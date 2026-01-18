@@ -20,21 +20,18 @@ function initNavigation() {
   const navMenu = document.getElementById('navMenu');
   const navLinks = document.querySelectorAll('.nav-link');
 
-  // Scroll effect (guard if header missing)
   window.addEventListener('scroll', () => {
     if (!header) return;
     if (window.scrollY > 50) header.classList.add('scrolled');
     else header.classList.remove('scrolled');
   });
 
-  // Mobile toggle (guard if elements missing)
   if (navToggle && navMenu) {
     navToggle.addEventListener('click', () => {
       navToggle.classList.toggle('active');
       navMenu.classList.toggle('active');
     });
 
-    // Close on link click
     navLinks.forEach((link) => {
       link.addEventListener('click', () => {
         navToggle.classList.remove('active');
@@ -43,22 +40,18 @@ function initNavigation() {
     });
   }
 
-  // Smooth scroll (CRITICAL FIX: ignore href="#" which breaks querySelector)
+  // Smooth scroll (fixes href="#" crash)
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
-
-      // Allow default if no href
       if (!href) return;
 
-      // Prevent the "#" crash and provide “scroll to top”
       if (href === '#') {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
 
-      // Only handle real fragment IDs like "#contact"
       if (!href.startsWith('#') || href.length < 2) return;
 
       const target = document.querySelector(href);
@@ -79,55 +72,41 @@ function initPortfolio() {
   const grid = document.getElementById('portfolioGrid');
   const filterBtns = document.querySelectorAll('.filter-btn');
 
-  // If the page section isn’t present, exit safely
   if (!grid) return;
-
-  // Ensure data exists
-  if (!Array.isArray(window.projects) && typeof projects === 'undefined') {
-    console.warn('[Portfolio] projects data not found (js/data.js may not be loaded).');
+  if (typeof projects === 'undefined' || !Array.isArray(projects)) {
+    console.warn('[Portfolio] projects not found. Ensure js/data.js loads before js/main.js');
     return;
   }
 
-  // Use the global `projects` from data.js
-  const projectData = typeof projects !== 'undefined' ? projects : window.projects;
-
   function renderProjects(filter = 'all') {
-    const filtered =
-      filter === 'all' ? projectData : projectData.filter((p) => p.type === filter);
+    const filtered = filter === 'all' ? projects : projects.filter((p) => p.type === filter);
 
     grid.innerHTML = filtered
       .map(
         (project) => `
-            <article class="portfolio-item fade-in" data-id="${project.id}">
-                <div class="portfolio-image">
-                    <img src="${project.image}" alt="${project.title}" loading="lazy">
-                </div>
-                <div class="portfolio-info">
-                    <span class="portfolio-type">${
-                      project.type === 'custom' ? 'Custom Home' : 'Spec Home'
-                    }</span>
-                    <h3 class="portfolio-title">${project.title}</h3>
-                    <p class="portfolio-location">${project.location}</p>
-                </div>
-            </article>
+          <article class="portfolio-item fade-in" data-id="${project.id}">
+            <div class="portfolio-image">
+              <img src="${project.image}" alt="${project.title}" loading="lazy">
+            </div>
+            <div class="portfolio-info">
+              <span class="portfolio-type">${project.type === 'custom' ? 'Custom Home' : 'Spec Home'}</span>
+              <h3 class="portfolio-title">${project.title}</h3>
+              <p class="portfolio-location">${project.location}</p>
+            </div>
+          </article>
         `
       )
       .join('');
 
-    // Add click handlers
     document.querySelectorAll('.portfolio-item').forEach((item) => {
       item.addEventListener('click', () => openModal(parseInt(item.dataset.id, 10)));
     });
 
-    // Re-trigger animations
     setTimeout(() => {
-      document.querySelectorAll('.portfolio-item.fade-in').forEach((el) => {
-        el.classList.add('visible');
-      });
+      document.querySelectorAll('.portfolio-item.fade-in').forEach((el) => el.classList.add('visible'));
     }, 100);
   }
 
-  // Filter buttons (optional)
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       filterBtns.forEach((b) => b.classList.remove('active'));
@@ -148,41 +127,29 @@ function initTestimonials() {
   const prevBtn = document.getElementById('prevTestimonial');
   const nextBtn = document.getElementById('nextTestimonial');
 
-  // If testimonials section isn’t present, exit safely
   if (!track || !dotsContainer || !prevBtn || !nextBtn) return;
-
-  // Ensure data exists
-  if (!Array.isArray(window.testimonials) && typeof testimonials === 'undefined') {
-    console.warn('[Testimonials] testimonials data not found (js/data.js may not be loaded).');
+  if (typeof testimonials === 'undefined' || !Array.isArray(testimonials)) {
+    console.warn('[Testimonials] testimonials not found. Ensure js/data.js loads before js/main.js');
     return;
   }
 
-  const testimonialData =
-    typeof testimonials !== 'undefined' ? testimonials : window.testimonials;
-
   let currentIndex = 0;
 
-  // Render testimonials
-  track.innerHTML = testimonialData
+  track.innerHTML = testimonials
     .map(
       (t, i) => `
         <div class="testimonial-slide ${i === 0 ? 'active' : ''}">
-            <p class="testimonial-quote">${t.quote}</p>
-            <p class="testimonial-author">${t.author}</p>
-            <p class="testimonial-project">${t.project}</p>
+          <p class="testimonial-quote">${t.quote}</p>
+          <p class="testimonial-author">${t.author}</p>
+          <p class="testimonial-project">${t.project}</p>
         </div>
-    `
+      `
     )
     .join('');
 
-  // Render dots
-  dotsContainer.innerHTML = testimonialData
+  dotsContainer.innerHTML = testimonials
     .map(
-      (_, i) => `
-        <button class="dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Go to slide ${
-        i + 1
-      }"></button>
-    `
+      (_, i) => `<button class="dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Go to slide ${i + 1}"></button>`
     )
     .join('');
 
@@ -190,7 +157,7 @@ function initTestimonials() {
   const dots = document.querySelectorAll('.dot');
 
   function goToSlide(index) {
-    if (!slides.length || !dots.length) return;
+    if (!slides.length) return;
 
     slides.forEach((s) => s.classList.remove('active'));
     dots.forEach((d) => d.classList.remove('active'));
@@ -205,15 +172,9 @@ function initTestimonials() {
 
   prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
   nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+  dots.forEach((dot) => dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.index, 10))));
 
-  dots.forEach((dot) => {
-    dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.index, 10)));
-  });
-
-  // Auto-advance (only if multiple slides exist)
-  if (slides.length > 1) {
-    setInterval(() => goToSlide(currentIndex + 1), 6000);
-  }
+  if (slides.length > 1) setInterval(() => goToSlide(currentIndex + 1), 6000);
 }
 
 // ============================================
@@ -230,17 +191,13 @@ function initModal() {
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      closeModal();
-    }
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
   });
 }
 
 function openModal(projectId) {
   const modal = document.getElementById('projectModal');
   if (!modal) return;
-
-  if (typeof projects === 'undefined' || !Array.isArray(projects)) return;
 
   const project = projects.find((p) => p.id === projectId);
   if (!project) return;
@@ -263,22 +220,10 @@ function openModal(projectId) {
 
   if (modalSpecs) {
     modalSpecs.innerHTML = `
-        <div class="spec-item">
-            <span class="spec-label">Sq Ft</span>
-            <span class="spec-value">${project.sqft}</span>
-        </div>
-        <div class="spec-item">
-            <span class="spec-label">Beds</span>
-            <span class="spec-value">${project.beds}</span>
-        </div>
-        <div class="spec-item">
-            <span class="spec-label">Baths</span>
-            <span class="spec-value">${project.baths}</span>
-        </div>
-        <div class="spec-item">
-            <span class="spec-label">Year</span>
-            <span class="spec-value">${project.year}</span>
-        </div>
+      <div class="spec-item"><span class="spec-label">Sq Ft</span><span class="spec-value">${project.sqft}</span></div>
+      <div class="spec-item"><span class="spec-label">Beds</span><span class="spec-value">${project.beds}</span></div>
+      <div class="spec-item"><span class="spec-label">Baths</span><span class="spec-value">${project.baths}</span></div>
+      <div class="spec-item"><span class="spec-label">Year</span><span class="spec-value">${project.year}</span></div>
     `;
   }
 
@@ -289,7 +234,6 @@ function openModal(projectId) {
 function closeModal() {
   const modal = document.getElementById('projectModal');
   if (!modal) return;
-
   modal.classList.remove('active');
   document.body.style.overflow = '';
 }
@@ -308,11 +252,9 @@ function initContactForm() {
     if (!btn) return;
 
     const originalText = btn.textContent;
-
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    // Simulate submission (replace with actual endpoint)
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     btn.textContent = 'Message Sent!';
@@ -335,11 +277,7 @@ function initScrollAnimations() {
   if (!els.length) return;
 
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    },
+    (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('visible')),
     { threshold: 0.1 }
   );
 
