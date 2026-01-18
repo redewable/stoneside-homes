@@ -79,25 +79,21 @@ const projects = [
 
 const testimonials = [
     {
-        id: 1,
         quote: "Working with Stoneside was like having a partner who truly cared about our family's future. They didn't just build us a house—they built us a home.",
         author: "The Johnson Family",
         project: "Custom Home in College Station"
     },
     {
-        id: 2,
         quote: "From the first conversation to handing us the keys, the attention to detail was incredible. Every single thing we asked for, they delivered.",
         author: "Michael & Sarah Thompson",
         project: "The Heritage Craftsman"
     },
     {
-        id: 3,
         quote: "We've built with other builders before. The difference with Stoneside? They build like it's their own family moving in. That integrity is rare.",
         author: "Dr. Robert Chen",
         project: "The Brazos View Estate"
     },
     {
-        id: 4,
         quote: "Our spec home has the quality of a custom build. Friends can't believe we didn't design it ourselves. The craftsmanship speaks for itself.",
         author: "The Martinez Family",
         project: "Willow Creek Residence"
