@@ -257,23 +257,41 @@ button {
   filter: drop-shadow(0 10px 22px rgba(13, 26, 38, 0.18));
 }
 
-.cursor-pencil {
-  width: 44px;
-  height: 44px;
-  transform-origin: 50% 50%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 44px 44px;
-  /* Crisp “architect pencil” cursor (SVG inline) */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23c7f5ff'/%3E%3Cstop offset='1' stop-color='%234fd1ff'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%230d1a26' stop-opacity='.92'/%3E%3Cstop offset='1' stop-color='%230d1a26' stop-opacity='.55'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M12.2 31.8l1.9-6.7L28.6 10.6c1.1-1.1 2.9-1.1 4 0l.8.8c1.1 1.1 1.1 2.9 0 4L19 29.9l-6.8 1.9z' fill='url(%23g1)'/%3E%3Cpath d='M12.2 31.8l6.8-1.9 14.4-14.4c1.1-1.1 1.1-2.9 0-4l-.8-.8c-1.1-1.1-2.9-1.1-4 0L14.1 25.1l-1.9 6.7z' fill='none' stroke='url(%23g2)' stroke-width='1.2'/%3E%3Cpath d='M29.3 9.9l4.8 4.8' stroke='%230d1a26' stroke-opacity='.55' stroke-width='1.2'/%3E%3Cpath d='M12.2 31.8l4.1-1.1-2.9-2.9-1.2 4z' fill='%230d1a26' fill-opacity='.82'/%3E%3Cpath d='M16.3 30.7l1.9-1.9' stroke='%23ffffff' stroke-opacity='.55' stroke-width='1.2'/%3E%3Ccircle cx='22' cy='22' r='20' fill='none' stroke='%234fd1ff' stroke-opacity='.18'/%3E%3C/svg%3E");
+/* Premium pencil cursor skin */
+.cursor { mix-blend-mode: normal; }
+.cursor-pencil{
+  width: 34px;
+  height: 14px;
+  border-radius: 999px;
+  transform-origin: 20% 50%;
+  background:
+    /* tip */
+    linear-gradient(90deg,
+      rgba(240,240,240,0) 0 8px,
+      #c8b48a 8px 12px,
+      #2a2f3a 12px 15px,
+      rgba(0,0,0,0) 15px 100%),
+    /* body */
+    linear-gradient(180deg,
+      rgba(255,255,255,.70),
+      rgba(255,255,255,.18)),
+    /* electric edge */
+    linear-gradient(90deg,
+      rgba(0,215,255,.0) 0%,
+      rgba(0,215,255,.25) 35%,
+      rgba(0,215,255,.0) 75%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.22) inset,
+    0 10px 20px rgba(0,0,0,.22),
+    0 0 18px rgba(0,215,255,.18);
 }
-
-.cursor.hover {
-  filter: drop-shadow(0 14px 30px rgba(13, 26, 38, 0.22));
-}
-
-@media (max-width: 1024px) {
-  .cursor { display: none; }
+@media (prefers-color-scheme: dark){
+  .cursor-pencil{
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.16) inset,
+      0 12px 24px rgba(0,0,0,.55),
+      0 0 22px rgba(0,215,255,.22);
+  }
 }
 
 /* -----------------------------
@@ -2529,4 +2547,170 @@ main {
 /* Large screens: premium breathing room */
 @media (min-width: 1200px) {
   .section-title { font-size: clamp(2.75rem, 3.8vw, 4.25rem); }
+}
+
+/* ============================================================
+   ICY LUXE OVERRIDES (paste at the very bottom)
+   “Ice on your wrist” = noir + platinum + electric accent
+   ============================================================ */
+
+:root{
+  color-scheme: light dark;
+
+  /* Luxe tokens */
+  --luxe-bg: #fbfbfd;
+  --luxe-bg2:#f3f6ff;
+  --luxe-surface: rgba(255,255,255,.72);
+  --luxe-surface2: rgba(255,255,255,.54);
+  --luxe-text:#0b0f17;
+  --luxe-text80: rgba(11,15,23,.80);
+  --luxe-line: rgba(11,15,23,.12);
+
+  /* “Icy” accent = diamond electric */
+  --luxe-accent:#00d7ff;
+  --luxe-accent2:#b9c6dd;     /* platinum */
+  --luxe-accent-deep:#0b66ff; /* depth for gradients */
+  --luxe-glow: rgba(0,215,255,.22);
+  --luxe-glow2: rgba(0,215,255,.12);
+
+  /* Map into existing system vars used throughout the site */
+  --cream: var(--luxe-bg);
+  --cream-dark: var(--luxe-bg2);
+  --ink: var(--luxe-text);
+  --ink-80: var(--luxe-text80);
+  --ink-60: rgba(11,15,23,.60);
+  --ink-40: rgba(11,15,23,.40);
+  --ink-20: rgba(11,15,23,.20);
+  --ink-10: rgba(11,15,23,.10);
+  --ink-05: rgba(11,15,23,.05);
+
+  /* Keep “copper” name but make it electric */
+  --copper: var(--luxe-accent);
+  --copper-light: rgba(0,215,255,.35);
+  --copper-dark: var(--luxe-accent-deep);
+  --copper-10: rgba(0,215,255,.10);
+  --copper-20: rgba(0,215,255,.20);
+
+  /* Rhythm */
+  --container-padding: clamp(1.15rem, 4vw, 3rem);
+}
+
+/* Dark mode (AUTO from system) */
+@media (prefers-color-scheme: dark){
+  :root{
+    --luxe-bg:#070a10;
+    --luxe-bg2:#0b101a;
+    --luxe-surface: rgba(12,16,24,.62);
+    --luxe-surface2: rgba(12,16,24,.46);
+    --luxe-text:#f4f6fb;
+    --luxe-text80: rgba(244,246,251,.80);
+    --luxe-line: rgba(244,246,251,.14);
+
+    --ink: var(--luxe-text);
+    --ink-80: var(--luxe-text80);
+    --ink-60: rgba(244,246,251,.62);
+    --ink-40: rgba(244,246,251,.40);
+    --ink-20: rgba(244,246,251,.20);
+    --ink-10: rgba(244,246,251,.10);
+    --ink-05: rgba(244,246,251,.06);
+  }
+}
+
+/* Background: premium noir glow, not frosted “ice” */
+body{
+  background:
+    radial-gradient(900px 520px at 18% -8%, var(--luxe-glow2), transparent 55%),
+    radial-gradient(900px 520px at 82% 0%, rgba(185,198,221,.14), transparent 55%),
+    linear-gradient(180deg, var(--luxe-bg) 0%, var(--luxe-bg2) 100%);
+}
+
+/* Typography: bolder, more confident */
+.hero-title, .section-title{
+  letter-spacing: -0.04em;
+}
+.hero-title{
+  text-shadow: 0 18px 60px rgba(0,0,0,.10);
+}
+@media (prefers-color-scheme: dark){
+  .hero-title{ text-shadow: 0 18px 60px rgba(0,0,0,.45); }
+}
+
+/* Header: clean, confident, premium */
+.header{
+  background: var(--luxe-surface);
+  border-bottom: 1px solid var(--luxe-line);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+.header.scrolled{
+  background: color-mix(in srgb, var(--luxe-surface) 92%, transparent);
+  box-shadow: 0 16px 50px rgba(0,0,0,.10);
+}
+
+/* Cards: “platinum edge” border + subtle glow */
+.service-card, .project-card, .testimonial-card, .faq-item, .contact-panel, .modal-content{
+  background: var(--luxe-surface2) !important;
+  border: 1px solid color-mix(in srgb, var(--luxe-line) 75%, transparent) !important;
+  box-shadow: 0 18px 60px rgba(0,0,0,.10) !important;
+  position: relative;
+}
+.service-card::before, .project-card::before, .testimonial-card::before, .faq-item::before, .contact-panel::before, .modal-content::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    rgba(185,198,221,.65),
+    rgba(0,215,255,.45),
+    rgba(185,198,221,.35)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events:none;
+  opacity:.55;
+}
+@media (prefers-color-scheme: dark){
+  .service-card::before, .project-card::before, .testimonial-card::before, .faq-item::before, .contact-panel::before, .modal-content::before{
+    opacity:.70;
+  }
+}
+
+/* Buttons: “diamond shine” (bold, modern, high-end) */
+.btn-primary, .nav-cta, .btn-submit{
+  background: linear-gradient(135deg, var(--luxe-accent) 0%, var(--luxe-accent-deep) 100%);
+  color: #06111b;
+  border: 1px solid rgba(255,255,255,.28);
+  box-shadow: 0 18px 45px rgba(0,0,0,.16), 0 0 0 1px rgba(0,215,255,.12) inset;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after, .nav-cta::after, .btn-submit::after{
+  content:"";
+  position:absolute;
+  inset:-40% -20%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 45%);
+  transform: rotate(14deg);
+  opacity:.65;
+  pointer-events:none;
+}
+.btn-primary:hover, .nav-cta:hover, .btn-submit:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 24px 70px rgba(0,0,0,.18), 0 0 38px var(--luxe-glow);
+}
+
+/* Links: crisp electric underline */
+.nav-link::after{
+  background: linear-gradient(90deg, transparent, var(--luxe-accent), transparent);
+}
+.nav-link:hover{
+  text-shadow: 0 0 18px var(--luxe-glow2);
+}
+
+/* Spacing: consistent section rhythm */
+.section{
+  padding: clamp(4.5rem, 7vw, 8.5rem) 0;
+}
+html{
+  scroll-padding-top: calc(var(--header-height) + 18px);
 }
