@@ -21,14 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
 function initLoader() {
     const loader = document.getElementById('loader');
     
+    // Check if the loader element actually exists before trying to use it
+    if (!loader) return;
+
     window.addEventListener('load', () => {
         setTimeout(() => {
             loader.classList.add('done');
-            document.body.classList.remove('locked');
-        }, 2300);
+            // Check if document.body exists
+            if(document.body) {
+                document.body.classList.remove('locked');
+            }
+        }, 1000); // Reduced delay for better UX
     });
     
-    document.body.classList.add('locked');
+    if(document.body) {
+        document.body.classList.add('locked');
+    }
 }
 
 // ============================================
