@@ -1,2277 +1,420 @@
-/* ============================================
-   STONESIDE CUSTOM HOMES - Main Styles
-   Craftsman Heritage Edition
-   ============================================ */
-
-/* CSS Variables */
-:root {
-    /* Colors */
-    --color-sage: #4A5D4F;
-    --color-sage-light: #5C7261;
-    --color-sage-dark: #3A4A3D;
-    --color-stone: #C4B5A1;
-    --color-stone-light: #D4C8B8;
-    --color-stone-dark: #A89B88;
-    --color-cream: #F7F4EF;
-    --color-cream-dark: #EDE8E0;
-    --color-charcoal: #2C2C2C;
-    --color-charcoal-light: #3D3D3D;
-    --color-white: #FFFFFF;
-    --color-black: #1A1A1A;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stoneside Custom Homes | Bryan-College Station Custom Home Builder</title>
+    <meta name="description" content="Stoneside Custom Homes crafts exceptional custom and spec homes in Bryan-College Station, Texas. Built on a firm foundation of quality, integrity, and craftsmanship.">
     
-    /* Blueprint Colors */
-    --blueprint-blue: #1E3A5F;
-    --blueprint-light: #2A4A73;
-    --blueprint-line: #4A7AB0;
-    --blueprint-grid: rgba(74, 122, 176, 0.15);
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    /* Tape Measure Yellow */
-    --tape-yellow: #FFC107;
-    --tape-yellow-dark: #E6AC00;
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
     
-    /* Pencil/Sketch */
-    --pencil-gray: #4A4A4A;
-    --sketch-line: #5C5C5C;
-    
-    /* Typography */
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-handwritten: 'Caveat', cursive;
-    --font-architect: 'Architects Daughter', cursive;
-    
-    /* Spacing */
-    --section-padding: clamp(80px, 10vw, 140px);
-    --container-max: 1400px;
-    --container-padding: clamp(20px, 5vw, 60px);
-    
-    /* Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-medium: 0.4s ease;
-    --transition-slow: 0.6s ease;
-    --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    
-    /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.12);
-    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.16);
-    --shadow-sketch: 2px 2px 0 rgba(0, 0, 0, 0.1);
-}
-
-/* Reset & Base */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-}
-
-body {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--color-charcoal);
-    background-color: var(--color-cream);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-body.no-scroll {
-    overflow: hidden;
-}
-
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    line-height: 1.2;
-    color: var(--color-charcoal);
-}
-
-h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
-h2 { font-size: clamp(2rem, 4vw, 3rem); }
-h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
-
-p {
-    margin-bottom: 1rem;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-    transition: var(--transition-fast);
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Handwritten Style */
-.handwritten {
-    font-family: var(--font-handwritten);
-    font-size: 1.4em;
-    letter-spacing: 0.5px;
-}
-
-/* Container */
-.container {
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: 0 var(--container-padding);
-}
-
-/* Section Styling */
-.section-tag {
-    display: inline-block;
-    font-family: var(--font-handwritten);
-    font-size: 1.5rem;
-    color: var(--color-sage);
-    margin-bottom: 1rem;
-    position: relative;
-}
-
-.section-tag::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--color-sage);
-    opacity: 0.3;
-    transform: rotate(-1deg);
-}
-
-.section-title {
-    margin-bottom: 1rem;
-}
-
-.section-subtitle {
-    font-size: 1.125rem;
-    color: var(--color-charcoal-light);
-    opacity: 0.8;
-}
-
-.section-header {
-    margin-bottom: 3rem;
-}
-
-.section-header.center {
-    text-align: center;
-}
-
-/* Highlight Sketch Effect */
-.highlight-sketch {
-    position: relative;
-    display: inline-block;
-}
-
-.highlight-sketch::after {
-    content: '';
-    position: absolute;
-    bottom: 5px;
-    left: -5px;
-    right: -5px;
-    height: 12px;
-    background: var(--tape-yellow);
-    opacity: 0.3;
-    transform: rotate(-1deg);
-    z-index: -1;
-    border-radius: 2px;
-}
-
-/* Buttons */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 500;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: var(--transition-medium);
-    position: relative;
-    overflow: hidden;
-}
-
-.btn svg {
-    width: 20px;
-    height: 20px;
-    transition: transform var(--transition-medium);
-}
-
-.btn-primary {
-    background: var(--color-sage);
-    color: var(--color-white);
-}
-
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.btn-primary:hover {
-    background: var(--color-sage-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.btn-primary:hover::before {
-    left: 100%;
-}
-
-.btn-primary:hover svg {
-    transform: translateX(4px);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--color-charcoal);
-    border: 2px solid var(--color-charcoal);
-}
-
-.btn-secondary:hover {
-    background: var(--color-charcoal);
-    color: var(--color-white);
-}
-
-.btn-outline {
-    background: transparent;
-    color: var(--color-sage);
-    border: 2px solid var(--color-sage);
-}
-
-.btn-outline:hover {
-    background: var(--color-sage);
-    color: var(--color-white);
-}
-
-.btn-outline:hover svg {
-    transform: translate(4px, -4px);
-}
-
-/* ============================================
-   NAVIGATION
-   ============================================ */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 1.5rem 0;
-    transition: var(--transition-medium);
-}
-
-.header.scrolled {
-    background: rgba(247, 244, 239, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 1rem 0;
-    box-shadow: var(--shadow-sm);
-}
-
-.nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo-img {
-    height: 50px;
-    width: auto;
-    transition: var(--transition-medium);
-}
-
-.header.scrolled .logo-img {
-    height: 40px;
-}
-
-.nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-    list-style: none;
-}
-
-.nav-link {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--color-charcoal);
-    position: relative;
-    padding: 0.5rem 0;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--color-sage);
-    transition: width var(--transition-medium);
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.nav-cta {
-    background: var(--color-sage);
-    color: var(--color-white) !important;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-}
-
-.nav-cta::after {
-    display: none;
-}
-
-.nav-cta:hover {
-    background: var(--color-sage-dark);
-    transform: translateY(-2px);
-}
-
-.nav-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    padding: 0.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-.nav-toggle span {
-    display: block;
-    width: 25px;
-    height: 2px;
-    background: var(--color-charcoal);
-    transition: var(--transition-medium);
-}
-
-/* Mobile Navigation */
-@media (max-width: 900px) {
-    .nav-toggle {
-        display: flex;
-    }
-    
-    .nav-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        max-width: 400px;
-        height: 100vh;
-        background: var(--color-cream);
-        flex-direction: column;
-        justify-content: center;
-        gap: 2rem;
-        padding: 2rem;
-        transition: right var(--transition-medium);
-        box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-    }
-    
-    .nav-menu.active {
-        right: 0;
-    }
-    
-    .nav-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-    
-    .nav-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .nav-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
-    }
-    
-    .nav-link {
-        font-size: 1.25rem;
-    }
-}
-
-/* ============================================
-   HERO SECTION
-   ============================================ */
-.hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-blueprint-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.hero-content {
-    display: flex;
-    align-items: center;
-    padding: 120px 0 80px;
-    position: relative;
-    z-index: 2;
-}
-
-.hero-text {
-    max-width: 600px;
-}
-
-.hero-title {
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
-}
-
-.title-line {
-    display: block;
-    overflow: hidden;
-}
-
-.sketch-to-real {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(100%);
-    animation: slideUp 0.8s ease forwards;
-}
-
-.title-line:nth-child(2) .sketch-to-real {
-    animation-delay: 0.2s;
-}
-
-@keyframes slideUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    color: var(--color-charcoal-light);
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: fadeIn 0.8s ease 0.5s forwards;
-}
-
-@keyframes fadeIn {
-    to { opacity: 1; }
-}
-
-.hero-cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeIn 0.8s ease 0.7s forwards;
-}
-
-/* Napkin Sketch */
-.napkin-sketch {
-    position: absolute;
-    top: 50%;
-    left: -100px;
-    transform: translateY(-50%) rotate(-5deg);
-    width: 200px;
-    height: 150px;
-    opacity: 0.15;
-    pointer-events: none;
-}
-
-.napkin-house {
-    width: 100%;
-    height: 100%;
-}
-
-.napkin-line {
-    stroke: var(--pencil-gray);
-    stroke-width: 2;
-    fill: none;
-    stroke-dasharray: 500;
-    stroke-dashoffset: 500;
-    animation: drawLine 3s ease forwards;
-}
-
-.dimension-line {
-    stroke: var(--pencil-gray);
-    stroke-width: 1;
-    stroke-dasharray: 4 4;
-    opacity: 0.5;
-}
-
-.dimension-text {
-    font-family: var(--font-handwritten);
-    font-size: 14px;
-    fill: var(--pencil-gray);
-}
-
-@keyframes drawLine {
-    to { stroke-dashoffset: 0; }
-}
-
-/* Tape Measure Stats */
-.tape-measure-stats {
-    display: flex;
-    gap: 2rem;
-    margin-top: 3rem;
-    opacity: 0;
-    animation: fadeIn 0.8s ease 1s forwards;
-}
-
-.tape-stat {
-    text-align: center;
-}
-
-.tape-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.5rem;
-}
-
-.tape-body {
-    background: var(--tape-yellow);
-    border-radius: 4px 0 0 4px;
-    padding: 0.5rem 1rem;
-    position: relative;
-    box-shadow: var(--shadow-sm);
-}
-
-.tape-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, 
-        var(--color-black) 0%, var(--color-black) 10%,
-        transparent 10%, transparent 20%,
-        var(--color-black) 20%, var(--color-black) 30%,
-        transparent 30%, transparent 40%,
-        var(--color-black) 40%, var(--color-black) 50%,
-        transparent 50%, transparent 60%,
-        var(--color-black) 60%, var(--color-black) 70%,
-        transparent 70%, transparent 80%,
-        var(--color-black) 80%, var(--color-black) 90%,
-        transparent 90%
-    );
-    opacity: 0.3;
-}
-
-.tape-extended {
-    position: relative;
-}
-
-.tape-number {
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-black);
-    line-height: 1;
-}
-
-.tape-plus, .tape-percent {
-    font-size: 1rem;
-    vertical-align: super;
-}
-
-.tape-hook {
-    width: 8px;
-    height: 30px;
-    background: var(--color-charcoal);
-    border-radius: 0 2px 2px 0;
-    position: relative;
-}
-
-.tape-hook::after {
-    content: '';
-    position: absolute;
-    right: -4px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 6px;
-    height: 20px;
-    background: var(--color-charcoal);
-    border-radius: 0 2px 2px 0;
-}
-
-.tape-label {
-    font-size: 0.85rem;
-    color: var(--color-charcoal-light);
-    font-weight: 500;
-}
-
-/* Hero Image */
-.hero-image-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 80px;
-}
-
-.sketch-frame {
-    position: absolute;
-    top: 15%;
-    left: 10%;
-    right: 10%;
-    bottom: 15%;
-    pointer-events: none;
-}
-
-.frame-corner {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--pencil-gray);
-    opacity: 0.3;
-}
-
-.frame-tl {
-    top: 0;
-    left: 0;
-    border-right: none;
-    border-bottom: none;
-}
-
-.frame-tr {
-    top: 0;
-    right: 0;
-    border-left: none;
-    border-bottom: none;
-}
-
-.frame-bl {
-    bottom: 0;
-    left: 0;
-    border-right: none;
-    border-top: none;
-}
-
-.frame-br {
-    bottom: 0;
-    right: 0;
-    border-left: none;
-    border-top: none;
-}
-
-.hero-image-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-}
-
-.hero-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform var(--transition-slow);
-}
-
-.hero-image-wrapper:hover .hero-image {
-    transform: scale(1.05);
-}
-
-.sketch-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(30, 58, 95, 0.1) 0%,
-        transparent 50%,
-        rgba(30, 58, 95, 0.05) 100%
-    );
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* Pencil Annotations */
-.pencil-annotations {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-}
-
-.pencil-note {
-    position: absolute;
-    font-family: var(--font-handwritten);
-    font-size: 1.1rem;
-    color: var(--pencil-gray);
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
-}
-
-.note-1 {
-    top: 20%;
-    right: -10%;
-    animation-delay: 1.5s;
-    transform: rotate(5deg);
-}
-
-.note-2 {
-    bottom: 30%;
-    left: -10%;
-    animation-delay: 1.8s;
-    transform: rotate(-3deg);
-}
-
-/* Scroll Indicator */
-.scroll-indicator {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    opacity: 0;
-    animation: fadeIn 0.8s ease 1.5s forwards;
-}
-
-.scroll-line {
-    width: 2px;
-    height: 60px;
-    background: linear-gradient(to bottom, var(--color-sage), transparent);
-    position: relative;
-}
-
-.scroll-line::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20px;
-    background: var(--color-sage);
-    animation: scrollPulse 2s ease infinite;
-}
-
-@keyframes scrollPulse {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(40px); opacity: 0; }
-}
-
-.scroll-text {
-    font-size: 1rem;
-    color: var(--color-charcoal-light);
-}
-
-/* Hero Responsive */
-@media (max-width: 1100px) {
-    .hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-    }
-    
-    .hero-content {
-        padding: 140px 0 60px;
-        text-align: center;
-    }
-    
-    .hero-text {
-        max-width: 100%;
-    }
-    
-    .hero-cta {
-        justify-content: center;
-    }
-    
-    .tape-measure-stats {
-        justify-content: center;
-    }
-    
-    .hero-image-container {
-        padding: 40px;
-    }
-    
-    .napkin-sketch,
-    .pencil-annotations {
-        display: none;
-    }
-    
-    .scroll-indicator {
-        display: none;
-    }
-}
-
-@media (max-width: 600px) {
-    .tape-measure-stats {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-    
-    .hero-cta {
-        flex-direction: column;
-    }
-    
-    .btn {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-/* ============================================
-   LEGACY SECTION
-   ============================================ */
-.legacy-section {
-    padding: var(--section-padding) 0;
-    position: relative;
-    background: var(--color-white);
-    overflow: hidden;
-}
-
-.blueprint-bg-subtle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.3;
-}
-
-.legacy-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.legacy-visual {
-    position: relative;
-    height: 400px;
-}
-
-/* Generation Blocks */
-.generation-blocks {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    perspective: 1000px;
-}
-
-.gen-block {
-    position: absolute;
-    width: 120px;
-    height: 60px;
-    transform-style: preserve-3d;
-    transition: transform 0.5s ease;
-}
-
-.block-face {
-    position: absolute;
-    backface-visibility: hidden;
-}
-
-.block-face.front {
-    width: 120px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--color-stone) 0%, var(--color-stone-dark) 100%);
-    border: 2px solid var(--color-stone-dark);
-    transform: translateZ(20px);
-}
-
-.block-face.top {
-    width: 120px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--color-stone-light) 0%, var(--color-stone) 100%);
-    border: 2px solid var(--color-stone-dark);
-    transform: rotateX(90deg) translateZ(30px) translateY(-20px);
-}
-
-.block-face.side {
-    width: 40px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--color-stone-dark) 0%, #968977 100%);
-    border: 2px solid var(--color-stone-dark);
-    transform: rotateY(90deg) translateZ(100px) translateX(-20px);
-}
-
-.block-1 {
-    bottom: 20%;
-    left: 25%;
-    transform: rotateX(-10deg) rotateY(-20deg);
-}
-
-.block-2 {
-    bottom: 35%;
-    left: 30%;
-    transform: rotateX(-10deg) rotateY(-20deg);
-    animation: blockFloat 4s ease-in-out infinite;
-    animation-delay: 0.5s;
-}
-
-.block-3 {
-    bottom: 50%;
-    left: 35%;
-    transform: rotateX(-10deg) rotateY(-20deg);
-    animation: blockFloat 4s ease-in-out infinite;
-    animation-delay: 1s;
-}
-
-.block-4 {
-    bottom: 65%;
-    left: 40%;
-    transform: rotateX(-10deg) rotateY(-20deg);
-    animation: blockFloat 4s ease-in-out infinite;
-    animation-delay: 1.5s;
-}
-
-@keyframes blockFloat {
-    0%, 100% { transform: rotateX(-10deg) rotateY(-20deg) translateY(0); }
-    50% { transform: rotateX(-10deg) rotateY(-20deg) translateY(-10px); }
-}
-
-.block-label {
-    position: absolute;
-    left: 140px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: var(--font-handwritten);
-    font-size: 1rem;
-    color: var(--color-charcoal-light);
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.gen-block:hover .block-label {
-    opacity: 1;
-}
-
-.generation-tree {
-    display: none;
-}
-
-.legacy-text {
-    position: relative;
-    z-index: 1;
-}
-
-.legacy-description {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-}
-
-/* Scripture Quote */
-.scripture-quote {
-    position: relative;
-    padding: 2rem;
-    background: var(--color-cream);
-    border-left: 4px solid var(--color-sage);
-    border-radius: 0 8px 8px 0;
-}
-
-.quote-mark {
-    position: absolute;
-    top: -10px;
-    left: 20px;
-    font-family: var(--font-heading);
-    font-size: 4rem;
-    color: var(--color-sage);
-    opacity: 0.2;
-    line-height: 1;
-}
-
-.scripture-quote p {
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
-    position: relative;
-    z-index: 1;
-}
-
-.scripture-quote cite {
-    font-family: var(--font-handwritten);
-    font-size: 1.1rem;
-    color: var(--color-sage);
-    font-style: normal;
-}
-
-@media (max-width: 900px) {
-    .legacy-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .legacy-visual {
-        height: 300px;
-        order: -1;
-    }
-}
-
-/* ============================================
-   PORTFOLIO SECTION
-   ============================================ */
-.portfolio-section {
-    padding: var(--section-padding) 0;
-    background: var(--color-cream);
-}
-
-.portfolio-filters {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: var(--color-white);
-    border: 2px solid var(--color-stone);
-    border-radius: 50px;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-charcoal);
-    cursor: pointer;
-    transition: var(--transition-medium);
-}
-
-.filter-btn:hover {
-    border-color: var(--color-sage);
-    color: var(--color-sage);
-}
-
-.filter-btn.active {
-    background: var(--color-sage);
-    border-color: var(--color-sage);
-    color: var(--color-white);
-}
-
-.filter-count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 24px;
-    height: 24px;
-    padding: 0 6px;
-    background: rgba(0,0,0,0.1);
-    border-radius: 12px;
-    font-size: 0.8rem;
-}
-
-.filter-btn.active .filter-count {
-    background: rgba(255,255,255,0.2);
-}
-
-/* Portfolio Grid */
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.portfolio-item {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--color-white);
-    box-shadow: var(--shadow-sm);
-    cursor: pointer;
-    transition: var(--transition-medium);
-}
-
-.portfolio-item:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
-}
-
-.portfolio-image {
-    position: relative;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-}
-
-.portfolio-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--transition-slow);
-}
-
-.portfolio-item:hover .portfolio-image img {
-    transform: scale(1.1);
-}
-
-.portfolio-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, 
-        transparent 0%,
-        rgba(30, 58, 95, 0.8) 100%
-    );
-    opacity: 0;
-    transition: opacity var(--transition-medium);
-    display: flex;
-    align-items: flex-end;
-    padding: 1.5rem;
-}
-
-.portfolio-item:hover .portfolio-overlay {
-    opacity: 1;
-}
-
-.overlay-content {
-    color: var(--color-white);
-    transform: translateY(20px);
-    transition: transform var(--transition-medium);
-}
-
-.portfolio-item:hover .overlay-content {
-    transform: translateY(0);
-}
-
-.view-project {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-handwritten);
-    font-size: 1.2rem;
-}
-
-.view-project svg {
-    width: 20px;
-    height: 20px;
-}
-
-.portfolio-info {
-    padding: 1.5rem;
-}
-
-.portfolio-type {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: var(--color-cream);
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--color-sage);
-    margin-bottom: 0.75rem;
-}
-
-.portfolio-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.25rem;
-}
-
-.portfolio-location {
-    font-size: 0.9rem;
-    color: var(--color-charcoal-light);
-}
-
-.portfolio-cta {
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-    .portfolio-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .portfolio-filters {
-        justify-content: center;
-    }
-}
-
-/* ============================================
-   ABOUT SECTION
-   ============================================ */
-.about-section {
-    padding: var(--section-padding) 0;
-    background: var(--color-white);
-}
-
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.about-images {
-    position: relative;
-}
-
-.image-blueprint-frame {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-}
-
-.about-img-main {
-    width: 100%;
-    display: block;
-}
-
-.blueprint-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        linear-gradient(135deg, rgba(30, 58, 95, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.blueprint-dimensions {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-}
-
-.dim {
-    position: absolute;
-    font-family: var(--font-handwritten);
-    font-size: 1rem;
-    color: var(--color-white);
-    background: rgba(0,0,0,0.5);
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-}
-
-.dim-top {
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.dim-side {
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%) rotate(90deg);
-    transform-origin: center;
-}
-
-.about-badge {
-    position: absolute;
-    bottom: -30px;
-    right: -30px;
-    width: 120px;
-    height: 120px;
-    z-index: 2;
-}
-
-.badge-tape {
-    width: 100%;
-    height: 100%;
-    animation: rotateBadge 20s linear infinite;
-}
-
-@keyframes rotateBadge {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-.badge-number {
-    font-family: var(--font-heading);
-    font-size: 28px;
-    font-weight: 700;
-    fill: var(--color-charcoal);
-}
-
-.badge-text {
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 600;
-    fill: var(--color-charcoal);
-    letter-spacing: 2px;
-}
-
-.about-lead {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-}
-
-/* About Values */
-.about-values {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.value-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-}
-
-.value-icon {
-    flex-shrink: 0;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-cream);
-    border-radius: 8px;
-}
-
-.sketch-icon {
-    width: 30px;
-    height: 30px;
-}
-
-.icon-line {
-    fill: none;
-    stroke: var(--color-sage);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.value-text h4 {
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-}
-
-.value-text p {
-    font-size: 0.95rem;
-    color: var(--color-charcoal-light);
-    margin: 0;
-}
-
-@media (max-width: 900px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-    
-    .about-badge {
-        bottom: -20px;
-        right: 20px;
-        width: 100px;
-        height: 100px;
-    }
-}
-
-/* ============================================
-   PROCESS SECTION
-   ============================================ */
-.process-section {
-    padding: var(--section-padding) 0;
-    background: var(--color-cream);
-    position: relative;
-    overflow: hidden;
-}
-
-.blueprint-paper-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
-    background-size: 20px 20px;
-    opacity: 0.5;
-}
-
-.process-timeline {
-    position: relative;
-    margin-top: 4rem;
-}
-
-.timeline-line {
-    position: absolute;
-    top: 40px;
-    left: 0;
-    right: 0;
-    height: 4px;
-    z-index: 0;
-}
-
-.line-svg {
-    width: 100%;
-    height: 4px;
-}
-
-.timeline-path {
-    stroke: var(--color-stone);
-    stroke-width: 4;
-    stroke-dasharray: 8 4;
-}
-
-.process-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    position: relative;
-    z-index: 1;
-}
-
-.process-step {
-    text-align: center;
-}
-
-.step-marker {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 2rem;
-}
-
-.marker-outer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: var(--color-white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-md);
-    z-index: 2;
-}
-
-.marker-inner {
-    width: 50px;
-    height: 50px;
-    background: var(--color-sage);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.step-num {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-white);
-}
-
-.marker-sketch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.sketch-circle {
-    fill: none;
-    stroke: var(--color-sage);
-    stroke-width: 2;
-    stroke-dasharray: 180;
-    stroke-dashoffset: 180;
-    opacity: 0.3;
-}
-
-.process-step.visible .sketch-circle {
-    animation: drawCircle 1s ease forwards;
-}
-
-@keyframes drawCircle {
-    to { stroke-dashoffset: 0; }
-}
-
-.step-content {
-    background: var(--color-white);
-    padding: 2rem 1.5rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-medium);
-}
-
-.process-step:hover .step-content {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-md);
-}
-
-.step-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 1rem;
-}
-
-.process-icon {
-    width: 100%;
-    height: 100%;
-}
-
-.icon-draw {
-    fill: none;
-    stroke: var(--color-sage);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.step-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-}
-
-.step-desc {
-    font-size: 0.95rem;
-    color: var(--color-charcoal-light);
-    margin-bottom: 1rem;
-}
-
-.step-note {
-    font-size: 1rem;
-    color: var(--color-sage);
-}
-
-@media (max-width: 1000px) {
-    .process-steps {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .timeline-line {
-        display: none;
-    }
-}
-
-@media (max-width: 600px) {
-    .process-steps {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ============================================
-   TESTIMONIALS SECTION
-   ============================================ */
-.testimonials-section {
-    padding: var(--section-padding) 0;
-    background: var(--color-white);
-}
-
-.testimonials-slider {
-    position: relative;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.testimonial-track {
-    overflow: hidden;
-}
-
-.testimonial-slide {
-    padding: 2rem;
-    text-align: center;
-    display: none;
-}
-
-.testimonial-slide.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-}
-
-.testimonial-content {
-    position: relative;
-}
-
-.testimonial-quote {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-style: italic;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    position: relative;
-}
-
-.testimonial-quote::before {
-    content: '"';
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 6rem;
-    color: var(--color-sage);
-    opacity: 0.1;
-    font-family: var(--font-heading);
-    line-height: 1;
-}
-
-.testimonial-author {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.author-name {
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.author-project {
-    font-family: var(--font-handwritten);
-    font-size: 1.1rem;
-    color: var(--color-sage);
-}
-
-.testimonial-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.nav-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 2px solid var(--color-stone);
-    background: var(--color-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: var(--transition-medium);
-}
-
-.nav-btn:hover {
-    background: var(--color-sage);
-    border-color: var(--color-sage);
-    color: var(--color-white);
-}
-
-.nav-btn svg {
-    width: 20px;
-    height: 20px;
-}
-
-.testimonial-dots {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--color-stone);
-    cursor: pointer;
-    transition: var(--transition-medium);
-}
-
-.dot.active {
-    background: var(--color-sage);
-    transform: scale(1.2);
-}
-
-/* ============================================
-   CONTACT SECTION
-   ============================================ */
-.contact-section {
-    padding: var(--section-padding) 0;
-    background: var(--color-cream);
-    position: relative;
-}
-
-.blueprint-bg-contact {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
-    background-size: 30px 30px;
-    opacity: 0.3;
-}
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    position: relative;
-    z-index: 1;
-}
-
-.contact-lead {
-    font-size: 1.125rem;
-    margin-bottom: 2rem;
-}
-
-.contact-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.contact-item {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-.contact-icon {
-    width: 50px;
-    height: 50px;
-    background: var(--color-white);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-sm);
-}
-
-.sketch-icon-sm {
-    width: 24px;
-    height: 24px;
-    color: var(--color-sage);
-}
-
-.contact-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.contact-label {
-    font-size: 0.85rem;
-    color: var(--color-charcoal-light);
-}
-
-.contact-text a,
-.contact-text span {
-    font-weight: 500;
-}
-
-.contact-text a:hover {
-    color: var(--color-sage);
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-}
-
-.social-link {
-    width: 44px;
-    height: 44px;
-    border: 2px solid var(--color-stone);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition-medium);
-}
-
-.social-link:hover {
-    background: var(--color-sage);
-    border-color: var(--color-sage);
-    color: var(--color-white);
-}
-
-.social-link svg {
-    width: 20px;
-    height: 20px;
-}
-
-/* Contact Form */
-.contact-form-wrapper {
-    position: relative;
-}
-
-.form-napkin {
-    background: var(--color-white);
-    border-radius: 12px;
-    padding: 2.5rem;
-    box-shadow: var(--shadow-md);
-    position: relative;
-    overflow: hidden;
-}
-
-.napkin-lines {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-        transparent,
-        transparent 30px,
-        rgba(74, 122, 176, 0.05) 30px,
-        rgba(74, 122, 176, 0.05) 31px
-    );
-    pointer-events: none;
-}
-
-.form-header {
-    margin-bottom: 2rem;
-    font-size: 1.5rem;
-    color: var(--color-sage);
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-    position: relative;
-}
-
-.form-label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    color: var(--color-charcoal);
-}
-
-.form-input,
-.form-textarea {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    border-bottom: 2px solid var(--color-stone);
-    background: transparent;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    color: var(--color-charcoal);
-    transition: var(--transition-medium);
-}
-
-.form-input:focus,
-.form-textarea:focus {
-    outline: none;
-    border-color: var(--color-sage);
-}
-
-.form-textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-.input-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--color-sage);
-    transition: width var(--transition-medium);
-}
-
-.form-input:focus ~ .input-line,
-.form-textarea:focus ~ .input-line {
-    width: 100%;
-}
-
-.btn-submit {
-    width: 100%;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-@media (max-width: 900px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-}
-
-@media (max-width: 500px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-.footer {
-    background: var(--color-charcoal);
-    color: var(--color-white);
-    padding: 4rem 0 2rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2rem;
-    position: relative;
-    z-index: 1;
-}
-
-.footer-logo {
-    height: 60px;
-    width: auto;
-    filter: brightness(0) invert(1);
-    opacity: 0.9;
-}
-
-.footer-tagline {
-    font-size: 1.3rem;
-    color: var(--color-stone-light);
-    margin-top: 0.5rem;
-}
-
-.footer-links {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.footer-links a {
-    color: var(--color-stone-light);
-    font-size: 0.95rem;
-    transition: var(--transition-fast);
-}
-
-.footer-links a:hover {
-    color: var(--color-white);
-}
-
-.footer-bottom {
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    width: 100%;
-}
-
-.footer-bottom p {
-    font-size: 0.9rem;
-    color: var(--color-stone);
-    margin: 0;
-}
-
-.footer-location {
-    margin-top: 0.5rem !important;
-    font-family: var(--font-handwritten);
-    font-size: 1.1rem !important;
-}
-
-.footer-blueprint {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    opacity: 0.1;
-}
-
-.footer-house-sketch {
-    width: 100%;
-    height: 100%;
-}
-
-.footer-line {
-    fill: none;
-    stroke: var(--color-white);
-    stroke-width: 2;
-}
-
-/* ============================================
-   MODAL
-   ============================================ */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--transition-medium);
-}
-
-.modal.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-}
-
-.modal-container {
-    position: relative;
-    width: 90%;
-    max-width: 1000px;
-    max-height: 90vh;
-    background: var(--color-white);
-    border-radius: 12px;
-    overflow: hidden;
-    transform: scale(0.9);
-    transition: transform var(--transition-medium);
-}
-
-.modal.active .modal-container {
-    transform: scale(1);
-}
-
-.modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 40px;
-    height: 40px;
-    border: none;
-    background: var(--color-white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-fast);
-}
-
-.modal-close:hover {
-    background: var(--color-cream);
-}
-
-.modal-close svg {
-    width: 20px;
-    height: 20px;
-}
-
-.modal-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal-gallery {
-    background: var(--color-cream);
-}
-
-.gallery-main {
-    position: relative;
-    aspect-ratio: 4/3;
-}
-
-.gallery-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.gallery-blueprint-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(30,58,95,0.1), transparent);
-    pointer-events: none;
-}
-
-.gallery-thumbs {
-    display: flex;
-    gap: 0.5rem;
-    padding: 1rem;
-    overflow-x: auto;
-}
-
-.gallery-thumb {
-    width: 80px;
-    height: 60px;
-    border-radius: 4px;
-    overflow: hidden;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: var(--transition-fast);
-    flex-shrink: 0;
-}
-
-.gallery-thumb:hover,
-.gallery-thumb.active {
-    opacity: 1;
-}
-
-.gallery-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.modal-info {
-    padding: 2.5rem;
-}
-
-.project-type-badge {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: var(--color-sage);
-    color: var(--color-white);
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-}
-
-.modal-title {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-}
-
-.modal-location {
-    color: var(--color-charcoal-light);
-    margin-bottom: 1.5rem;
-}
-
-.modal-specs {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-stone-light);
-}
-
-.spec-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.spec-label {
-    font-size: 0.8rem;
-    color: var(--color-charcoal-light);
-}
-
-.spec-value {
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.modal-description {
-    line-height: 1.8;
-    margin-bottom: 2rem;
-}
-
-.modal-cta {
-    width: 100%;
-    justify-content: center;
-}
-
-@media (max-width: 800px) {
-    .modal-content {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Custom Cursor */
-.custom-cursor {
-    position: fixed;
-    width: 30px;
-    height: 30px;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.custom-cursor svg {
-    width: 100%;
-    height: 100%;
-}
-
-body:hover .custom-cursor {
-    opacity: 1;
-}
-
-@media (max-width: 1024px) {
-    .custom-cursor {
-        display: none;
-    }
-}
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">
+                    <img src="assets/images/logo.jpg" alt="Stoneside Custom Homes" class="logo-img">
+                </a>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#process" class="nav-link">Process</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="#contact" class="nav-link nav-cta">Start Your Build</a></li>
+                </ul>
+                
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <img src="assets/images/custom_home.jpg" alt="Stoneside Custom Home" class="hero-bg-img">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-tagline">Bryan-College Station's Premier Home Builder</p>
+                <h1 class="hero-title">Building Dreams.<br>Crafting Legacies.</h1>
+                <p class="hero-subtitle">Custom homes built on a foundation of quality, integrity, and Texas craftsmanship.</p>
+                
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary">Start Your Journey</a>
+                    <a href="#portfolio" class="btn btn-secondary">View Portfolio</a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Homes Built</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Client Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <p class="section-label">About Stoneside</p>
+                    <h2 class="section-title">Craftsmen by Trade.<br>Builders by Passion.</h2>
+                    <p class="about-lead">For over 15 years, Stoneside Custom Homes has been turning dreams into addresses throughout the Brazos Valley.</p>
+                    <p>We don't just build houses—we craft homes where families will gather for generations. Every nail, every beam, every finish is selected with intention and installed with precision.</p>
+                    <p>As a faith-driven company, we believe in building on a firm foundation—both literally and figuratively. Our commitment to integrity means transparent communication, honest timelines, and craftsmanship that speaks for itself.</p>
+                    
+                    <div class="about-values">
+                        <div class="value">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+                                </svg>
+                            </div>
+                            <div class="value-text">
+                                <h4>Quality First</h4>
+                                <p>Premium materials, master craftsmanship</p>
+                            </div>
+                        </div>
+                        <div class="value">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </div>
+                            <div class="value-text">
+                                <h4>Integrity Always</h4>
+                                <p>Honest pricing, transparent process</p>
+                            </div>
+                        </div>
+                        <div class="value">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <div class="value-text">
+                                <h4>Personal Touch</h4>
+                                <p>Your vision, our expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <div class="image-frame">
+                        <img src="assets/images/custom_home.jpg" alt="Stoneside craftsmanship">
+                    </div>
+                    <div class="experience-badge">
+                        <span class="badge-number">15+</span>
+                        <span class="badge-text">Years of Excellence</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label">Our Work</p>
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Every home tells a story. Here are some of ours.</p>
+            </div>
+            
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="custom">Custom Homes</button>
+                <button class="filter-btn" data-filter="spec">Spec Homes</button>
+            </div>
+            
+            <div class="portfolio-grid" id="portfolioGrid">
+                <!-- Projects loaded by JavaScript -->
+            </div>
+            
+            <div class="portfolio-cta">
+                <a href="#contact" class="btn btn-primary">Start Your Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-header center">
+                <p class="section-label">How We Work</p>
+                <h2 class="section-title">Our Process</h2>
+                <p class="section-subtitle">From first conversation to handing you the keys</p>
+            </div>
+            
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Discovery</h3>
+                        <p>We sit down and learn about your vision, lifestyle, and budget. No detail is too small—this is your dream we're building.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Design</h3>
+                        <p>Working with our design partners, we transform your ideas into detailed plans. Every room, every angle, perfected on paper first.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Build</h3>
+                        <p>Watch your home rise from the ground. Weekly updates, complete transparency, and craftsmanship you can see at every stage.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Welcome Home</h3>
+                        <p>Keys in hand, dreams realized. We walk through every detail together before your family writes the first chapter.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header center">
+                <p class="section-label">Client Stories</p>
+                <h2 class="section-title">What Families Say</h2>
+            </div>
+            
+            <div class="testimonials-slider" id="testimonialsSlider">
+                <div class="testimonial-track" id="testimonialTrack">
+                    <!-- Testimonials loaded by JavaScript -->
+                </div>
+                
+                <div class="testimonial-nav">
+                    <button class="nav-arrow prev" id="prevTestimonial" aria-label="Previous">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="testimonial-dots" id="testimonialDots"></div>
+                    <button class="nav-arrow next" id="nextTestimonial" aria-label="Next">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripture Section -->
+    <section class="scripture">
+        <div class="container">
+            <blockquote class="scripture-quote">
+                <p>"Therefore everyone who hears these words of mine and puts them into practice is like a wise man who built his house on the rock."</p>
+                <cite>— Matthew 7:24</cite>
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p class="section-label">Get In Touch</p>
+                    <h2 class="section-title">Ready to Build Your Dream?</h2>
+                    <p class="contact-lead">Let's start the conversation. Whether you have detailed plans or just a vision, we're here to help bring it to life.</p>
+                    
+                    <div class="contact-details">
+                        <a href="tel:+19795551234" class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="contact-label">Call Us</span>
+                                <span class="contact-value">(979) 555-1234</span>
+                            </div>
+                        </a>
+                        
+                        <a href="mailto:build@stonesidehomes.com" class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="contact-label">Email Us</span>
+                                <span class="contact-value">build@stonesidehomes.com</span>
+                            </div>
+                        </a>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="contact-label">Location</span>
+                                <span class="contact-value">Bryan-College Station, Texas</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"/></svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="1" fill="currentColor"/></svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Houzz">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 3L4 8v13h5v-8h7v8h4V8l-7.5-5z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project-type">Project Type</label>
+                            <select id="project-type" name="project-type">
+                                <option value="">Select an option</option>
+                                <option value="custom">Custom Home</option>
+                                <option value="spec">Spec Home Purchase</option>
+                                <option value="remodel">Remodel</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Tell us about your dream home</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="assets/images/logo.jpg" alt="Stoneside Custom Homes" class="footer-logo">
+                    <p class="footer-tagline">Built on the Rock. Built for Generations.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <a href="#portfolio">Portfolio</a>
+                        <a href="#about">About Us</a>
+                        <a href="#process">Our Process</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <a href="#contact">Custom Homes</a>
+                        <a href="#contact">Spec Homes</a>
+                        <a href="#contact">Remodeling</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Stoneside Custom Homes. All rights reserved.</p>
+                <p>Bryan-College Station, Texas</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <button class="modal-close" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+            <div class="modal-content">
+                <div class="modal-gallery">
+                    <img src="" alt="" class="modal-image" id="modalImage">
+                </div>
+                <div class="modal-info">
+                    <span class="modal-type" id="modalType"></span>
+                    <h3 class="modal-title" id="modalTitle"></h3>
+                    <p class="modal-location" id="modalLocation"></p>
+                    <div class="modal-specs" id="modalSpecs"></div>
+                    <p class="modal-description" id="modalDescription"></p>
+                    <a href="#contact" class="btn btn-primary" onclick="closeModal()">Build Something Similar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
