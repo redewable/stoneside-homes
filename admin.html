@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stoneside Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --bg-card: #1a1a1a;
+      --bg-input: #252525;
+      --border: #333;
+      --text: #f5f5f5;
+      --text-muted: #888;
+      --accent: #9d7b5a;
+      --accent-light: #c4a882;
+      --success: #4ade80;
+      --error: #f87171;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Layout */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    @media (max-width: 900px) {
+      .admin-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 32px;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: var(--bg-input);
+      color: var(--text);
+    }
+
+    .nav-link.active {
+      border-left: 3px solid var(--accent);
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: var(--bg-input);
+      color: var(--error);
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    .page-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .card-badge {
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 100px;
+    }
+
+    /* Form Elements */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--text);
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(157, 123, 90, 0.2);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Image Upload */
+    .image-upload {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .image-upload:hover {
+      border-color: var(--accent);
+      background: rgba(157, 123, 90, 0.05);
+    }
+
+    .image-upload-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      color: var(--text-muted);
+    }
+
+    .image-upload-text {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .image-upload-text strong {
+      color: var(--accent);
+    }
+
+    .image-preview {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .image-preview-remove {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+    }
+
+    .btn-secondary {
+      background: var(--bg-input);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border);
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--error);
+      border: 1px solid var(--error);
+    }
+
+    .btn-danger:hover {
+      background: var(--error);
+      color: var(--bg);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    /* Projects List */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--bg-input);
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .project-item:hover {
+      background: var(--border);
+    }
+
+    .project-thumb {
+      width: 80px;
+      height: 60px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .project-info {
+      flex: 1;
+    }
+
+    .project-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .project-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .project-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .project-btn:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+    }
+
+    .project-btn.delete:hover {
+      color: var(--error);
+      border-color: var(--error);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab {
+      padding: 12px 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--text);
+    }
+
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .toast.success {
+      border-color: var(--success);
+    }
+
+    .toast.error {
+      border-color: var(--error);
+    }
+
+    .toast-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .toast.success .toast-icon {
+      color: var(--success);
+    }
+
+    .toast.error .toast-icon {
+      color: var(--error);
+    }
+
+    .toast-message {
+      font-size: 0.875rem;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Login Screen */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+    }
+
+    .login-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .login-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .login-btn {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    /* Hidden */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Screen -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo">Stoneside</div>
+      <div class="login-subtitle">Admin Dashboard</div>
+      
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-input" id="loginUsername" required />
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="loginPassword" required />
+        </div>
+        
+        <button type="submit" class="btn btn-primary login-btn">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div class="admin-layout hidden" id="adminDashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">Stoneside</div>
+      <div class="sidebar-subtitle">Admin Dashboard</div>
+      
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-link active" data-section="hero">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18"/>
+          </svg>
+          Hero Section
+        </a>
+        <a href="#" class="nav-link" data-section="content">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+          </svg>
+          Page Content
+        </a>
+        <a href="#" class="nav-link" data-section="projects">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          Projects
+        </a>
+        <a href="#" class="nav-link" data-section="settings">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          Settings
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="logout-btn" id="logoutBtn">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section class="section-content active" id="section-hero">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Hero Section</h1>
+            <p class="page-subtitle">Manage the main hero content on your homepage</p>
+          </div>
+          <button class="btn btn-primary" id="saveHero">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Changes
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Hero Content</h2>
+            <span class="card-badge">Live</span>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Title Line 1 - Word 1</label>
+              <input type="text" class="form-input" id="heroTitle1Word1" value="Where" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Title Line 1 - Word 2</label>
+              <input type="text" class="form-input" id="heroTitle1Word2" value="Blueprints" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Title Line 2 - Word 1</label>
+              <input type="text" class="form-input" id="heroTitle2Word1" value="Become" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Title Line 2 - Word 2 (Accent)</label>
+              <input type="text" class="form-input" id="heroTitle2Word2" value="Legacy" />
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Subtitle</label>
+              <textarea class="form-textarea" id="heroSubtitle">Custom homes built with the patience of experience, the discipline of tradition, and the care of a family name.</textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Location Text</label>
+              <input type="text" class="form-input" id="heroLocation" value="Bryan–College Station, Texas" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Years Badge</label>
+              <input type="text" class="form-input" id="heroYears" value="40 Years" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Hero Images</h2>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Sketch Image</label>
+              <div class="image-preview" id="sketchPreview">
+                <img src="assets/images/hero-sketch.jpg" alt="Sketch" />
+                <button class="image-preview-remove" type="button">×</button>
+              </div>
+              <input type="file" accept="image/*" class="hidden" id="sketchUpload" />
+              <button class="btn btn-secondary" style="margin-top: 12px; width: 100%;" onclick="document.getElementById('sketchUpload').click()">
+                Change Image
+              </button>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Photo Image</label>
+              <div class="image-preview" id="photoPreview">
+                <img src="assets/images/hero-photo.jpg" alt="Photo" />
+                <button class="image-preview-remove" type="button">×</button>
+              </div>
+              <input type="file" accept="image/*" class="hidden" id="photoUpload" />
+              <button class="btn btn-secondary" style="margin-top: 12px; width: 100%;" onclick="document.getElementById('photoUpload').click()">
+                Change Image
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Stats Section</h2>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Stat 1 Value</label>
+              <input type="text" class="form-input" id="stat1Value" value="40+" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Stat 1 Label</label>
+              <input type="text" class="form-input" id="stat1Label" value="Years" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Stat 2 Value</label>
+              <input type="text" class="form-input" id="stat2Value" value="∞" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Stat 2 Label</label>
+              <input type="text" class="form-input" id="stat2Label" value="Patience" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Stat 3 Value</label>
+              <input type="text" class="form-input" id="stat3Value" value="1" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Stat 3 Label</label>
+              <input type="text" class="form-input" id="stat3Label" value="Promise" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page Content Section -->
+      <section class="section-content" id="section-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Page Content</h1>
+            <p class="page-subtitle">Edit section titles and text throughout the site</p>
+          </div>
+          <button class="btn btn-primary" id="saveContent">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Changes
+          </button>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="legacy">Legacy</button>
+          <button class="tab" data-tab="philosophy">Philosophy</button>
+          <button class="tab" data-tab="portfolio">Portfolio</button>
+          <button class="tab" data-tab="process">Process</button>
+          <button class="tab" data-tab="contact">Contact</button>
+        </div>
+
+        <!-- Legacy Tab -->
+        <div class="tab-content active" id="tab-legacy">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Legacy Section</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">Section Title</label>
+                <input type="text" class="form-input" id="legacyTitle" value="Unwavering Excellence" />
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">Lead Text</label>
+                <textarea class="form-textarea" id="legacyLead">In 1984, when most builders chased volume, we chose a different path— one measured not in units built, but in families served with excellence.</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Philosophy Tab -->
+        <div class="tab-content" id="tab-philosophy">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Philosophy Section</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">Section Title</label>
+                <input type="text" class="form-input" id="philosophyTitle" value="Building Is Stewardship" />
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">Lead Text</label>
+                <textarea class="form-textarea" id="philosophyLead">A home is where your children will take their first steps. Where holidays will gather decades of memories. Where legacy is quietly built.</textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Pillar 1 Title</label>
+                <input type="text" class="form-input" id="pillar1Title" value="Clarity Before Commitment" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Pillar 1 Text</label>
+                <input type="text" class="form-input" id="pillar1Text" value="You'll understand every detail before we break ground." />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Pillar 2 Title</label>
+                <input type="text" class="form-input" id="pillar2Title" value="Peace During the Build" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Pillar 2 Text</label>
+                <input type="text" class="form-input" id="pillar2Text" value="Weekly communication. Clean sites. No surprises." />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Pillar 3 Title</label>
+                <input type="text" class="form-input" id="pillar3Title" value="Accountability After Keys" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Pillar 3 Text</label>
+                <input type="text" class="form-input" id="pillar3Text" value="Our relationship doesn't end at closing. Ever." />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio Tab -->
+        <div class="tab-content" id="tab-portfolio">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Portfolio Section</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">Section Title</label>
+                <input type="text" class="form-input" id="portfolioTitle" value="Homes That Tell Stories" />
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">Lead Text</label>
+                <textarea class="form-textarea" id="portfolioLead">Every home begins as a drawing. What matters is what it becomes— a vessel for your family's story.</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Process Tab -->
+        <div class="tab-content" id="tab-process">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Process Section</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">Section Title</label>
+                <input type="text" class="form-input" id="processTitle" value="From First Conversation to Forever Home" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Tab -->
+        <div class="tab-content" id="tab-contact">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Contact Section</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">Section Title</label>
+                <input type="text" class="form-input" id="contactTitle" value="Let's Build Something That Lasts" />
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">Lead Text</label>
+                <textarea class="form-textarea" id="contactLead">A short note is enough to begin. We'll schedule a call to discuss your vision, timeline, and whether we're the right fit.</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section class="section-content" id="section-projects">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Projects</h1>
+            <p class="page-subtitle">Manage your portfolio of homes</p>
+          </div>
+          <button class="btn btn-primary" id="addProject">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add Project
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="projects-list" id="projectsList">
+            <!-- Projects populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section class="section-content" id="section-settings">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Settings</h1>
+            <p class="page-subtitle">General site settings and configuration</p>
+          </div>
+          <button class="btn btn-primary" id="saveSettings">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Settings
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Site Information</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Company Name</label>
+              <input type="text" class="form-input" id="companyName" value="Stoneside Custom Homes" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Established Year</label>
+              <input type="text" class="form-input" id="establishedYear" value="1984" />
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Location</label>
+              <input type="text" class="form-input" id="siteLocation" value="Bryan–College Station, Texas" />
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Scripture Verse</label>
+              <input type="text" class="form-input" id="scriptureVerse" value="Unless the Lord builds the house, the builders labor in vain." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Scripture Reference</label>
+              <input type="text" class="form-input" id="scriptureRef" value="Psalm 127:1" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Admin Credentials</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Username</label>
+              <input type="text" class="form-input" id="adminUsername" value="admin" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">New Password</label>
+              <input type="password" class="form-input" id="adminPassword" placeholder="Leave blank to keep current" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: var(--error);">
+          <div class="card-header">
+            <h2 class="card-title" style="color: var(--error);">Danger Zone</h2>
+          </div>
+          <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.875rem;">
+            Reset all content to default values. This cannot be undone.
+          </p>
+          <button class="btn btn-danger" id="resetContent">Reset All Content</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // ════════════════════════════════════════════════════════════
+    // ADMIN DASHBOARD JAVASCRIPT
+    // ════════════════════════════════════════════════════════════
+
+    // Default credentials (in production, use proper auth)
+    const DEFAULT_CREDENTIALS = {
+      username: 'admin',
+      password: 'stoneside2024'
+    };
+
+    // State
+    let isAuthenticated = false;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      initNavigation();
+      initTabs();
+      initProjects();
+      initSaveButtons();
+      loadContent();
+    });
+
+    // ════════════════════════════════════════════════════════════
+    // AUTHENTICATION
+    // ════════════════════════════════════════════════════════════
+    function checkAuth() {
+      const auth = localStorage.getItem('stoneside_admin_auth');
+      if (auth === 'true') {
+        showDashboard();
+      }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const savedCreds = JSON.parse(localStorage.getItem('stoneside_admin_creds') || 'null');
+      const creds = savedCreds || DEFAULT_CREDENTIALS;
+
+      if (username === creds.username && password === creds.password) {
+        localStorage.setItem('stoneside_admin_auth', 'true');
+        showDashboard();
+        showToast('Welcome back!', 'success');
+      } else {
+        showToast('Invalid credentials', 'error');
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('stoneside_admin_auth');
+      location.reload();
+    });
+
+    function showDashboard() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('adminDashboard').classList.remove('hidden');
+      isAuthenticated = true;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // NAVIGATION
+    // ════════════════════════════════════════════════════════════
+    function initNavigation() {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.dataset.section;
+
+          // Update active nav
+          document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+
+          // Show section
+          document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+          document.getElementById(`section-${section}`).classList.add('active');
+        });
+      });
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // TABS
+    // ════════════════════════════════════════════════════════════
+    function initTabs() {
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabId = tab.dataset.tab;
+
+          // Update active tab
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          // Show tab content
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          document.getElementById(`tab-${tabId}`).classList.add('active');
+        });
+      });
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // PROJECTS
+    // ════════════════════════════════════════════════════════════
+    function initProjects() {
+      renderProjects();
+
+      document.getElementById('addProject').addEventListener('click', () => {
+        // In a real app, this would open a modal
+        showToast('Project editor coming soon!', 'success');
+      });
+    }
+
+    function renderProjects() {
+      const projects = JSON.parse(localStorage.getItem('stoneside_projects') || 'null') || getDefaultProjects();
+      const list = document.getElementById('projectsList');
+
+      list.innerHTML = projects.map((project, index) => `
+        <div class="project-item" data-id="${project.id}">
+          <img class="project-thumb" src="${project.photo}" alt="${project.title}" />
+          <div class="project-info">
+            <div class="project-title">${project.title} <span style="font-size: 0.625rem; padding: 2px 8px; background: ${project.type === 'custom' ? 'var(--accent)' : 'var(--border)'}; border-radius: 100px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.05em;">${project.type || 'custom'}</span></div>
+            <div class="project-meta">${project.location} • ${project.sqft} sq ft • ${project.beds} bed • ${project.baths} bath • ${project.year}</div>
+          </div>
+          <div class="project-actions">
+            <button class="project-btn edit" title="Edit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+            </button>
+            <button class="project-btn delete" title="Delete">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getDefaultProjects() {
+      return [
+        { id: 1, title: "The Oakwood Estate", type: "custom", location: "College Station, TX", sqft: "4,200", beds: "5", baths: "4.5", year: "2024", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "Designed for a growing family who wanted vaulted volume, long sightlines, and a backyard built for gathering.", verseText: "By wisdom a house is built, and through understanding it is established.", verseRef: "Proverbs 24:3" },
+        { id: 2, title: "The Heritage Craftsman", type: "custom", location: "Bryan, TX", sqft: "3,600", beds: "4", baths: "3.5", year: "2023", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A classic exterior with thoughtful interior flow. Built for everyday living and long-term durability.", verseText: "Unless the Lord builds the house, the builders labor in vain.", verseRef: "Psalm 127:1" },
+        { id: 3, title: "The Brazos Modern Ranch", type: "custom", location: "Bryan–College Station, TX", sqft: "3,950", beds: "4", baths: "3", year: "2024", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A modern ranch with practical planning: generous storage, clean transitions, and materials chosen for performance.", verseText: "Commit your work to the Lord, and your plans will be established.", verseRef: "Proverbs 16:3" },
+        { id: 4, title: "The Stonegate Spec", type: "spec", location: "College Station, TX", sqft: "2,850", beds: "4", baths: "3", year: "2023", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A spec home built with custom-home discipline: strong details, clean scope, and straightforward value.", verseText: "Let all that you do be done in love.", verseRef: "1 Corinthians 16:14" },
+        { id: 5, title: "The Traditions Porch House", type: "custom", location: "College Station, TX", sqft: "3,250", beds: "4", baths: "3.5", year: "2022", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "Designed around front-porch living and family gatherings. Traditional proportions with warm interior light.", verseText: "As for me and my house, we will serve the Lord.", verseRef: "Joshua 24:15" },
+        { id: 6, title: "The Midtown Bryan Build", type: "spec", location: "Bryan, TX", sqft: "2,640", beds: "3", baths: "2.5", year: "2022", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A clean, durable build with strong planning and honest finishes. Built for real life — and built to last.", verseText: "Whatever you do, work at it with all your heart.", verseRef: "Colossians 3:23" }
+      ];
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // SAVE FUNCTIONS
+    // ════════════════════════════════════════════════════════════
+    function initSaveButtons() {
+      document.getElementById('saveHero').addEventListener('click', saveHeroContent);
+      document.getElementById('saveContent').addEventListener('click', savePageContent);
+      document.getElementById('saveSettings').addEventListener('click', saveSettings);
+      document.getElementById('resetContent').addEventListener('click', resetAllContent);
+    }
+
+    function saveHeroContent() {
+      const heroContent = {
+        title1Word1: document.getElementById('heroTitle1Word1').value,
+        title1Word2: document.getElementById('heroTitle1Word2').value,
+        title2Word1: document.getElementById('heroTitle2Word1').value,
+        title2Word2: document.getElementById('heroTitle2Word2').value,
+        subtitle: document.getElementById('heroSubtitle').value,
+        location: document.getElementById('heroLocation').value,
+        years: document.getElementById('heroYears').value,
+        stat1Value: document.getElementById('stat1Value').value,
+        stat1Label: document.getElementById('stat1Label').value,
+        stat2Value: document.getElementById('stat2Value').value,
+        stat2Label: document.getElementById('stat2Label').value,
+        stat3Value: document.getElementById('stat3Value').value,
+        stat3Label: document.getElementById('stat3Label').value
+      };
+
+      localStorage.setItem('stoneside_hero', JSON.stringify(heroContent));
+      showToast('Hero content saved!', 'success');
+    }
+
+    function savePageContent() {
+      const pageContent = {
+        legacyTitle: document.getElementById('legacyTitle').value,
+        legacyLead: document.getElementById('legacyLead').value,
+        philosophyTitle: document.getElementById('philosophyTitle').value,
+        philosophyLead: document.getElementById('philosophyLead').value,
+        pillar1Title: document.getElementById('pillar1Title').value,
+        pillar1Text: document.getElementById('pillar1Text').value,
+        pillar2Title: document.getElementById('pillar2Title').value,
+        pillar2Text: document.getElementById('pillar2Text').value,
+        pillar3Title: document.getElementById('pillar3Title').value,
+        pillar3Text: document.getElementById('pillar3Text').value,
+        portfolioTitle: document.getElementById('portfolioTitle').value,
+        portfolioLead: document.getElementById('portfolioLead').value,
+        processTitle: document.getElementById('processTitle').value,
+        contactTitle: document.getElementById('contactTitle').value,
+        contactLead: document.getElementById('contactLead').value
+      };
+
+      localStorage.setItem('stoneside_content', JSON.stringify(pageContent));
+      showToast('Page content saved!', 'success');
+    }
+
+    function saveSettings() {
+      const settings = {
+        companyName: document.getElementById('companyName').value,
+        establishedYear: document.getElementById('establishedYear').value,
+        location: document.getElementById('siteLocation').value,
+        scriptureVerse: document.getElementById('scriptureVerse').value,
+        scriptureRef: document.getElementById('scriptureRef').value
+      };
+
+      localStorage.setItem('stoneside_settings', JSON.stringify(settings));
+
+      // Save credentials if changed
+      const newUsername = document.getElementById('adminUsername').value;
+      const newPassword = document.getElementById('adminPassword').value;
+
+      if (newUsername && newPassword) {
+        localStorage.setItem('stoneside_admin_creds', JSON.stringify({
+          username: newUsername,
+          password: newPassword
+        }));
+      }
+
+      showToast('Settings saved!', 'success');
+    }
+
+    function resetAllContent() {
+      if (confirm('Are you sure you want to reset all content to defaults? This cannot be undone.')) {
+        localStorage.removeItem('stoneside_hero');
+        localStorage.removeItem('stoneside_content');
+        localStorage.removeItem('stoneside_projects');
+        localStorage.removeItem('stoneside_settings');
+        loadContent();
+        showToast('All content reset to defaults', 'success');
+      }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // LOAD CONTENT
+    // ════════════════════════════════════════════════════════════
+    function loadContent() {
+      // Load hero content
+      const heroContent = JSON.parse(localStorage.getItem('stoneside_hero') || 'null');
+      if (heroContent) {
+        document.getElementById('heroTitle1Word1').value = heroContent.title1Word1 || 'Where';
+        document.getElementById('heroTitle1Word2').value = heroContent.title1Word2 || 'Blueprints';
+        document.getElementById('heroTitle2Word1').value = heroContent.title2Word1 || 'Become';
+        document.getElementById('heroTitle2Word2').value = heroContent.title2Word2 || 'Legacy';
+        document.getElementById('heroSubtitle').value = heroContent.subtitle || '';
+        document.getElementById('heroLocation').value = heroContent.location || '';
+        document.getElementById('heroYears').value = heroContent.years || '40 Years';
+        document.getElementById('stat1Value').value = heroContent.stat1Value || '40+';
+        document.getElementById('stat1Label').value = heroContent.stat1Label || 'Years';
+        document.getElementById('stat2Value').value = heroContent.stat2Value || '∞';
+        document.getElementById('stat2Label').value = heroContent.stat2Label || 'Patience';
+        document.getElementById('stat3Value').value = heroContent.stat3Value || '1';
+        document.getElementById('stat3Label').value = heroContent.stat3Label || 'Promise';
+      }
+
+      // Load page content
+      const pageContent = JSON.parse(localStorage.getItem('stoneside_content') || 'null');
+      if (pageContent) {
+        Object.keys(pageContent).forEach(key => {
+          const el = document.getElementById(key);
+          if (el) el.value = pageContent[key];
+        });
+      }
+
+      // Load settings
+      const settings = JSON.parse(localStorage.getItem('stoneside_settings') || 'null');
+      if (settings) {
+        document.getElementById('companyName').value = settings.companyName || '';
+        document.getElementById('establishedYear').value = settings.establishedYear || '';
+        document.getElementById('siteLocation').value = settings.location || '';
+        document.getElementById('scriptureVerse').value = settings.scriptureVerse || '';
+        document.getElementById('scriptureRef').value = settings.scriptureRef || '';
+      }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // TOAST NOTIFICATIONS
+    // ════════════════════════════════════════════════════════════
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          ${type === 'success' 
+            ? '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
+            : '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'
+          }
+        </svg>
+        <span class="toast-message">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
