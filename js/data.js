@@ -3,99 +3,103 @@
 // ============================================
 
 const projects = [
-    {
-        id: 1,
-        title: "The Oakwood Estate",
-        type: "custom",
-        location: "College Station, TX",
-        sqft: "4,200",
-        beds: 5,
-        baths: 4.5,
-        year: 2024,
-        image: "assets/images/custom_home.jpg",
-        description: "A stunning custom estate featuring exposed beam ceilings, a chef's kitchen with custom cabinetry, and a sprawling backyard perfect for Texas entertaining."
-    },
-    {
-        id: 2,
-        title: "The Heritage Craftsman",
-        type: "custom",
-        location: "Bryan, TX",
-        sqft: "3,800",
-        beds: 4,
-        baths: 3.5,
-        year: 2024,
-        image: "assets/images/custom_home.jpg",
-        description: "Classic craftsman style meets modern luxury with handcrafted woodwork, a wrap-around porch, and an open floor plan designed for family living."
-    },
-    {
-        id: 3,
-        title: "Stone Creek Modern",
-        type: "custom",
-        location: "College Station, TX",
-        sqft: "3,500",
-        beds: 4,
-        baths: 3,
-        year: 2023,
-        image: "assets/images/custom_home.jpg",
-        description: "Contemporary design with Texas soul. Clean lines, floor-to-ceiling windows, and an indoor-outdoor living concept that maximizes the beautiful lot."
-    },
-    {
-        id: 4,
-        title: "The Brazos View",
-        type: "custom",
-        location: "Bryan, TX",
-        sqft: "4,500",
-        beds: 5,
-        baths: 5,
-        year: 2023,
-        image: "assets/images/custom_home.jpg",
-        description: "Positioned to capture stunning views of the Brazos Valley with luxury finishes, a resort-style pool, and a separate guest casita."
-    },
-    {
-        id: 5,
-        title: "Willow Creek Residence",
-        type: "spec",
-        location: "College Station, TX",
-        sqft: "2,800",
-        beds: 4,
-        baths: 3,
-        year: 2024,
-        image: "assets/images/custom_home.jpg",
-        description: "Move-in ready luxury in the sought-after Willow Creek community. Premium finishes, open concept living, and a covered patio for outdoor entertaining."
-    },
-    {
-        id: 6,
-        title: "Pecan Grove Estate",
-        type: "spec",
-        location: "College Station, TX",
-        sqft: "3,100",
-        beds: 4,
-        baths: 3.5,
-        year: 2024,
-        image: "assets/images/custom_home.jpg",
-        description: "Nestled among mature pecan trees, this home offers privacy and luxury with a gourmet kitchen, spa-like master bath, and outdoor fireplace."
-    }
+  {
+    id: 1,
+    title: "The Oakwood Estate",
+    type: "custom",
+    location: "College Station, TX",
+    sqft: "4,200",
+    beds: 5,
+    baths: 4.5,
+    year: 2024,
+    image: "assets/images/custom_home.jpg",
+    description:
+      "Designed for a growing family who wanted vaulted volume, long sightlines, and a backyard built for gathering. Warm finishes, disciplined layout, and details that age well."
+  },
+  {
+    id: 2,
+    title: "The Heritage Craftsman",
+    type: "custom",
+    location: "Bryan, TX",
+    sqft: "3,600",
+    beds: 4,
+    baths: 3.5,
+    year: 2023,
+    image: "assets/images/spec_home.jpg",
+    description:
+      "A classic exterior with thoughtful interior flow. Built for everyday living, long-term durability, and a finish level that doesn’t chase trends."
+  },
+  {
+    id: 3,
+    title: "The Brazos Modern Ranch",
+    type: "custom",
+    location: "Bryan–College Station, TX",
+    sqft: "3,950",
+    beds: 4,
+    baths: 3,
+    year: 2024,
+    image: "assets/images/custom_home.jpg",
+    description:
+      "A modern ranch with practical planning: generous storage, clean transitions, and materials chosen for how they perform over time."
+  },
+  {
+    id: 4,
+    title: "The Stonegate Spec",
+    type: "spec",
+    location: "College Station, TX",
+    sqft: "2,850",
+    beds: 4,
+    baths: 3,
+    year: 2023,
+    image: "assets/images/spec_home.jpg",
+    description:
+      "A spec home built with custom-home discipline: strong details, clean scope, and straightforward value for families who want quality without the noise."
+  },
+  {
+    id: 5,
+    title: "The Traditions Porch House",
+    type: "custom",
+    location: "College Station, TX",
+    sqft: "3,250",
+    beds: 4,
+    baths: 3.5,
+    year: 2022,
+    image: "assets/images/custom_home.jpg",
+    description:
+      "Designed around front-porch living and family gatherings. Traditional proportions, warm interior light, and a layout that feels settled."
+  },
+  {
+    id: 6,
+    title: "The Midtown Bryan Build",
+    type: "spec",
+    location: "Bryan, TX",
+    sqft: "2,640",
+    beds: 3,
+    baths: 2.5,
+    year: 2022,
+    image: "assets/images/spec_home.jpg",
+    description:
+      "A clean, durable build with strong planning and honest finishes. Built for real life — and built to last."
+  }
 ];
 
 const testimonials = [
-    {
-        quote: "Working with Stoneside was like having a partner who truly cared about our family's future. They didn't just build us a house—they built us a home.",
-        author: "The Johnson Family",
-        project: "Custom Home in College Station"
-    },
-    {
-        quote: "From the first conversation to handing us the keys, the attention to detail was incredible. Every single thing we asked for, they delivered.",
-        author: "Michael & Sarah Thompson",
-        project: "The Heritage Craftsman"
-    },
-    {
-        quote: "We've built with other builders before. The difference with Stoneside? They build like it's their own family moving in. That integrity is rare.",
-        author: "Dr. Robert Chen",
-        project: "The Brazos View Estate"
-    },
-    {
-        quote: "Our spec home has the quality of a custom build. Friends can't believe we didn't design it ourselves. The craftsmanship speaks for itself.",
-        author: "The Martinez Family",
-        project: "Willow Creek Residence"
-    }
+  {
+    quote:
+      "The difference was communication and care. We always knew what was happening, and the craftsmanship speaks for itself.",
+    author: "Homeowner, College Station",
+    project: "Custom Build"
+  },
+  {
+    quote:
+      "No games, no surprises. Clear plans, honest numbers, and a builder who stood behind the details.",
+    author: "Homeowner, Bryan",
+    project: "Custom Build"
+  },
+  {
+    quote:
+      "They build like their name is on it — because it is. We’d choose Stoneside again without hesitation.",
+    author: "Homeowner, B/CS",
+    project: "Spec Home"
+  }
 ];
