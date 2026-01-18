@@ -1,206 +1,347 @@
 // ============================================
-// STONESIDE CUSTOM HOMES - Fixed Main JS
+// STONESIDE CUSTOM HOMES - Main JavaScript
 // ============================================
 
-document.addEventListener('DOMContentLoaded', () => {
-    initLoader();
-    initCursor();
-    initHeader();
-    initMobileMenu();
-    initWork();
-    initTestimonials();
-    initModal();
-    initForm();
-    initReveal();
-    initSmoothScroll();
+document.addEventListener('DOMContentLoaded', function () {
+  initNavigation();
+  initPortfolio();
+  initTestimonials();
+  initModal();
+  initContactForm();
+  initScrollAnimations();
 });
 
 // ============================================
-// LOADER - Fixed null check for body and loader
+// NAVIGATION
 // ============================================
-function initLoader() {
-    const loader = document.getElementById('loader');
-    if (!loader) return;
+function initNavigation() {
+  const header = document.getElementById('header');
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            loader.classList.add('done');
-            if (document.body) document.body.classList.remove('locked');
-        }, 1500);
-    });
-    
-    if (document.body) document.body.classList.add('locked');
-}
-
-// ============================================
-// MOBILE MENU - Fixed IDs to match index.html
-// ============================================
-function initMobileMenu() {
-    const menuBtn = document.getElementById('menuBtn'); // Matches index.html
-    const mobileMenu = document.getElementById('mobileMenu'); // Matches index.html
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-    
-    if (!menuBtn || !mobileMenu) return;
-    
-    menuBtn.addEventListener('click', () => {
-        menuBtn.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        if (document.body) document.body.classList.toggle('locked');
-    });
-    
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            menuBtn.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            if (document.body) document.body.classList.remove('locked');
-        });
-    });
-}
-
-// ============================================
-// HEADER
-// ============================================
-function initHeader() {
-    const header = document.getElementById('header');
+  // Scroll effect (guard if header missing)
+  window.addEventListener('scroll', () => {
     if (!header) return;
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+    if (window.scrollY > 50) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  });
+
+  // Mobile toggle (guard if elements missing)
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
     });
+
+    // Close on link click
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+  }
+
+  // Smooth scroll (CRITICAL FIX: ignore href="#" which breaks querySelector)
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+
+      // Allow default if no href
+      if (!href) return;
+
+      // Prevent the "#" crash and provide “scroll to top”
+      if (href === '#') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      // Only handle real fragment IDs like "#contact"
+      if (!href.startsWith('#') || href.length < 2) return;
+
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      e.preventDefault();
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
 }
 
 // ============================================
-// WORK / PORTFOLIO
+// PORTFOLIO
 // ============================================
-function initWork() {
-    const grid = document.getElementById('workGrid');
-    const filters = document.querySelectorAll('.filter-btn');
-    
-    // Safety check for the 'projects' data array from projects.js
-    if (!grid || typeof projects === 'undefined') return;
-    
-    function renderProjects(filter = 'all') {
-        const filtered = filter === 'all' 
-            ? projects 
-            : projects.filter(p => p.type === filter);
-        
-        grid.innerHTML = filtered.map(project => `
-            <article class="work-item reveal" data-id="${project.id}">
-                <div class="work-img">
+function initPortfolio() {
+  const grid = document.getElementById('portfolioGrid');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+
+  // If the page section isn’t present, exit safely
+  if (!grid) return;
+
+  // Ensure data exists
+  if (!Array.isArray(window.projects) && typeof projects === 'undefined') {
+    console.warn('[Portfolio] projects data not found (js/data.js may not be loaded).');
+    return;
+  }
+
+  // Use the global `projects` from data.js
+  const projectData = typeof projects !== 'undefined' ? projects : window.projects;
+
+  function renderProjects(filter = 'all') {
+    const filtered =
+      filter === 'all' ? projectData : projectData.filter((p) => p.type === filter);
+
+    grid.innerHTML = filtered
+      .map(
+        (project) => `
+            <article class="portfolio-item fade-in" data-id="${project.id}">
+                <div class="portfolio-image">
                     <img src="${project.image}" alt="${project.title}" loading="lazy">
                 </div>
-                <div class="work-overlay"></div>
-                <div class="work-info">
-                    <span class="work-tag">${project.type === 'custom' ? 'Custom Home' : 'Spec Home'}</span>
-                    <h3 class="work-title">${project.title}</h3>
-                    <p class="work-loc">${project.location}</p>
+                <div class="portfolio-info">
+                    <span class="portfolio-type">${
+                      project.type === 'custom' ? 'Custom Home' : 'Spec Home'
+                    }</span>
+                    <h3 class="portfolio-title">${project.title}</h3>
+                    <p class="portfolio-location">${project.location}</p>
                 </div>
             </article>
-        `).join('');
-        
-        document.querySelectorAll('.work-item').forEach(item => {
-            item.addEventListener('click', () => openModal(parseInt(item.dataset.id)));
-        });
-        
-        setTimeout(() => {
-            document.querySelectorAll('.work-item.reveal').forEach(el => {
-                el.classList.add('visible');
-            });
-        }, 100);
-    }
-    
-    filters.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filters.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderProjects(btn.dataset.filter);
-        });
+        `
+      )
+      .join('');
+
+    // Add click handlers
+    document.querySelectorAll('.portfolio-item').forEach((item) => {
+      item.addEventListener('click', () => openModal(parseInt(item.dataset.id, 10)));
     });
-    
-    renderProjects();
+
+    // Re-trigger animations
+    setTimeout(() => {
+      document.querySelectorAll('.portfolio-item.fade-in').forEach((el) => {
+        el.classList.add('visible');
+      });
+    }, 100);
+  }
+
+  // Filter buttons (optional)
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProjects(btn.dataset.filter);
+    });
+  });
+
+  renderProjects();
 }
 
-// ... (Functions below remain as they were in your source file)
-
-function initCursor() {
-    const cursor = document.getElementById('cursor');
-    const follower = document.getElementById('cursorFollower');
-    if (!cursor || !follower) return;
-    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, followerX = 0, followerY = 0;
-    document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
-    function animate() {
-        cursorX += (mouseX - cursorX) * 0.2; cursorY += (mouseY - cursorY) * 0.2;
-        cursor.style.left = cursorX + 'px'; cursor.style.top = cursorY + 'px';
-        followerX += (mouseX - followerX) * 0.1; followerY += (mouseY - followerY) * 0.1;
-        follower.style.left = followerX + 'px'; follower.style.top = followerY + 'px';
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
+// ============================================
+// TESTIMONIALS
+// ============================================
 function initTestimonials() {
-    const slider = document.getElementById('testimonialSlider');
-    if (!slider || typeof testimonials === 'undefined') return;
-    slider.innerHTML = testimonials.map((t, i) => `
+  const track = document.getElementById('testimonialTrack');
+  const dotsContainer = document.getElementById('testimonialDots');
+  const prevBtn = document.getElementById('prevTestimonial');
+  const nextBtn = document.getElementById('nextTestimonial');
+
+  // If testimonials section isn’t present, exit safely
+  if (!track || !dotsContainer || !prevBtn || !nextBtn) return;
+
+  // Ensure data exists
+  if (!Array.isArray(window.testimonials) && typeof testimonials === 'undefined') {
+    console.warn('[Testimonials] testimonials data not found (js/data.js may not be loaded).');
+    return;
+  }
+
+  const testimonialData =
+    typeof testimonials !== 'undefined' ? testimonials : window.testimonials;
+
+  let currentIndex = 0;
+
+  // Render testimonials
+  track.innerHTML = testimonialData
+    .map(
+      (t, i) => `
         <div class="testimonial-slide ${i === 0 ? 'active' : ''}">
-            <p class="test-quote">${t.quote}</p>
-            <p class="test-author">${t.author}</p>
-            <p class="test-project">${t.project}</p>
+            <p class="testimonial-quote">${t.quote}</p>
+            <p class="testimonial-author">${t.author}</p>
+            <p class="testimonial-project">${t.project}</p>
         </div>
-    `).join('');
+    `
+    )
+    .join('');
+
+  // Render dots
+  dotsContainer.innerHTML = testimonialData
+    .map(
+      (_, i) => `
+        <button class="dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Go to slide ${
+        i + 1
+      }"></button>
+    `
+    )
+    .join('');
+
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.dot');
+
+  function goToSlide(index) {
+    if (!slides.length || !dots.length) return;
+
+    slides.forEach((s) => s.classList.remove('active'));
+    dots.forEach((d) => d.classList.remove('active'));
+
+    currentIndex = index;
+    if (currentIndex < 0) currentIndex = slides.length - 1;
+    if (currentIndex >= slides.length) currentIndex = 0;
+
+    slides[currentIndex].classList.add('active');
+    dots[currentIndex].classList.add('active');
+  }
+
+  prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.index, 10)));
+  });
+
+  // Auto-advance (only if multiple slides exist)
+  if (slides.length > 1) {
+    setInterval(() => goToSlide(currentIndex + 1), 6000);
+  }
 }
 
+// ============================================
+// MODAL
+// ============================================
 function initModal() {
-    const modal = document.getElementById('modal');
-    if (!modal) return;
-    document.getElementById('modalBg')?.addEventListener('click', closeModal);
-    document.getElementById('modalClose')?.addEventListener('click', closeModal);
+  const modal = document.getElementById('projectModal');
+  if (!modal) return;
+
+  const overlay = modal.querySelector('.modal-overlay');
+  const closeBtn = modal.querySelector('.modal-close');
+
+  if (overlay) overlay.addEventListener('click', closeModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
 }
 
-function openModal(id) {
-    const modal = document.getElementById('modal');
-    const project = projects.find(p => p.id === id);
-    if (!project || !modal) return;
-    document.getElementById('modalImage').src = project.image;
-    document.getElementById('modalTitle').textContent = project.title;
-    modal.classList.add('active');
-    if (document.body) document.body.classList.add('locked');
+function openModal(projectId) {
+  const modal = document.getElementById('projectModal');
+  if (!modal) return;
+
+  if (typeof projects === 'undefined' || !Array.isArray(projects)) return;
+
+  const project = projects.find((p) => p.id === projectId);
+  if (!project) return;
+
+  const modalImage = document.getElementById('modalImage');
+  const modalType = document.getElementById('modalType');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalLocation = document.getElementById('modalLocation');
+  const modalDescription = document.getElementById('modalDescription');
+  const modalSpecs = document.getElementById('modalSpecs');
+
+  if (modalImage) {
+    modalImage.src = project.image;
+    modalImage.alt = project.title;
+  }
+  if (modalType) modalType.textContent = project.type === 'custom' ? 'Custom Home' : 'Spec Home';
+  if (modalTitle) modalTitle.textContent = project.title;
+  if (modalLocation) modalLocation.textContent = project.location;
+  if (modalDescription) modalDescription.textContent = project.description;
+
+  if (modalSpecs) {
+    modalSpecs.innerHTML = `
+        <div class="spec-item">
+            <span class="spec-label">Sq Ft</span>
+            <span class="spec-value">${project.sqft}</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Beds</span>
+            <span class="spec-value">${project.beds}</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Baths</span>
+            <span class="spec-value">${project.baths}</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Year</span>
+            <span class="spec-value">${project.year}</span>
+        </div>
+    `;
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-    const modal = document.getElementById('modal');
-    if (modal) {
-        modal.classList.remove('active');
-        if (document.body) document.body.classList.remove('locked');
-    }
+  const modal = document.getElementById('projectModal');
+  if (!modal) return;
+
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
 }
 
-function initForm() {
-    const form = document.getElementById('contactForm');
-    if (!form) return;
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Message sent!');
-    });
+// ============================================
+// CONTACT FORM
+// ============================================
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const btn = form.querySelector('button[type="submit"]');
+    if (!btn) return;
+
+    const originalText = btn.textContent;
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    // Simulate submission (replace with actual endpoint)
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    btn.textContent = 'Message Sent!';
+    btn.style.background = '#4CAF50';
+
+    setTimeout(() => {
+      form.reset();
+      btn.textContent = originalText;
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 3000);
+  });
 }
 
-function initReveal() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-}
+// ============================================
+// SCROLL ANIMATIONS
+// ============================================
+function initScrollAnimations() {
+  const els = document.querySelectorAll('.fade-in');
+  if (!els.length) return;
 
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
-        });
-    });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  els.forEach((el) => observer.observe(el));
 }
