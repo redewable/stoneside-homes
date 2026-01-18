@@ -2283,3 +2283,115 @@ button {
     scroll-behavior: auto;
   }
 }
+/* ============================================================
+   PREMIUM HARDENING LAYER — Accessibility, FAQ, Motion
+   (Appended)
+   ============================================================ */
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-140%);
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0.75rem 1rem;
+  z-index: 10001;
+  border-radius: 0 0 0.75rem 0.75rem;
+  box-shadow: var(--shadow-md);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Focus visibility */
+:where(a, button, input, textarea, summary):focus-visible {
+  outline: 3px solid var(--copper);
+  outline-offset: 3px;
+}
+
+/* Honeypot field */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* FAQ */
+.section-faq {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);
+}
+.faq-header {
+  max-width: 900px;
+}
+.faq-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.faq-item {
+  border: 1px solid var(--ink-10);
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.15rem 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-q {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.faq-a {
+  padding: 0 1.15rem 1.15rem 1.15rem;
+  color: var(--ink-80);
+}
+.faq-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  position: relative;
+  flex: none;
+}
+.faq-icon::before,
+.faq-icon::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 14px;
+  height: 2px;
+  background: var(--copper);
+  transform: translate(-50%, -50%);
+}
+.faq-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: transform 220ms var(--ease-out);
+}
+.faq-item[open] .faq-icon::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+/* Reduced motion: disable cinematic transitions */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .cursor { display: none !important; }
+}

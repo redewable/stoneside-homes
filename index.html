@@ -15,9 +15,42 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/premium.css" />
+
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <meta name="theme-color" content="#0d1a26" />
+  <meta property="og:image" content="assets/images/hero-photo.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Stoneside Custom Homes — Heritage Builder Since 1984" />
+  <meta name="twitter:description" content="Four decades of craftsmanship in Bryan–College Station. Custom homes built with patience, discipline, and care." />
+  <meta name="twitter:image" content="assets/images/hero-photo.jpg" />
+  <link rel="canonical" href="https://www.stonesidecustomhomes.com/" />
+
+  <link rel="preload" as="image" href="assets/images/hero-photo.jpg" imagesrcset="assets/images/hero-photo.jpg 1x" />
+  <link rel="preload" as="image" href="assets/images/hero-sketch.jpg" imagesrcset="assets/images/hero-sketch.jpg 1x" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Stoneside Custom Homes",
+    "description": "Custom home builder serving Bryan–College Station, Texas. Heritage craftsmanship since 1984.",
+    "areaServed": "Bryan–College Station, TX",
+    "url": "https://www.stonesidecustomhomes.com/",
+    "image": "https://www.stonesidecustomhomes.com/assets/images/hero-photo.jpg",
+    "sameAs": [],
+    "telephone": "",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bryan–College Station",
+      "addressRegion": "TX",
+      "addressCountry": "US"
+    }
+  }
+  </script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <!-- Cinematic Preloader -->
   <div class="preloader" id="preloader">
     <div class="preloader-inner">
@@ -71,10 +104,11 @@
         <a href="#philosophy" class="nav-link" data-text="Philosophy">Philosophy</a>
         <a href="#craft" class="nav-link" data-text="Our Craft">Our Craft</a>
         <a href="#portfolio" class="nav-link" data-text="Homes">Homes</a>
+        <a href="#faq" class="nav-link" data-text="FAQ">FAQ</a>
         <a href="#contact" class="nav-cta">Begin Your Home</a>
       </nav>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="nav">
         <span></span>
         <span></span>
         <span></span>
@@ -82,7 +116,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <!-- Hero Section -->
     <section class="hero" id="hero">
       <div class="hero-bg">
@@ -503,13 +537,121 @@
       </div>
     </section>
 
+
+
+    <!-- FAQ Section -->
+    <section class="section section-faq" id="faq">
+      <div class="container">
+        <div class="faq-header">
+          <div class="section-label">
+            <span class="label-num">06</span>
+            <span class="label-line"></span>
+            <span class="label-text">Frequently Asked</span>
+          </div>
+
+          <h2 class="section-title faq-title">
+            Clarity Before<br/>
+            <em>Commitment</em>
+          </h2>
+
+          <p class="faq-intro">
+            These answers set expectations up front. If your question isn’t here, send a note—
+            a short builder call is the fastest way to determine fit.
+          </p>
+        </div>
+
+        <div class="faq-grid" id="faqGrid">
+          <details class="faq-item" open>
+            <summary>
+              <span class="faq-q">How many projects do you take each year?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              We intentionally limit our project count so the builder stays involved, communication stays weekly, and the craftsmanship stays disciplined.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span class="faq-q">Do you build from our architect’s plans?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              Yes. We also coordinate early to ensure the design is buildable on budget, with clean scope and fewer surprises after groundbreaking.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span class="faq-q">How do you handle pricing and change orders?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              We emphasize transparent scope and clear numbers before construction. If changes occur, they’re documented with written pricing and timeline impact.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span class="faq-q">What does weekly communication look like?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              A short weekly update covering schedule, decisions needed, and progress. Our goal is peace during the build—no guessing, no gaps.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How many projects do you take each year?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We intentionally limit our project count so the builder stays involved, communication stays weekly, and the craftsmanship stays disciplined."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you build from our architect’s plans?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. We coordinate early to ensure the design is buildable on budget, with clean scope and fewer surprises after groundbreaking."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you handle pricing and change orders?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We emphasize transparent scope and clear numbers before construction. If changes occur, they’re documented with written pricing and timeline impact."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does weekly communication look like?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A short weekly update covering schedule, decisions needed, and progress. Our goal is peace during the build—no guessing, no gaps."
+            }
+          }
+        ]
+      }
+      </script>
+    </section>
+
     <!-- Contact Section -->
     <section class="section section-contact" id="contact">
       <div class="container">
         <div class="contact-grid">
           <div class="contact-left">
             <div class="section-label">
-              <span class="label-num">05</span>
+              <span class="label-num">07</span>
               <span class="label-line"></span>
               <span class="label-text">Start Here</span>
             </div>
@@ -555,27 +697,28 @@
           </div>
 
           <div class="contact-right">
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" novalidate>
+              <input type="text" name="company" id="company" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
               <div class="form-group">
-                <input type="text" id="name" name="name" required placeholder=" " />
+                <input type="text" id="name" name="name" required placeholder=" " autocomplete="name" />
                 <label for="name">Full Name</label>
                 <span class="input-line"></span>
               </div>
 
               <div class="form-group">
-                <input type="email" id="email" name="email" required placeholder=" " />
+                <input type="email" id="email" name="email" required placeholder=" " autocomplete="email" inputmode="email" />
                 <label for="email">Email Address</label>
                 <span class="input-line"></span>
               </div>
 
               <div class="form-group">
-                <input type="tel" id="phone" name="phone" placeholder=" " />
+                <input type="tel" id="phone" name="phone" placeholder=" " autocomplete="tel" inputmode="tel" />
                 <label for="phone">Phone (Optional)</label>
                 <span class="input-line"></span>
               </div>
 
               <div class="form-group">
-                <input type="text" id="location" name="location" placeholder=" " />
+                <input type="text" id="location" name="location" placeholder=" " autocomplete="address-level2" />
                 <label for="location">Build Location</label>
                 <span class="input-line"></span>
               </div>
@@ -627,6 +770,7 @@
           <a href="#philosophy">Philosophy</a>
           <a href="#craft">Our Craft</a>
           <a href="#portfolio">Homes</a>
+          <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
@@ -643,7 +787,7 @@
   </footer>
 
   <!-- Project Modal -->
-  <div class="modal" id="projectModal" aria-hidden="true">
+  <div class="modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription">
     <div class="modal-backdrop"></div>
     <div class="modal-container">
       <button class="modal-close" id="modalClose" aria-label="Close">
@@ -700,7 +844,7 @@
     </div>
   </div>
 
-  <script src="js/data.js"></script>
-  <script src="js/premium.js"></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/premium.js" defer></script>
 </body>
 </html>

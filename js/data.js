@@ -15,7 +15,7 @@ const projects = [
 
     // REAL photo + SKETCH (needed for transform)
     photo: "assets/images/custom_home.jpg",
-    sketch: "assets/images/custom_home_sketch.jpg",
+    sketch: "assets/images/hero-sketch.jpg",
 
     description:
       "Designed for a growing family who wanted vaulted volume, long sightlines, and a backyard built for gathering. Warm finishes, disciplined layout, and details that age well.",
@@ -33,8 +33,8 @@ const projects = [
     baths: 3.5,
     year: 2023,
 
-    photo: "assets/images/spec_home.jpg",
-    sketch: "assets/images/spec_home_sketch.jpg",
+    photo: "assets/images/custom_home.jpg",
+    sketch: "assets/images/hero-sketch.jpg",
 
     description:
       "A classic exterior with thoughtful interior flow. Built for everyday living, long-term durability, and a finish level that doesn’t chase trends.",
@@ -53,7 +53,7 @@ const projects = [
     year: 2024,
 
     photo: "assets/images/custom_home.jpg",
-    sketch: "assets/images/custom_home_sketch.jpg",
+    sketch: "assets/images/hero-sketch.jpg",
 
     description:
       "A modern ranch with practical planning: generous storage, clean transitions, and materials chosen for how they perform over time.",
@@ -71,8 +71,8 @@ const projects = [
     baths: 3,
     year: 2023,
 
-    photo: "assets/images/spec_home.jpg",
-    sketch: "assets/images/spec_home_sketch.jpg",
+    photo: "assets/images/custom_home.jpg",
+    sketch: "assets/images/hero-sketch.jpg",
 
     description:
       "A spec home built with custom-home discipline: strong details, clean scope, and straightforward value for families who want quality without the noise.",
@@ -91,7 +91,7 @@ const projects = [
     year: 2022,
 
     photo: "assets/images/custom_home.jpg",
-    sketch: "assets/images/custom_home_sketch.jpg",
+    sketch: "assets/images/hero-sketch.jpg",
 
     description:
       "Designed around front-porch living and family gatherings. Traditional proportions, warm interior light, and a layout that feels settled.",
@@ -109,8 +109,8 @@ const projects = [
     baths: 2.5,
     year: 2022,
 
-    photo: "assets/images/spec_home.jpg",
-    sketch: "assets/images/spec_home_sketch.jpg",
+    photo: "assets/images/custom_home.jpg",
+    sketch: "assets/images/hero-sketch.jpg",
 
     description:
       "A clean, durable build with strong planning and honest finishes. Built for real life — and built to last.",
