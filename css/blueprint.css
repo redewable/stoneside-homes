@@ -1,0 +1,678 @@
+/* ============================================
+   STONESIDE CUSTOM HOMES - Blueprint Animations
+   Craftsman Heritage Special Effects
+   ============================================ */
+
+/* ============================================
+   PRELOADER - BLUEPRINT HOUSE DRAWING
+   ============================================ */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--blueprint-blue);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-inner {
+    text-align: center;
+    position: relative;
+}
+
+.blueprint-grid {
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    right: -200px;
+    bottom: -200px;
+    background-image: 
+        linear-gradient(rgba(74, 122, 176, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 122, 176, 0.3) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.5;
+}
+
+.house-sketch {
+    width: 200px;
+    height: 150px;
+    position: relative;
+    z-index: 1;
+}
+
+.sketch-line {
+    fill: none;
+    stroke: #FFFFFF;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+}
+
+/* Animate each line sequentially */
+.line-1 { animation: drawSketch 0.4s ease forwards 0.2s; }
+.line-2 { animation: drawSketch 0.3s ease forwards 0.5s; }
+.line-3 { animation: drawSketch 0.3s ease forwards 0.5s; }
+.line-4 { animation: drawSketch 0.4s ease forwards 0.8s; }
+.line-5 { animation: drawSketch 0.4s ease forwards 0.8s; }
+.line-6 { animation: drawSketch 0.4s ease forwards 1.2s; }
+.line-7 { animation: drawSketch 0.3s ease forwards 1.4s; }
+.line-8 { animation: drawSketch 0.3s ease forwards 1.4s; }
+.line-9 { animation: drawSketch 0.3s ease forwards 1.6s; }
+
+@keyframes drawSketch {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.preloader-text {
+    margin-top: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.pencil-write {
+    font-family: var(--font-handwritten);
+    font-size: 1.5rem;
+    color: white;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards 1.8s;
+}
+
+.loading-dots span {
+    font-family: var(--font-handwritten);
+    font-size: 1.5rem;
+    color: white;
+    opacity: 0;
+}
+
+.loading-dots span:nth-child(1) { animation: dotPulse 1.5s ease infinite 2s; }
+.loading-dots span:nth-child(2) { animation: dotPulse 1.5s ease infinite 2.2s; }
+.loading-dots span:nth-child(3) { animation: dotPulse 1.5s ease infinite 2.4s; }
+
+@keyframes dotPulse {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* ============================================
+   HERO BLUEPRINT BACKGROUND
+   ============================================ */
+.blueprint-grid-animated {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridFade 3s ease forwards;
+}
+
+@keyframes gridFade {
+    0% { opacity: 0; }
+    100% { opacity: 0.3; }
+}
+
+/* Blueprint Annotations */
+.blueprint-annotations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.annotation {
+    position: absolute;
+    font-family: var(--font-architect);
+    font-size: 0.9rem;
+    color: var(--blueprint-line);
+    opacity: 0;
+    white-space: nowrap;
+}
+
+.annotation::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background: var(--blueprint-line);
+    opacity: 0.5;
+}
+
+.annotation-1 {
+    top: 20%;
+    left: 5%;
+    animation: annotationFade 0.5s ease forwards 2s;
+}
+
+.annotation-1::before {
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+}
+
+.annotation-2 {
+    top: 40%;
+    right: 5%;
+    animation: annotationFade 0.5s ease forwards 2.3s;
+}
+
+.annotation-2::before {
+    top: 50%;
+    left: -40px;
+    transform: translateY(-50%);
+}
+
+.annotation-3 {
+    bottom: 30%;
+    left: 8%;
+    animation: annotationFade 0.5s ease forwards 2.6s;
+}
+
+.annotation-3::before {
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+}
+
+@keyframes annotationFade {
+    to { opacity: 0.6; }
+}
+
+/* ============================================
+   TAPE MEASURE ANIMATION
+   ============================================ */
+.tape-stat {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.tape-stat:nth-child(1) { animation: slideUp 0.6s ease forwards 1.2s; }
+.tape-stat:nth-child(2) { animation: slideUp 0.6s ease forwards 1.4s; }
+.tape-stat:nth-child(3) { animation: slideUp 0.6s ease forwards 1.6s; }
+
+.tape-extended {
+    width: 0;
+    overflow: hidden;
+    animation: extendTape 0.8s ease forwards;
+}
+
+.tape-stat:nth-child(1) .tape-extended { animation-delay: 1.4s; }
+.tape-stat:nth-child(2) .tape-extended { animation-delay: 1.6s; }
+.tape-stat:nth-child(3) .tape-extended { animation-delay: 1.8s; }
+
+@keyframes extendTape {
+    0% { width: 0; }
+    100% { width: auto; min-width: 80px; }
+}
+
+/* Tape measure markings pattern */
+.tape-markings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 8px,
+        rgba(0, 0, 0, 0.1) 8px,
+        rgba(0, 0, 0, 0.1) 10px,
+        transparent 10px,
+        transparent 16px,
+        rgba(0, 0, 0, 0.2) 16px,
+        rgba(0, 0, 0, 0.2) 18px
+    );
+    pointer-events: none;
+}
+
+/* Tape measure hover effect */
+.tape-stat:hover .tape-body {
+    transform: scaleX(1.1);
+    transition: transform 0.3s ease;
+}
+
+.tape-stat:hover .tape-hook {
+    transform: translateX(5px);
+    transition: transform 0.3s ease;
+}
+
+/* ============================================
+   NAPKIN SKETCH EFFECT
+   ============================================ */
+.napkin-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.02) 2px,
+            rgba(0, 0, 0, 0.02) 4px
+        );
+    pointer-events: none;
+}
+
+/* Sketch to photo transition effect */
+.hero-image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(
+            -45deg,
+            transparent 0%,
+            transparent 40%,
+            rgba(255, 255, 255, 0.9) 50%,
+            transparent 60%,
+            transparent 100%
+        );
+    background-size: 200% 200%;
+    z-index: 2;
+    animation: sketchReveal 1.5s ease forwards 0.5s;
+    pointer-events: none;
+}
+
+@keyframes sketchReveal {
+    0% { background-position: 200% 200%; }
+    100% { background-position: -50% -50%; opacity: 0; }
+}
+
+/* ============================================
+   PROCESS ICON DRAWING ANIMATION
+   ============================================ */
+.process-icon .icon-draw {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.process-step.visible .icon-draw {
+    stroke-dashoffset: 0;
+}
+
+/* Staggered animation for multiple paths */
+.process-step.visible .icon-draw:nth-child(1) { transition-delay: 0.1s; }
+.process-step.visible .icon-draw:nth-child(2) { transition-delay: 0.2s; }
+.process-step.visible .icon-draw:nth-child(3) { transition-delay: 0.3s; }
+.process-step.visible .icon-draw:nth-child(4) { transition-delay: 0.4s; }
+.process-step.visible .icon-draw:nth-child(5) { transition-delay: 0.5s; }
+.process-step.visible .icon-draw:nth-child(6) { transition-delay: 0.6s; }
+.process-step.visible .icon-draw:nth-child(7) { transition-delay: 0.7s; }
+
+/* ============================================
+   GENERATION BLOCKS 3D EFFECT
+   ============================================ */
+.generation-blocks {
+    transform-style: preserve-3d;
+    animation: blocksRotate 20s linear infinite;
+    animation-play-state: paused;
+}
+
+.legacy-section:hover .generation-blocks {
+    animation-play-state: running;
+}
+
+@keyframes blocksRotate {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+/* Stone texture on blocks */
+.block-face.front::after,
+.block-face.top::after,
+.block-face.side::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.1;
+    mix-blend-mode: overlay;
+}
+
+/* Block hover effect */
+.gen-block {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gen-block:hover {
+    transform: rotateX(-15deg) rotateY(-25deg) translateY(-20px) !important;
+}
+
+/* ============================================
+   PENCIL/SKETCH STYLE ICONS
+   ============================================ */
+.sketch-icon .icon-line {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    transition: stroke-dashoffset 0.8s ease;
+}
+
+.value-item:hover .icon-line {
+    stroke-dashoffset: 0;
+}
+
+/* Sketch effect on hover */
+.value-item {
+    position: relative;
+}
+
+.value-item::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-sage);
+    transition: width 0.4s ease;
+}
+
+.value-item:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   FOOTER HOUSE SKYLINE ANIMATION
+   ============================================ */
+.footer-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawSkyline 3s ease forwards;
+}
+
+@keyframes drawSkyline {
+    to { stroke-dashoffset: 0; }
+}
+
+/* ============================================
+   FORM INPUT PENCIL EFFECT
+   ============================================ */
+.form-input,
+.form-textarea {
+    position: relative;
+    background-image: linear-gradient(
+        transparent,
+        transparent calc(100% - 2px),
+        var(--color-stone) calc(100% - 2px)
+    );
+    background-size: 100% 100%;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    background-image: linear-gradient(
+        transparent,
+        transparent calc(100% - 2px),
+        var(--color-sage) calc(100% - 2px)
+    );
+}
+
+/* Pencil cursor for inputs */
+.form-input:focus,
+.form-textarea:focus {
+    caret-color: var(--color-sage);
+}
+
+/* ============================================
+   PORTFOLIO ITEM BLUEPRINT HOVER
+   ============================================ */
+.portfolio-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.portfolio-item:hover::before {
+    opacity: 0.3;
+}
+
+/* Dimension lines on hover */
+.portfolio-item::after {
+    content: attr(data-sqft);
+    position: absolute;
+    bottom: 80px;
+    right: 20px;
+    font-family: var(--font-architect);
+    font-size: 0.9rem;
+    color: var(--color-white);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.portfolio-item:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   TESTIMONIAL QUOTE ANIMATION
+   ============================================ */
+.testimonial-quote::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--tape-yellow);
+    transition: width 0.6s ease;
+}
+
+.testimonial-slide.active .testimonial-quote::after {
+    width: 60px;
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+.reveal-draw {
+    opacity: 0;
+}
+
+.reveal-draw.visible {
+    opacity: 1;
+}
+
+.reveal-draw svg path,
+.reveal-draw svg line,
+.reveal-draw svg circle,
+.reveal-draw svg rect {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+}
+
+.reveal-draw.visible svg path,
+.reveal-draw.visible svg line,
+.reveal-draw.visible svg circle,
+.reveal-draw.visible svg rect {
+    animation: drawElement 1.5s ease forwards;
+}
+
+@keyframes drawElement {
+    to { stroke-dashoffset: 0; }
+}
+
+/* ============================================
+   MODAL BLUEPRINT EFFECTS
+   ============================================ */
+.gallery-blueprint-overlay::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px dashed var(--blueprint-line);
+    opacity: 0.3;
+}
+
+.gallery-blueprint-overlay::after {
+    content: '+';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: var(--blueprint-line);
+    opacity: 0.2;
+}
+
+/* ============================================
+   BUTTON PENCIL EFFECTS
+   ============================================ */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover::after {
+    opacity: 1;
+}
+
+/* Pencil icon animation */
+.btn-pencil {
+    transition: transform 0.3s ease;
+}
+
+.btn:hover .btn-pencil {
+    animation: pencilWrite 0.5s ease infinite;
+}
+
+@keyframes pencilWrite {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+.loading-skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-stone-light) 0%,
+        var(--color-cream) 50%,
+        var(--color-stone-light) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ============================================
+   SPECIAL HOVER STATES
+   ============================================ */
+/* Nav link pencil underline */
+.nav-link::after {
+    background: linear-gradient(90deg, 
+        var(--color-sage) 0%, 
+        var(--color-sage) 80%, 
+        transparent 80%,
+        transparent 85%,
+        var(--color-sage) 85%
+    );
+    background-size: 10px 100%;
+}
+
+/* Section tag sketch underline wobble */
+.section-tag::after {
+    transform-origin: left;
+    animation: sketchWobble 2s ease-in-out infinite;
+}
+
+@keyframes sketchWobble {
+    0%, 100% { transform: rotate(-1deg) scaleX(1); }
+    50% { transform: rotate(1deg) scaleX(1.02); }
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 768px) {
+    .blueprint-annotations {
+        display: none;
+    }
+    
+    .generation-blocks {
+        transform: scale(0.8);
+    }
+    
+    .annotation {
+        font-size: 0.8rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .generation-blocks {
+        animation: none;
+    }
+    
+    .sketch-line,
+    .icon-draw,
+    .footer-line {
+        stroke-dashoffset: 0 !important;
+    }
+}
