@@ -65,13 +65,17 @@
     const cursor = document.getElementById('cursor');
     if (!cursor || window.matchMedia('(max-width: 1024px)').matches) return;
 
-    const dot = cursor.querySelector('.cursor-dot');
-    const ring = cursor.querySelector('.cursor-ring');
-    if (!dot || !ring) return;
+    const pencil = cursor.querySelector('.cursor-pencil');
+    if (!pencil) return;
 
-    let mouseX = 0, mouseY = 0;
-    let dotX = 0, dotY = 0;
-    let ringX = 0, ringY = 0;
+    // Smooth follow + subtle rotation based on velocity.
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let x = mouseX;
+    let y = mouseY;
+    let lastX = mouseX;
+    let lastY = mouseY;
+    let angle = -35; // default “architect pencil” tilt
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
@@ -79,17 +83,29 @@
     }, { passive: true });
 
     function animate() {
-      dotX += (mouseX - dotX) * 0.22;
-      dotY += (mouseY - dotY) * 0.22;
-      dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+      const dx = mouseX - x;
+      const dy = mouseY - y;
 
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+      // Follow
+      x += dx * 0.18;
+      y += dy * 0.18;
 
+      // Velocity angle (smoothed)
+      const vX = x - lastX;
+      const vY = y - lastY;
+      const targetAngle = Math.atan2(vY, vX) * 180 / Math.PI;
+      if (Number.isFinite(targetAngle)) angle += (targetAngle - angle) * 0.15;
+
+      cursor.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${angle}deg)`;
+
+      lastX = x;
+      lastY = y;
       requestAnimationFrame(animate);
     }
-    animate();
+
+    // Initialize position immediately to avoid “jump”
+    cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%) rotate(${angle}deg)`;
+    requestAnimationFrame(animate);
 
     // Hover states
     const bindHover = (root = document) => {
