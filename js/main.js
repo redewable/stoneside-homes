@@ -3,6 +3,16 @@
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Force-finish the loader overlay (prevents "stuck loading screen")
+  const loader = document.querySelector('.loader');
+  if (loader) {
+    // Let CSS transition run, then hide it
+    loader.classList.add('done');
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 700);
+  }
+
   initNavigation();
   initPortfolio();
   initTestimonials();
