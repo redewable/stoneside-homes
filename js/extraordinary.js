@@ -152,6 +152,15 @@ function initPreloader() {
   const preloader = document.getElementById('preloader');
   if (!preloader) return;
 
+  // SESSION MEMORY: Skip animation if user has seen it this session
+  if (sessionStorage.getItem('stoneside_preloader_seen')) {
+    preloader.classList.add('skip-animation');
+    preloader.classList.add('done');
+    document.querySelector('.hero')?.classList.add('loaded');
+    return;
+  }
+
+  // First visit this session - show full animation
   document.body.classList.add('locked');
 
   setTimeout(() => {
@@ -161,13 +170,17 @@ function initPreloader() {
       preloader.classList.add('done');
       document.body.classList.remove('locked');
       document.querySelector('.hero')?.classList.add('loaded');
+      // Mark as seen for this session
+      sessionStorage.setItem('stoneside_preloader_seen', 'true');
     }, 1000);
   }, 3200);
 
+  // Failsafe
   setTimeout(() => {
     if (!preloader.classList.contains('done')) {
       preloader.classList.add('done');
       document.body.classList.remove('locked');
+      sessionStorage.setItem('stoneside_preloader_seen', 'true');
     }
   }, 5000);
 }
