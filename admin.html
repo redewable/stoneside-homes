@@ -19,13 +19,10 @@
       --accent-light: #c4a882;
       --success: #4ade80;
       --error: #f87171;
+      --warning: #fbbf24;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Inter', -apple-system, sans-serif;
@@ -33,6 +30,8 @@
       color: var(--text);
       min-height: 100vh;
     }
+
+    .hidden { display: none !important; }
 
     /* Layout */
     .admin-layout {
@@ -42,9 +41,9 @@
     }
 
     @media (max-width: 900px) {
-      .admin-layout {
-        grid-template-columns: 1fr;
-      }
+      .admin-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .sidebar.mobile-open { display: flex; position: fixed; inset: 0; z-index: 100; }
     }
 
     /* Sidebar */
@@ -54,14 +53,13 @@
       padding: 24px;
       display: flex;
       flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
     }
 
-    .sidebar-logo {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
+    .sidebar-logo { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
     .sidebar-subtitle {
       font-size: 0.75rem;
       color: var(--text-muted);
@@ -70,11 +68,7 @@
       margin-bottom: 32px;
     }
 
-    .sidebar-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 4px; }
 
     .nav-link {
       display: flex;
@@ -86,24 +80,22 @@
       color: var(--text-muted);
       text-decoration: none;
       border-radius: 8px;
+      border: none;
+      background: none;
+      cursor: pointer;
       transition: all 0.2s;
+      text-align: left;
+      width: 100%;
     }
 
-    .nav-link:hover,
-    .nav-link.active {
+    .nav-link:hover, .nav-link.active {
       background: var(--bg-input);
       color: var(--text);
     }
 
-    .nav-link.active {
-      border-left: 3px solid var(--accent);
-    }
+    .nav-link.active { border-left: 3px solid var(--accent); margin-left: -3px; }
 
-    .nav-icon {
-      width: 20px;
-      height: 20px;
-      opacity: 0.7;
-    }
+    .nav-icon { width: 20px; height: 20px; opacity: 0.7; flex-shrink: 0; }
 
     .sidebar-footer {
       margin-top: auto;
@@ -111,7 +103,7 @@
       border-top: 1px solid var(--border);
     }
 
-    .logout-btn {
+    .view-site-btn, .logout-btn {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -124,36 +116,26 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s;
+      text-decoration: none;
     }
 
-    .logout-btn:hover {
-      background: var(--bg-input);
-      color: var(--error);
-    }
+    .view-site-btn:hover { background: var(--bg-input); color: var(--accent); }
+    .logout-btn:hover { background: var(--bg-input); color: var(--error); }
 
     /* Main Content */
-    .main-content {
-      padding: 32px;
-      overflow-y: auto;
-    }
+    .main-content { padding: 32px; overflow-y: auto; max-height: 100vh; }
 
     .page-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
-    .page-title {
-      font-size: 1.75rem;
-      font-weight: 700;
-    }
-
-    .page-subtitle {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
+    .page-title { font-size: 1.75rem; font-weight: 700; }
+    .page-subtitle { color: var(--text-muted); font-size: 0.875rem; margin-top: 4px; }
 
     /* Cards */
     .card {
@@ -173,11 +155,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .card-title {
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
+    .card-title { font-size: 1rem; font-weight: 600; }
     .card-badge {
       font-size: 0.625rem;
       font-weight: 600;
@@ -189,28 +167,19 @@
       border-radius: 100px;
     }
 
-    /* Form Elements */
+    /* Forms */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
     }
 
-    @media (max-width: 768px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 700px) {
+      .form-grid { grid-template-columns: 1fr; }
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .form-group.full-width {
-      grid-column: 1 / -1;
-    }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full-width { grid-column: 1 / -1; }
 
     .form-label {
       font-size: 0.75rem;
@@ -220,95 +189,30 @@
       color: var(--text-muted);
     }
 
-    .form-input,
-    .form-textarea,
-    .form-select {
+    .form-input, .form-textarea, .form-select {
       width: 100%;
       padding: 12px 16px;
       font-family: inherit;
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       color: var(--text);
       background: var(--bg-input);
       border: 1px solid var(--border);
       border-radius: 8px;
-      outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    .form-input:focus,
-    .form-textarea:focus,
-    .form-select:focus {
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(157, 123, 90, 0.2);
     }
 
-    .form-textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
+    .form-textarea { min-height: 100px; resize: vertical; }
 
-    .form-hint {
+    .form-help {
       font-size: 0.75rem;
       color: var(--text-muted);
-    }
-
-    /* Image Upload */
-    .image-upload {
-      border: 2px dashed var(--border);
-      border-radius: 12px;
-      padding: 32px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-    }
-
-    .image-upload:hover {
-      border-color: var(--accent);
-      background: rgba(157, 123, 90, 0.05);
-    }
-
-    .image-upload-icon {
-      width: 48px;
-      height: 48px;
-      margin: 0 auto 16px;
-      color: var(--text-muted);
-    }
-
-    .image-upload-text {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-    }
-
-    .image-upload-text strong {
-      color: var(--accent);
-    }
-
-    .image-preview {
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .image-preview img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .image-preview-remove {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.7);
-      border: none;
-      border-radius: 50%;
-      color: white;
-      cursor: pointer;
+      margin-top: 4px;
     }
 
     /* Buttons */
@@ -317,7 +221,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 12px 24px;
+      padding: 10px 20px;
       font-family: inherit;
       font-size: 0.875rem;
       font-weight: 600;
@@ -331,108 +235,34 @@
       background: var(--accent);
       color: var(--bg);
     }
-
-    .btn-primary:hover {
-      background: var(--accent-light);
-    }
+    .btn-primary:hover { background: var(--accent-light); }
 
     .btn-secondary {
       background: var(--bg-input);
       color: var(--text);
       border: 1px solid var(--border);
     }
-
-    .btn-secondary:hover {
-      background: var(--border);
-    }
+    .btn-secondary:hover { border-color: var(--text-muted); }
 
     .btn-danger {
       background: transparent;
       color: var(--error);
       border: 1px solid var(--error);
     }
+    .btn-danger:hover { background: var(--error); color: var(--bg); }
 
-    .btn-danger:hover {
-      background: var(--error);
-      color: var(--bg);
-    }
+    .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
 
-    .btn-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    /* Projects List */
-    .projects-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .project-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px;
-      background: var(--bg-input);
-      border-radius: 8px;
-      transition: background 0.2s;
-    }
-
-    .project-item:hover {
-      background: var(--border);
-    }
-
-    .project-thumb {
-      width: 80px;
-      height: 60px;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-
-    .project-info {
-      flex: 1;
-    }
-
-    .project-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .project-meta {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .project-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .project-btn {
+    .btn-icon {
       width: 36px;
       height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
+      padding: 0;
+      border-radius: 8px;
     }
 
-    .project-btn:hover {
-      color: var(--text);
-      border-color: var(--text-muted);
-    }
-
-    .project-btn.delete:hover {
-      color: var(--error);
-      border-color: var(--error);
-    }
+    /* Section Content */
+    .section-content { display: none; }
+    .section-content.active { display: block; }
 
     /* Tabs */
     .tabs {
@@ -440,6 +270,7 @@
       gap: 4px;
       margin-bottom: 24px;
       border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
     }
 
     .tab {
@@ -454,29 +285,187 @@
       transition: all 0.2s;
     }
 
-    .tab:hover {
-      color: var(--text);
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Editable List Items */
+    .editable-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .editable-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      align-items: start;
     }
 
-    .tab.active {
+    .editable-item-content { display: flex; flex-direction: column; gap: 12px; }
+    .editable-item-row { display: grid; grid-template-columns: 100px 1fr; gap: 12px; align-items: center; }
+    .editable-item-row label { font-size: 0.75rem; color: var(--text-muted); }
+    .editable-item-actions { display: flex; flex-direction: column; gap: 8px; }
+
+    .add-item-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px;
+      background: transparent;
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      font-size: 0.875rem;
+    }
+
+    .add-item-btn:hover {
+      border-color: var(--accent);
       color: var(--accent);
-      border-bottom-color: var(--accent);
     }
 
-    .tab-content {
-      display: none;
+    /* Icon Picker */
+    .icon-picker {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      padding: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      max-height: 200px;
+      overflow-y: auto;
     }
 
-    .tab-content.active {
-      display: block;
+    .icon-option {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-input);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    /* Toast Notifications */
+    .icon-option:hover { border-color: var(--text-muted); }
+    .icon-option.selected { border-color: var(--accent); background: rgba(157, 123, 90, 0.2); }
+    .icon-option svg { width: 24px; height: 24px; color: var(--text); }
+
+    /* Projects List */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .project-card:hover { border-color: var(--accent); }
+
+    .project-card-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: var(--bg-input);
+    }
+
+    .project-card-content { padding: 16px; }
+    .project-card-type {
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .project-card-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .project-card-meta { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; }
+    .project-card-actions { display: flex; gap: 8px; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-title { font-size: 1.25rem; font-weight: 600; }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-input);
+      border: none;
+      border-radius: 8px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .modal-body { padding: 24px; }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Toast */
     .toast-container {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      z-index: 1000;
+      z-index: 1001;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -494,40 +483,17 @@
       animation: slideIn 0.3s ease-out;
     }
 
-    .toast.success {
-      border-color: var(--success);
-    }
+    .toast.success { border-color: var(--success); }
+    .toast.error { border-color: var(--error); }
 
-    .toast.error {
-      border-color: var(--error);
-    }
-
-    .toast-icon {
-      width: 20px;
-      height: 20px;
-    }
-
-    .toast.success .toast-icon {
-      color: var(--success);
-    }
-
-    .toast.error .toast-icon {
-      color: var(--error);
-    }
-
-    .toast-message {
-      font-size: 0.875rem;
-    }
+    .toast-icon { width: 20px; height: 20px; flex-shrink: 0; }
+    .toast.success .toast-icon { color: var(--success); }
+    .toast.error .toast-icon { color: var(--error); }
+    .toast-message { font-size: 0.875rem; }
 
     @keyframes slideIn {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
 
     /* Login Screen */
@@ -548,13 +514,7 @@
       padding: 40px;
     }
 
-    .login-logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
+    .login-logo { font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 8px; }
     .login-subtitle {
       font-size: 0.875rem;
       color: var(--text-muted);
@@ -562,41 +522,38 @@
       margin-bottom: 32px;
     }
 
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+    .login-form { display: flex; flex-direction: column; gap: 20px; }
+    .login-btn { width: 100%; padding: 14px; }
 
-    .login-btn {
+    /* Preview */
+    .preview-frame {
       width: 100%;
-      margin-top: 8px;
-    }
-
-    /* Hidden */
-    .hidden {
-      display: none !important;
+      height: 400px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
     }
   </style>
 </head>
+
 <body>
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
   <!-- Login Screen -->
   <div class="login-screen" id="loginScreen">
     <div class="login-card">
       <div class="login-logo">Stoneside</div>
       <div class="login-subtitle">Admin Dashboard</div>
-      
       <form class="login-form" id="loginForm">
         <div class="form-group">
           <label class="form-label">Username</label>
           <input type="text" class="form-input" id="loginUsername" required />
         </div>
-        
         <div class="form-group">
           <label class="form-label">Password</label>
           <input type="password" class="form-input" id="loginPassword" required />
         </div>
-        
         <button type="submit" class="btn btn-primary login-btn">Sign In</button>
       </form>
     </div>
@@ -605,49 +562,58 @@
   <!-- Admin Dashboard -->
   <div class="admin-layout hidden" id="adminDashboard">
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">Stoneside</div>
       <div class="sidebar-subtitle">Admin Dashboard</div>
       
       <nav class="sidebar-nav">
-        <a href="#" class="nav-link active" data-section="hero">
+        <button type="button" class="nav-link active" data-section="hero">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <path d="M3 9h18"/>
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/>
           </svg>
           Hero Section
-        </a>
-        <a href="#" class="nav-link" data-section="content">
+        </button>
+        <button type="button" class="nav-link" data-section="content">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
           </svg>
           Page Content
-        </a>
-        <a href="#" class="nav-link" data-section="projects">
+        </button>
+        <button type="button" class="nav-link" data-section="projects">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"/>
-            <rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/>
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
           </svg>
           Projects
-        </a>
-        <a href="#" class="nav-link" data-section="settings">
+        </button>
+        <button type="button" class="nav-link" data-section="testimonials">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          Testimonials
+        </button>
+        <button type="button" class="nav-link" data-section="settings">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="3"/>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
           Settings
-        </a>
+        </button>
       </nav>
       
       <div class="sidebar-footer">
-        <button class="logout-btn" id="logoutBtn">
+        <a href="index.html" target="_blank" class="view-site-btn">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          View Site
+        </a>
+        <button type="button" class="logout-btn" id="logoutBtn">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
+            <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
           </svg>
           Sign Out
         </button>
@@ -656,7 +622,10 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Hero Section -->
+      
+      <!-- ══════════════════════════════════════════════════════════════════
+           HERO SECTION
+      ══════════════════════════════════════════════════════════════════ -->
       <section class="section-content active" id="section-hero">
         <div class="page-header">
           <div>
@@ -666,8 +635,7 @@
           <button class="btn btn-primary" id="saveHero">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-              <polyline points="17 21 17 13 7 13 7 21"/>
-              <polyline points="7 3 7 8 15 8"/>
+              <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
             </svg>
             Save Changes
           </button>
@@ -713,48 +681,17 @@
 
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">Hero Images</h2>
-          </div>
-          
-          <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label">Sketch Image</label>
-              <div class="image-preview" id="sketchPreview">
-                <img src="assets/images/hero-sketch.jpg" alt="Sketch" />
-                <button class="image-preview-remove" type="button">×</button>
-              </div>
-              <input type="file" accept="image/*" class="hidden" id="sketchUpload" />
-              <button class="btn btn-secondary" style="margin-top: 12px; width: 100%;" onclick="document.getElementById('sketchUpload').click()">
-                Change Image
-              </button>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Photo Image</label>
-              <div class="image-preview" id="photoPreview">
-                <img src="assets/images/hero-photo.jpg" alt="Photo" />
-                <button class="image-preview-remove" type="button">×</button>
-              </div>
-              <input type="file" accept="image/*" class="hidden" id="photoUpload" />
-              <button class="btn btn-secondary" style="margin-top: 12px; width: 100%;" onclick="document.getElementById('photoUpload').click()">
-                Change Image
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
             <h2 class="card-title">Stats Section</h2>
           </div>
           
           <div class="form-grid">
             <div class="form-group">
               <label class="form-label">Stat 1 Value</label>
-              <input type="text" class="form-input" id="stat1Value" value="40+" />
+              <input type="text" class="form-input" id="stat1Value" value="40" />
             </div>
             <div class="form-group">
               <label class="form-label">Stat 1 Label</label>
-              <input type="text" class="form-input" id="stat1Label" value="Years" />
+              <input type="text" class="form-input" id="stat1Label" value="Years of Excellence" />
             </div>
             <div class="form-group">
               <label class="form-label">Stat 2 Value</label>
@@ -776,20 +713,21 @@
         </div>
       </section>
 
-      <!-- Page Content Section -->
+      <!-- ══════════════════════════════════════════════════════════════════
+           PAGE CONTENT SECTION
+      ══════════════════════════════════════════════════════════════════ -->
       <section class="section-content" id="section-content">
         <div class="page-header">
           <div>
             <h1 class="page-title">Page Content</h1>
-            <p class="page-subtitle">Edit section titles and text throughout the site</p>
+            <p class="page-subtitle">Edit all section content throughout the site</p>
           </div>
           <button class="btn btn-primary" id="saveContent">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-              <polyline points="17 21 17 13 7 13 7 21"/>
-              <polyline points="7 3 7 8 15 8"/>
+              <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
             </svg>
-            Save Changes
+            Save All Content
           </button>
         </div>
 
@@ -810,12 +748,23 @@
             <div class="form-grid">
               <div class="form-group full-width">
                 <label class="form-label">Section Title</label>
-                <input type="text" class="form-input" id="legacyTitle" value="Unwavering Excellence" />
+                <input type="text" class="form-input" id="legacyTitle" value="Four Decades of *Unwavering Excellence*" />
+                <span class="form-help">Use *text* to make words italic/accent</span>
               </div>
               <div class="form-group full-width">
                 <label class="form-label">Lead Text</label>
-                <textarea class="form-textarea" id="legacyLead">In 1984, when most builders chased volume, we chose a different path— one measured not in units built, but in families served with excellence.</textarea>
+                <textarea class="form-textarea" id="legacyLead">In 1984, when most builders chased volume, we chose a different path—one measured not in units built, but in families served with excellence.</textarea>
               </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Timeline Items</h2>
+              <button class="btn btn-secondary btn-sm" id="addTimelineItem">+ Add Year</button>
+            </div>
+            <div class="editable-list" id="timelineList">
+              <!-- Populated by JS -->
             </div>
           </div>
         </div>
@@ -829,35 +778,37 @@
             <div class="form-grid">
               <div class="form-group full-width">
                 <label class="form-label">Section Title</label>
-                <input type="text" class="form-input" id="philosophyTitle" value="Building Is Stewardship" />
+                <input type="text" class="form-input" id="philosophyTitle" value="Building Is *Stewardship*" />
               </div>
               <div class="form-group full-width">
                 <label class="form-label">Lead Text</label>
                 <textarea class="form-textarea" id="philosophyLead">A home is where your children will take their first steps. Where holidays will gather decades of memories. Where legacy is quietly built.</textarea>
               </div>
-              <div class="form-group">
-                <label class="form-label">Pillar 1 Title</label>
-                <input type="text" class="form-input" id="pillar1Title" value="Clarity Before Commitment" />
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Philosophy Pillars</h2>
+              <button class="btn btn-secondary btn-sm" id="addPillar">+ Add Pillar</button>
+            </div>
+            <div class="editable-list" id="pillarsList">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Scripture Verse</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">Verse Text</label>
+                <input type="text" class="form-input" id="philosophyVerse" value="As for me and my house, we will serve the Lord." />
               </div>
               <div class="form-group">
-                <label class="form-label">Pillar 1 Text</label>
-                <input type="text" class="form-input" id="pillar1Text" value="You'll understand every detail before we break ground." />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Pillar 2 Title</label>
-                <input type="text" class="form-input" id="pillar2Title" value="Peace During the Build" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Pillar 2 Text</label>
-                <input type="text" class="form-input" id="pillar2Text" value="Weekly communication. Clean sites. No surprises." />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Pillar 3 Title</label>
-                <input type="text" class="form-input" id="pillar3Title" value="Accountability After Keys" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Pillar 3 Text</label>
-                <input type="text" class="form-input" id="pillar3Text" value="Our relationship doesn't end at closing. Ever." />
+                <label class="form-label">Reference</label>
+                <input type="text" class="form-input" id="philosophyVerseRef" value="Joshua 24:15" />
               </div>
             </div>
           </div>
@@ -872,11 +823,11 @@
             <div class="form-grid">
               <div class="form-group full-width">
                 <label class="form-label">Section Title</label>
-                <input type="text" class="form-input" id="portfolioTitle" value="Homes That Tell Stories" />
+                <input type="text" class="form-input" id="portfolioTitle" value="Homes That *Tell Stories*" />
               </div>
               <div class="form-group full-width">
                 <label class="form-label">Lead Text</label>
-                <textarea class="form-textarea" id="portfolioLead">Every home begins as a drawing. What matters is what it becomes— a vessel for your family's story.</textarea>
+                <textarea class="form-textarea" id="portfolioLead">Every home begins as a drawing. What matters is what it becomes—a vessel for your family's story.</textarea>
               </div>
             </div>
           </div>
@@ -891,8 +842,18 @@
             <div class="form-grid">
               <div class="form-group full-width">
                 <label class="form-label">Section Title</label>
-                <input type="text" class="form-input" id="processTitle" value="From First Conversation to Forever Home" />
+                <input type="text" class="form-input" id="processTitle" value="From First *Conversation* to Forever Home" />
               </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Process Steps</h2>
+              <button class="btn btn-secondary btn-sm" id="addProcessStep">+ Add Step</button>
+            </div>
+            <div class="editable-list" id="processStepsList">
+              <!-- Populated by JS -->
             </div>
           </div>
         </div>
@@ -906,7 +867,7 @@
             <div class="form-grid">
               <div class="form-group full-width">
                 <label class="form-label">Section Title</label>
-                <input type="text" class="form-input" id="contactTitle" value="Let's Build Something That Lasts" />
+                <input type="text" class="form-input" id="contactTitle" value="Let's Build *Something* That Lasts" />
               </div>
               <div class="form-group full-width">
                 <label class="form-label">Lead Text</label>
@@ -914,10 +875,36 @@
               </div>
             </div>
           </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Contact Information</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-input" id="contactLocation" value="Bryan–College Station, TX" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="text" class="form-input" id="contactPhone" value="(979) 555-1984" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="contactEmail" value="build@stonesidehomes.com" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Response Time</label>
+                <input type="text" class="form-input" id="contactResponse" value="Within 24 Hours" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Projects Section -->
+      <!-- ══════════════════════════════════════════════════════════════════
+           PROJECTS SECTION
+      ══════════════════════════════════════════════════════════════════ -->
       <section class="section-content" id="section-projects">
         <div class="page-header">
           <div>
@@ -926,32 +913,59 @@
           </div>
           <button class="btn btn-primary" id="addProject">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="12" y1="5" x2="12" y2="19"/>
-              <line x1="5" y1="12" x2="19" y2="12"/>
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
             Add Project
           </button>
         </div>
 
+        <div class="projects-grid" id="projectsGrid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════════════
+           TESTIMONIALS SECTION
+      ══════════════════════════════════════════════════════════════════ -->
+      <section class="section-content" id="section-testimonials">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Testimonials</h1>
+            <p class="page-subtitle">Manage client reviews and quotes</p>
+          </div>
+          <button class="btn btn-primary" id="saveTestimonials">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Changes
+          </button>
+        </div>
+
         <div class="card">
-          <div class="projects-list" id="projectsList">
-            <!-- Projects populated by JS -->
+          <div class="card-header">
+            <h2 class="card-title">Testimonials</h2>
+            <button class="btn btn-secondary btn-sm" id="addTestimonial">+ Add Testimonial</button>
+          </div>
+          <div class="editable-list" id="testimonialsList">
+            <!-- Populated by JS -->
           </div>
         </div>
       </section>
 
-      <!-- Settings Section -->
+      <!-- ══════════════════════════════════════════════════════════════════
+           SETTINGS SECTION
+      ══════════════════════════════════════════════════════════════════ -->
       <section class="section-content" id="section-settings">
         <div class="page-header">
           <div>
             <h1 class="page-title">Settings</h1>
-            <p class="page-subtitle">General site settings and configuration</p>
+            <p class="page-subtitle">Configure site-wide settings</p>
           </div>
           <button class="btn btn-primary" id="saveSettings">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-              <polyline points="17 21 17 13 7 13 7 21"/>
-              <polyline points="7 3 7 8 15 8"/>
+              <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
             </svg>
             Save Settings
           </button>
@@ -959,7 +973,7 @@
 
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">Site Information</h2>
+            <h2 class="card-title">Company Information</h2>
           </div>
           <div class="form-grid">
             <div class="form-group">
@@ -974,12 +988,20 @@
               <label class="form-label">Location</label>
               <input type="text" class="form-input" id="siteLocation" value="Bryan–College Station, Texas" />
             </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Scripture (Footer)</h2>
+          </div>
+          <div class="form-grid">
             <div class="form-group full-width">
               <label class="form-label">Scripture Verse</label>
               <input type="text" class="form-input" id="scriptureVerse" value="Unless the Lord builds the house, the builders labor in vain." />
             </div>
             <div class="form-group">
-              <label class="form-label">Scripture Reference</label>
+              <label class="form-label">Reference</label>
               <input type="text" class="form-input" id="scriptureRef" value="Psalm 127:1" />
             </div>
           </div>
@@ -992,7 +1014,7 @@
           <div class="form-grid">
             <div class="form-group">
               <label class="form-label">Username</label>
-              <input type="text" class="form-input" id="adminUsername" value="admin" />
+              <input type="text" class="form-input" id="adminUsername" placeholder="Leave blank to keep current" />
             </div>
             <div class="form-group">
               <label class="form-label">New Password</label>
@@ -1001,187 +1023,673 @@
           </div>
         </div>
 
-        <div class="card" style="border-color: var(--error);">
+        <div class="card">
           <div class="card-header">
-            <h2 class="card-title" style="color: var(--error);">Danger Zone</h2>
+            <h2 class="card-title">Data Management</h2>
           </div>
-          <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.875rem;">
-            Reset all content to default values. This cannot be undone.
-          </p>
-          <button class="btn btn-danger" id="resetContent">Reset All Content</button>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <button class="btn btn-secondary" id="exportData">Export All Data</button>
+            <button class="btn btn-danger" id="resetContent">Reset to Defaults</button>
+          </div>
         </div>
       </section>
+
     </main>
   </div>
 
-  <!-- Toast Container -->
-  <div class="toast-container" id="toastContainer"></div>
+  <!-- Project Modal -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="projectModalTitle">Add Project</h3>
+        <button class="modal-close" id="closeProjectModal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="projectForm">
+          <input type="hidden" id="projectId" />
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Project Title</label>
+              <input type="text" class="form-input" id="projectTitle" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Type</label>
+              <select class="form-select" id="projectType">
+                <option value="custom">Custom Build</option>
+                <option value="spec">Spec Home</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Location</label>
+              <input type="text" class="form-input" id="projectLocation" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Square Feet</label>
+              <input type="text" class="form-input" id="projectSqft" placeholder="3,500" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Bedrooms</label>
+              <input type="text" class="form-input" id="projectBeds" placeholder="4" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Bathrooms</label>
+              <input type="text" class="form-input" id="projectBaths" placeholder="3.5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Year</label>
+              <input type="text" class="form-input" id="projectYear" placeholder="2024" />
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Description</label>
+              <textarea class="form-textarea" id="projectDescription"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Photo URL</label>
+              <input type="text" class="form-input" id="projectPhoto" placeholder="assets/images/..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sketch URL</label>
+              <input type="text" class="form-input" id="projectSketch" placeholder="assets/images/..." />
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label">Scripture Verse (optional)</label>
+              <input type="text" class="form-input" id="projectVerseText" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Scripture Reference</label>
+              <input type="text" class="form-input" id="projectVerseRef" placeholder="Proverbs 24:3" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelProject">Cancel</button>
+        <button class="btn btn-primary" id="saveProject">Save Project</button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // ════════════════════════════════════════════════════════════
-    // ADMIN DASHBOARD JAVASCRIPT
-    // ════════════════════════════════════════════════════════════
-
-    // Default credentials (in production, use proper auth)
-    const DEFAULT_CREDENTIALS = {
-      username: 'admin',
-      password: 'stoneside2024'
-    };
-
-    // State
-    let isAuthenticated = false;
-
-    // Initialize
+    // ════════════════════════════════════════════════════════════════
+    // INITIALIZATION
+    // ════════════════════════════════════════════════════════════════
     document.addEventListener('DOMContentLoaded', () => {
-      checkAuth();
+      initAuth();
       initNavigation();
       initTabs();
-      initProjects();
       initSaveButtons();
-      loadContent();
+      initProjectEditor();
+      loadAllContent();
     });
 
-    // ════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     // AUTHENTICATION
-    // ════════════════════════════════════════════════════════════
-    function checkAuth() {
-      const auth = localStorage.getItem('stoneside_admin_auth');
-      if (auth === 'true') {
+    // ════════════════════════════════════════════════════════════════
+    function initAuth() {
+      const loginForm = document.getElementById('loginForm');
+      const logoutBtn = document.getElementById('logoutBtn');
+      
+      // Check if already logged in
+      if (sessionStorage.getItem('stoneside_auth') === 'true') {
         showDashboard();
       }
+
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        const storedCreds = JSON.parse(localStorage.getItem('stoneside_admin_creds') || '{"username":"admin","password":"stoneside2024"}');
+        
+        if (username === storedCreds.username && password === storedCreds.password) {
+          sessionStorage.setItem('stoneside_auth', 'true');
+          showDashboard();
+          showToast('Welcome back!', 'success');
+        } else {
+          showToast('Invalid credentials', 'error');
+        }
+      });
+
+      logoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem('stoneside_auth');
+        location.reload();
+      });
     }
-
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const username = document.getElementById('loginUsername').value;
-      const password = document.getElementById('loginPassword').value;
-
-      const savedCreds = JSON.parse(localStorage.getItem('stoneside_admin_creds') || 'null');
-      const creds = savedCreds || DEFAULT_CREDENTIALS;
-
-      if (username === creds.username && password === creds.password) {
-        localStorage.setItem('stoneside_admin_auth', 'true');
-        showDashboard();
-        showToast('Welcome back!', 'success');
-      } else {
-        showToast('Invalid credentials', 'error');
-      }
-    });
-
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('stoneside_admin_auth');
-      location.reload();
-    });
 
     function showDashboard() {
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('adminDashboard').classList.remove('hidden');
-      isAuthenticated = true;
     }
 
-    // ════════════════════════════════════════════════════════════
-    // NAVIGATION
-    // ════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
+    // NAVIGATION - FIXED
+    // ════════════════════════════════════════════════════════════════
     function initNavigation() {
-      document.querySelectorAll('.nav-link').forEach(link => {
+      const navLinks = document.querySelectorAll('.nav-link[data-section]');
+      
+      navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
-          const section = link.dataset.section;
-
+          const sectionId = link.dataset.section;
+          
           // Update active nav
-          document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+          navLinks.forEach(l => l.classList.remove('active'));
           link.classList.add('active');
-
+          
           // Show section
           document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
-          document.getElementById(`section-${section}`).classList.add('active');
+          document.getElementById(`section-${sectionId}`).classList.add('active');
         });
       });
     }
 
-    // ════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     // TABS
-    // ════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     function initTabs() {
       document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', () => {
           const tabId = tab.dataset.tab;
-
-          // Update active tab
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          const parent = tab.closest('.section-content');
+          
+          parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
           tab.classList.add('active');
-
-          // Show tab content
-          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-          document.getElementById(`tab-${tabId}`).classList.add('active');
+          
+          parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          parent.querySelector(`#tab-${tabId}`).classList.add('active');
         });
       });
     }
 
-    // ════════════════════════════════════════════════════════════
-    // PROJECTS
-    // ════════════════════════════════════════════════════════════
-    function initProjects() {
-      renderProjects();
-
-      document.getElementById('addProject').addEventListener('click', () => {
-        // In a real app, this would open a modal
-        showToast('Project editor coming soon!', 'success');
-      });
+    // ════════════════════════════════════════════════════════════════
+    // SAVE BUTTONS
+    // ════════════════════════════════════════════════════════════════
+    function initSaveButtons() {
+      document.getElementById('saveHero').addEventListener('click', saveHeroContent);
+      document.getElementById('saveContent').addEventListener('click', savePageContent);
+      document.getElementById('saveSettings').addEventListener('click', saveSettings);
+      document.getElementById('saveTestimonials').addEventListener('click', saveTestimonials);
+      document.getElementById('resetContent').addEventListener('click', resetAllContent);
+      document.getElementById('exportData').addEventListener('click', exportAllData);
+      
+      // Dynamic list buttons
+      document.getElementById('addTimelineItem').addEventListener('click', () => addTimelineItem());
+      document.getElementById('addPillar').addEventListener('click', () => addPillar());
+      document.getElementById('addProcessStep').addEventListener('click', () => addProcessStep());
+      document.getElementById('addTestimonial').addEventListener('click', () => addTestimonial());
     }
 
-    function renderProjects() {
-      const projects = JSON.parse(localStorage.getItem('stoneside_projects') || 'null') || getDefaultProjects();
-      const list = document.getElementById('projectsList');
+    // ════════════════════════════════════════════════════════════════
+    // LOAD ALL CONTENT
+    // ════════════════════════════════════════════════════════════════
+    function loadAllContent() {
+      loadHeroContent();
+      loadPageContent();
+      loadTimeline();
+      loadPillars();
+      loadProcessSteps();
+      loadContactInfo();
+      loadProjects();
+      loadTestimonials();
+      loadSettings();
+    }
 
-      list.innerHTML = projects.map((project, index) => `
-        <div class="project-item" data-id="${project.id}">
-          <img class="project-thumb" src="${project.photo}" alt="${project.title}" />
-          <div class="project-info">
-            <div class="project-title">${project.title} <span style="font-size: 0.625rem; padding: 2px 8px; background: ${project.type === 'custom' ? 'var(--accent)' : 'var(--border)'}; border-radius: 100px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.05em;">${project.type || 'custom'}</span></div>
-            <div class="project-meta">${project.location} • ${project.sqft} sq ft • ${project.beds} bed • ${project.baths} bath • ${project.year}</div>
+    function loadHeroContent() {
+      const data = JSON.parse(localStorage.getItem('stoneside_hero') || 'null');
+      if (data) {
+        document.getElementById('heroTitle1Word1').value = data.title1Word1 || 'Where';
+        document.getElementById('heroTitle1Word2').value = data.title1Word2 || 'Blueprints';
+        document.getElementById('heroTitle2Word1').value = data.title2Word1 || 'Become';
+        document.getElementById('heroTitle2Word2').value = data.title2Word2 || 'Legacy';
+        document.getElementById('heroSubtitle').value = data.subtitle || '';
+        document.getElementById('heroLocation').value = data.location || '';
+        document.getElementById('heroYears').value = data.years || '40 Years';
+        document.getElementById('stat1Value').value = data.stat1Value || '40';
+        document.getElementById('stat1Label').value = data.stat1Label || 'Years of Excellence';
+        document.getElementById('stat2Value').value = data.stat2Value || '∞';
+        document.getElementById('stat2Label').value = data.stat2Label || 'Patience';
+        document.getElementById('stat3Value').value = data.stat3Value || '1';
+        document.getElementById('stat3Label').value = data.stat3Label || 'Promise';
+      }
+    }
+
+    function loadPageContent() {
+      const data = JSON.parse(localStorage.getItem('stoneside_content') || 'null');
+      if (data) {
+        if (data.legacyTitle) document.getElementById('legacyTitle').value = data.legacyTitle;
+        if (data.legacyLead) document.getElementById('legacyLead').value = data.legacyLead;
+        if (data.philosophyTitle) document.getElementById('philosophyTitle').value = data.philosophyTitle;
+        if (data.philosophyLead) document.getElementById('philosophyLead').value = data.philosophyLead;
+        if (data.philosophyVerse) document.getElementById('philosophyVerse').value = data.philosophyVerse;
+        if (data.philosophyVerseRef) document.getElementById('philosophyVerseRef').value = data.philosophyVerseRef;
+        if (data.portfolioTitle) document.getElementById('portfolioTitle').value = data.portfolioTitle;
+        if (data.portfolioLead) document.getElementById('portfolioLead').value = data.portfolioLead;
+        if (data.processTitle) document.getElementById('processTitle').value = data.processTitle;
+        if (data.contactTitle) document.getElementById('contactTitle').value = data.contactTitle;
+        if (data.contactLead) document.getElementById('contactLead').value = data.contactLead;
+      }
+    }
+
+    function loadContactInfo() {
+      const data = JSON.parse(localStorage.getItem('stoneside_contact') || 'null');
+      if (data) {
+        document.getElementById('contactLocation').value = data.location || '';
+        document.getElementById('contactPhone').value = data.phone || '';
+        document.getElementById('contactEmail').value = data.email || '';
+        document.getElementById('contactResponse').value = data.response || '';
+      }
+    }
+
+    function loadSettings() {
+      const data = JSON.parse(localStorage.getItem('stoneside_settings') || 'null');
+      if (data) {
+        document.getElementById('companyName').value = data.companyName || '';
+        document.getElementById('establishedYear').value = data.establishedYear || '';
+        document.getElementById('siteLocation').value = data.location || '';
+        document.getElementById('scriptureVerse').value = data.scriptureVerse || '';
+        document.getElementById('scriptureRef').value = data.scriptureRef || '';
+      }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // TIMELINE MANAGEMENT
+    // ════════════════════════════════════════════════════════════════
+    function getDefaultTimeline() {
+      return [
+        { year: '1984', title: 'The Beginning', text: 'Founded in Bryan–College Station with a simple promise: build homes as if our name depended on it.' },
+        { year: '1994', title: 'First Decade', text: 'A decade of learning the land, understanding families, and refining our craft.' },
+        { year: '2004', title: 'Deep Roots', text: 'Twenty years of building relationships as strong as our foundations.' },
+        { year: '2014', title: 'Generational', text: 'Three decades of families trusting their dreams to our hands.' },
+        { year: '2024', title: 'Four Decades Strong', text: 'Forty years of keeping one promise: every home built with the patience and care it deserves.' }
+      ];
+    }
+
+    function loadTimeline() {
+      const data = JSON.parse(localStorage.getItem('stoneside_timeline') || 'null') || getDefaultTimeline();
+      renderTimeline(data);
+    }
+
+    function renderTimeline(items) {
+      const list = document.getElementById('timelineList');
+      list.innerHTML = items.map((item, i) => `
+        <div class="editable-item" data-index="${i}">
+          <div class="editable-item-content">
+            <div class="editable-item-row">
+              <label>Year</label>
+              <input type="text" class="form-input" value="${item.year}" data-field="year" />
+            </div>
+            <div class="editable-item-row">
+              <label>Title</label>
+              <input type="text" class="form-input" value="${item.title}" data-field="title" />
+            </div>
+            <div class="editable-item-row">
+              <label>Description</label>
+              <textarea class="form-textarea" data-field="text" style="min-height: 60px;">${item.text}</textarea>
+            </div>
           </div>
-          <div class="project-actions">
-            <button class="project-btn edit" title="Edit">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-              </svg>
-            </button>
-            <button class="project-btn delete" title="Delete">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"/>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-              </svg>
-            </button>
+          <div class="editable-item-actions">
+            <button class="btn btn-icon btn-secondary" onclick="moveItem('timeline', ${i}, -1)" title="Move Up">↑</button>
+            <button class="btn btn-icon btn-secondary" onclick="moveItem('timeline', ${i}, 1)" title="Move Down">↓</button>
+            <button class="btn btn-icon btn-danger" onclick="deleteItem('timeline', ${i})" title="Delete">×</button>
           </div>
         </div>
       `).join('');
     }
 
-    function getDefaultProjects() {
+    function addTimelineItem() {
+      const data = JSON.parse(localStorage.getItem('stoneside_timeline') || 'null') || getDefaultTimeline();
+      data.push({ year: '20XX', title: 'New Milestone', text: 'Description of this milestone.' });
+      localStorage.setItem('stoneside_timeline', JSON.stringify(data));
+      renderTimeline(data);
+      showToast('Timeline item added', 'success');
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // PILLARS MANAGEMENT
+    // ════════════════════════════════════════════════════════════════
+    function getDefaultPillars() {
       return [
-        { id: 1, title: "The Oakwood Estate", type: "custom", location: "College Station, TX", sqft: "4,200", beds: "5", baths: "4.5", year: "2024", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "Designed for a growing family who wanted vaulted volume, long sightlines, and a backyard built for gathering.", verseText: "By wisdom a house is built, and through understanding it is established.", verseRef: "Proverbs 24:3" },
-        { id: 2, title: "The Heritage Craftsman", type: "custom", location: "Bryan, TX", sqft: "3,600", beds: "4", baths: "3.5", year: "2023", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A classic exterior with thoughtful interior flow. Built for everyday living and long-term durability.", verseText: "Unless the Lord builds the house, the builders labor in vain.", verseRef: "Psalm 127:1" },
-        { id: 3, title: "The Brazos Modern Ranch", type: "custom", location: "Bryan–College Station, TX", sqft: "3,950", beds: "4", baths: "3", year: "2024", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A modern ranch with practical planning: generous storage, clean transitions, and materials chosen for performance.", verseText: "Commit your work to the Lord, and your plans will be established.", verseRef: "Proverbs 16:3" },
-        { id: 4, title: "The Stonegate Spec", type: "spec", location: "College Station, TX", sqft: "2,850", beds: "4", baths: "3", year: "2023", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A spec home built with custom-home discipline: strong details, clean scope, and straightforward value.", verseText: "Let all that you do be done in love.", verseRef: "1 Corinthians 16:14" },
-        { id: 5, title: "The Traditions Porch House", type: "custom", location: "College Station, TX", sqft: "3,250", beds: "4", baths: "3.5", year: "2022", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "Designed around front-porch living and family gatherings. Traditional proportions with warm interior light.", verseText: "As for me and my house, we will serve the Lord.", verseRef: "Joshua 24:15" },
-        { id: 6, title: "The Midtown Bryan Build", type: "spec", location: "Bryan, TX", sqft: "2,640", beds: "3", baths: "2.5", year: "2022", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A clean, durable build with strong planning and honest finishes. Built for real life — and built to last.", verseText: "Whatever you do, work at it with all your heart.", verseRef: "Colossians 3:23" }
+        { num: 'I', title: 'Clarity Before Commitment', text: "You'll understand every detail before we break ground." },
+        { num: 'II', title: 'Peace During the Build', text: 'Weekly communication. Clean sites. No surprises.' },
+        { num: 'III', title: 'Accountability After Keys', text: "Our relationship doesn't end at closing. Ever." }
       ];
     }
 
-    // ════════════════════════════════════════════════════════════
-    // SAVE FUNCTIONS
-    // ════════════════════════════════════════════════════════════
-    function initSaveButtons() {
-      document.getElementById('saveHero').addEventListener('click', saveHeroContent);
-      document.getElementById('saveContent').addEventListener('click', savePageContent);
-      document.getElementById('saveSettings').addEventListener('click', saveSettings);
-      document.getElementById('resetContent').addEventListener('click', resetAllContent);
+    function loadPillars() {
+      const data = JSON.parse(localStorage.getItem('stoneside_pillars') || 'null') || getDefaultPillars();
+      renderPillars(data);
     }
 
+    function renderPillars(items) {
+      const numerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+      const list = document.getElementById('pillarsList');
+      list.innerHTML = items.map((item, i) => `
+        <div class="editable-item" data-index="${i}">
+          <div class="editable-item-content">
+            <div class="editable-item-row">
+              <label>Number</label>
+              <input type="text" class="form-input" value="${item.num || numerals[i]}" data-field="num" style="width: 80px;" />
+            </div>
+            <div class="editable-item-row">
+              <label>Title</label>
+              <input type="text" class="form-input" value="${item.title}" data-field="title" />
+            </div>
+            <div class="editable-item-row">
+              <label>Description</label>
+              <textarea class="form-textarea" data-field="text" style="min-height: 60px;">${item.text}</textarea>
+            </div>
+          </div>
+          <div class="editable-item-actions">
+            <button class="btn btn-icon btn-secondary" onclick="moveItem('pillars', ${i}, -1)" title="Move Up">↑</button>
+            <button class="btn btn-icon btn-secondary" onclick="moveItem('pillars', ${i}, 1)" title="Move Down">↓</button>
+            <button class="btn btn-icon btn-danger" onclick="deleteItem('pillars', ${i})" title="Delete">×</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addPillar() {
+      const numerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+      const data = JSON.parse(localStorage.getItem('stoneside_pillars') || 'null') || getDefaultPillars();
+      data.push({ num: numerals[data.length] || String(data.length + 1), title: 'New Pillar', text: 'Description of this pillar.' });
+      localStorage.setItem('stoneside_pillars', JSON.stringify(data));
+      renderPillars(data);
+      showToast('Pillar added', 'success');
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // PROCESS STEPS MANAGEMENT
+    // ════════════════════════════════════════════════════════════════
+    function getDefaultProcessSteps() {
+      return [
+        { num: '01', title: 'Discovery', text: 'We begin with listening. Your vision, your needs, your timeline.', icon: 'plus' },
+        { num: '02', title: 'Design Partnership', text: 'We collaborate with you and your architect to ensure the design is beautiful, buildable, and within budget.', icon: 'grid' },
+        { num: '03', title: 'Transparent Pricing', text: "Complete scope. Honest numbers. No allowance games.", icon: 'arrow' },
+        { num: '04', title: 'Thoughtful Construction', text: 'Weekly updates. Clean sites. A builder who answers your calls.', icon: 'home' },
+        { num: '05', title: 'Lasting Relationship', text: "Move-in day isn't goodbye. We stand behind our work.", icon: 'check' }
+      ];
+    }
+
+    function loadProcessSteps() {
+      const data = JSON.parse(localStorage.getItem('stoneside_process') || 'null') || getDefaultProcessSteps();
+      renderProcessSteps(data);
+    }
+
+    function renderProcessSteps(items) {
+      const list = document.getElementById('processStepsList');
+      list.innerHTML = items.map((item, i) => `
+        <div class="editable-item" data-index="${i}">
+          <div class="editable-item-content">
+            <div class="editable-item-row">
+              <label>Number</label>
+              <input type="text" class="form-input" value="${item.num || String(i + 1).padStart(2, '0')}" data-field="num" style="width: 80px;" />
+            </div>
+            <div class="editable-item-row">
+              <label>Title</label>
+              <input type="text" class="form-input" value="${item.title}" data-field="title" />
+            </div>
+            <div class="editable-item-row">
+              <label>Description</label>
+              <textarea class="form-textarea" data-field="text" style="min-height: 60px;">${item.text}</textarea>
+            </div>
+            <div class="editable-item-row">
+              <label>Icon</label>
+              <select class="form-select" data-field="icon">
+                <option value="plus" ${item.icon === 'plus' ? 'selected' : ''}>➕ Plus/Add</option>
+                <option value="grid" ${item.icon === 'grid' ? 'selected' : ''}>📐 Grid/Design</option>
+                <option value="arrow" ${item.icon === 'arrow' ? 'selected' : ''}>📈 Arrow/Growth</option>
+                <option value="home" ${item.icon === 'home' ? 'selected' : ''}>🏠 Home</option>
+                <option value="check" ${item.icon === 'check' ? 'selected' : ''}>✓ Checkmark</option>
+                <option value="heart" ${item.icon === 'heart' ? 'selected' : ''}>❤️ Heart</option>
+                <option value="star" ${item.icon === 'star' ? 'selected' : ''}>⭐ Star</option>
+                <option value="key" ${item.icon === 'key' ? 'selected' : ''}>🔑 Key</option>
+                <option value="chat" ${item.icon === 'chat' ? 'selected' : ''}>💬 Chat</option>
+                <option value="doc" ${item.icon === 'doc' ? 'selected' : ''}>📄 Document</option>
+              </select>
+            </div>
+          </div>
+          <div class="editable-item-actions">
+            <button class="btn btn-icon btn-secondary" onclick="moveItem('process', ${i}, -1)" title="Move Up">↑</button>
+            <button class="btn btn-icon btn-secondary" onclick="moveItem('process', ${i}, 1)" title="Move Down">↓</button>
+            <button class="btn btn-icon btn-danger" onclick="deleteItem('process', ${i})" title="Delete">×</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addProcessStep() {
+      const data = JSON.parse(localStorage.getItem('stoneside_process') || 'null') || getDefaultProcessSteps();
+      const num = String(data.length + 1).padStart(2, '0');
+      data.push({ num: num, title: 'New Step', text: 'Description of this step.', icon: 'plus' });
+      localStorage.setItem('stoneside_process', JSON.stringify(data));
+      renderProcessSteps(data);
+      showToast('Process step added', 'success');
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // TESTIMONIALS MANAGEMENT
+    // ════════════════════════════════════════════════════════════════
+    function getDefaultTestimonials() {
+      return [
+        { quote: "The difference was clear from our first conversation. No sales pitch—just a builder who listened, explained, and delivered exactly what was promised.", name: "The Martinez Family", detail: "Custom Build, College Station • 2023" },
+        { quote: "After interviewing five builders, Stoneside was the only one who asked about our family's needs first and budget second. That told us everything.", name: "The Thompson Family", detail: "Custom Build, Bryan • 2022" }
+      ];
+    }
+
+    function loadTestimonials() {
+      const data = JSON.parse(localStorage.getItem('stoneside_testimonials') || 'null') || getDefaultTestimonials();
+      renderTestimonials(data);
+    }
+
+    function renderTestimonials(items) {
+      const list = document.getElementById('testimonialsList');
+      list.innerHTML = items.map((item, i) => `
+        <div class="editable-item" data-index="${i}">
+          <div class="editable-item-content">
+            <div class="editable-item-row">
+              <label>Quote</label>
+              <textarea class="form-textarea" data-field="quote" style="min-height: 80px;">${item.quote}</textarea>
+            </div>
+            <div class="editable-item-row">
+              <label>Name</label>
+              <input type="text" class="form-input" value="${item.name}" data-field="name" />
+            </div>
+            <div class="editable-item-row">
+              <label>Detail</label>
+              <input type="text" class="form-input" value="${item.detail}" data-field="detail" placeholder="Custom Build, Location • Year" />
+            </div>
+          </div>
+          <div class="editable-item-actions">
+            <button class="btn btn-icon btn-secondary" onclick="moveItem('testimonials', ${i}, -1)" title="Move Up">↑</button>
+            <button class="btn btn-icon btn-secondary" onclick="moveItem('testimonials', ${i}, 1)" title="Move Down">↓</button>
+            <button class="btn btn-icon btn-danger" onclick="deleteItem('testimonials', ${i})" title="Delete">×</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addTestimonial() {
+      const data = JSON.parse(localStorage.getItem('stoneside_testimonials') || 'null') || getDefaultTestimonials();
+      data.push({ quote: "New testimonial quote here...", name: "Client Name", detail: "Custom Build, Location • Year" });
+      localStorage.setItem('stoneside_testimonials', JSON.stringify(data));
+      renderTestimonials(data);
+      showToast('Testimonial added', 'success');
+    }
+
+    function saveTestimonials() {
+      const items = [];
+      document.querySelectorAll('#testimonialsList .editable-item').forEach(item => {
+        items.push({
+          quote: item.querySelector('[data-field="quote"]').value,
+          name: item.querySelector('[data-field="name"]').value,
+          detail: item.querySelector('[data-field="detail"]').value
+        });
+      });
+      localStorage.setItem('stoneside_testimonials', JSON.stringify(items));
+      showToast('Testimonials saved!', 'success');
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // GENERIC LIST HELPERS
+    // ════════════════════════════════════════════════════════════════
+    function moveItem(type, index, direction) {
+      const keyMap = { timeline: 'stoneside_timeline', pillars: 'stoneside_pillars', process: 'stoneside_process', testimonials: 'stoneside_testimonials' };
+      const defaultMap = { timeline: getDefaultTimeline, pillars: getDefaultPillars, process: getDefaultProcessSteps, testimonials: getDefaultTestimonials };
+      const renderMap = { timeline: renderTimeline, pillars: renderPillars, process: renderProcessSteps, testimonials: renderTestimonials };
+      
+      const data = JSON.parse(localStorage.getItem(keyMap[type]) || 'null') || defaultMap[type]();
+      const newIndex = index + direction;
+      
+      if (newIndex < 0 || newIndex >= data.length) return;
+      
+      [data[index], data[newIndex]] = [data[newIndex], data[index]];
+      localStorage.setItem(keyMap[type], JSON.stringify(data));
+      renderMap[type](data);
+    }
+
+    function deleteItem(type, index) {
+      if (!confirm('Are you sure you want to delete this item?')) return;
+      
+      const keyMap = { timeline: 'stoneside_timeline', pillars: 'stoneside_pillars', process: 'stoneside_process', testimonials: 'stoneside_testimonials' };
+      const defaultMap = { timeline: getDefaultTimeline, pillars: getDefaultPillars, process: getDefaultProcessSteps, testimonials: getDefaultTestimonials };
+      const renderMap = { timeline: renderTimeline, pillars: renderPillars, process: renderProcessSteps, testimonials: renderTestimonials };
+      
+      const data = JSON.parse(localStorage.getItem(keyMap[type]) || 'null') || defaultMap[type]();
+      data.splice(index, 1);
+      localStorage.setItem(keyMap[type], JSON.stringify(data));
+      renderMap[type](data);
+      showToast('Item deleted', 'success');
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // PROJECTS
+    // ════════════════════════════════════════════════════════════════
+    function initProjectEditor() {
+      document.getElementById('addProject').addEventListener('click', () => openProjectModal());
+      document.getElementById('closeProjectModal').addEventListener('click', closeProjectModal);
+      document.getElementById('cancelProject').addEventListener('click', closeProjectModal);
+      document.getElementById('saveProject').addEventListener('click', saveProject);
+      
+      document.getElementById('projectModal').addEventListener('click', (e) => {
+        if (e.target.id === 'projectModal') closeProjectModal();
+      });
+    }
+
+    function getDefaultProjects() {
+      return [
+        { id: 1, title: "The Oakwood Estate", type: "custom", location: "College Station, TX", sqft: "4,200", beds: "5", baths: "4.5", year: "2024", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "Designed for a growing family who wanted vaulted volume and long sightlines.", verseText: "By wisdom a house is built, and through understanding it is established.", verseRef: "Proverbs 24:3" },
+        { id: 2, title: "The Heritage Craftsman", type: "custom", location: "Bryan, TX", sqft: "3,600", beds: "4", baths: "3.5", year: "2023", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A classic exterior with thoughtful interior flow.", verseText: "Unless the Lord builds the house, the builders labor in vain.", verseRef: "Psalm 127:1" },
+        { id: 3, title: "The Brazos Modern Ranch", type: "custom", location: "Bryan–College Station, TX", sqft: "3,950", beds: "4", baths: "3", year: "2024", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A modern ranch with practical planning and clean transitions.", verseText: "Commit your work to the Lord, and your plans will be established.", verseRef: "Proverbs 16:3" },
+        { id: 4, title: "The Stonegate Spec", type: "spec", location: "College Station, TX", sqft: "2,850", beds: "4", baths: "3", year: "2023", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A spec home built with custom-home discipline.", verseText: "Let all that you do be done in love.", verseRef: "1 Corinthians 16:14" },
+        { id: 5, title: "The Traditions Porch House", type: "custom", location: "College Station, TX", sqft: "3,250", beds: "4", baths: "3.5", year: "2022", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "Designed around front-porch living and family gatherings.", verseText: "As for me and my house, we will serve the Lord.", verseRef: "Joshua 24:15" },
+        { id: 6, title: "The Midtown Bryan Build", type: "spec", location: "Bryan, TX", sqft: "2,640", beds: "3", baths: "2.5", year: "2022", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A clean, durable build with strong planning.", verseText: "Whatever you do, work at it with all your heart.", verseRef: "Colossians 3:23" }
+      ];
+    }
+
+    function loadProjects() {
+      const data = JSON.parse(localStorage.getItem('stoneside_projects') || 'null') || getDefaultProjects();
+      renderProjects(data);
+    }
+
+    function renderProjects(projects) {
+      const grid = document.getElementById('projectsGrid');
+      grid.innerHTML = projects.map(p => `
+        <div class="project-card" data-id="${p.id}">
+          <img class="project-card-image" src="${p.photo || 'assets/images/custom_home.jpg'}" alt="${p.title}" />
+          <div class="project-card-content">
+            <div class="project-card-type">${p.type === 'custom' ? 'Custom Build' : 'Spec Home'}</div>
+            <div class="project-card-title">${p.title}</div>
+            <div class="project-card-meta">${p.location} • ${p.sqft} sq ft • ${p.beds} bed / ${p.baths} bath • ${p.year}</div>
+            <div class="project-card-actions">
+              <button class="btn btn-secondary btn-sm" onclick="editProject(${p.id})">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteProject(${p.id})">Delete</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openProjectModal(project = null) {
+      document.getElementById('projectModalTitle').textContent = project ? 'Edit Project' : 'Add Project';
+      document.getElementById('projectId').value = project ? project.id : '';
+      document.getElementById('projectTitle').value = project ? project.title : '';
+      document.getElementById('projectType').value = project ? project.type : 'custom';
+      document.getElementById('projectLocation').value = project ? project.location : '';
+      document.getElementById('projectSqft').value = project ? project.sqft : '';
+      document.getElementById('projectBeds').value = project ? project.beds : '';
+      document.getElementById('projectBaths').value = project ? project.baths : '';
+      document.getElementById('projectYear').value = project ? project.year : '';
+      document.getElementById('projectDescription').value = project ? project.description : '';
+      document.getElementById('projectPhoto').value = project ? project.photo : '';
+      document.getElementById('projectSketch').value = project ? project.sketch : '';
+      document.getElementById('projectVerseText').value = project ? project.verseText : '';
+      document.getElementById('projectVerseRef').value = project ? project.verseRef : '';
+      
+      document.getElementById('projectModal').classList.add('active');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('projectModal').classList.remove('active');
+    }
+
+    function editProject(id) {
+      const projects = JSON.parse(localStorage.getItem('stoneside_projects') || 'null') || getDefaultProjects();
+      const project = projects.find(p => p.id === id);
+      if (project) openProjectModal(project);
+    }
+
+    function saveProject() {
+      const projects = JSON.parse(localStorage.getItem('stoneside_projects') || 'null') || getDefaultProjects();
+      const id = document.getElementById('projectId').value;
+      
+      const projectData = {
+        id: id ? parseInt(id) : Date.now(),
+        title: document.getElementById('projectTitle').value,
+        type: document.getElementById('projectType').value,
+        location: document.getElementById('projectLocation').value,
+        sqft: document.getElementById('projectSqft').value,
+        beds: document.getElementById('projectBeds').value,
+        baths: document.getElementById('projectBaths').value,
+        year: document.getElementById('projectYear').value,
+        description: document.getElementById('projectDescription').value,
+        photo: document.getElementById('projectPhoto').value || 'assets/images/custom_home.jpg',
+        sketch: document.getElementById('projectSketch').value || 'assets/images/hero-sketch.jpg',
+        verseText: document.getElementById('projectVerseText').value,
+        verseRef: document.getElementById('projectVerseRef').value
+      };
+      
+      if (id) {
+        const index = projects.findIndex(p => p.id === parseInt(id));
+        if (index !== -1) projects[index] = projectData;
+      } else {
+        projects.push(projectData);
+      }
+      
+      localStorage.setItem('stoneside_projects', JSON.stringify(projects));
+      renderProjects(projects);
+      closeProjectModal();
+      showToast('Project saved!', 'success');
+    }
+
+    function deleteProject(id) {
+      if (!confirm('Are you sure you want to delete this project?')) return;
+      
+      let projects = JSON.parse(localStorage.getItem('stoneside_projects') || 'null') || getDefaultProjects();
+      projects = projects.filter(p => p.id !== id);
+      localStorage.setItem('stoneside_projects', JSON.stringify(projects));
+      renderProjects(projects);
+      showToast('Project deleted', 'success');
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // SAVE FUNCTIONS
+    // ════════════════════════════════════════════════════════════════
     function saveHeroContent() {
-      const heroContent = {
+      const data = {
         title1Word1: document.getElementById('heroTitle1Word1').value,
         title1Word2: document.getElementById('heroTitle1Word2').value,
         title2Word1: document.getElementById('heroTitle2Word1').value,
@@ -1196,32 +1704,71 @@
         stat3Value: document.getElementById('stat3Value').value,
         stat3Label: document.getElementById('stat3Label').value
       };
-
-      localStorage.setItem('stoneside_hero', JSON.stringify(heroContent));
+      localStorage.setItem('stoneside_hero', JSON.stringify(data));
       showToast('Hero content saved!', 'success');
     }
 
     function savePageContent() {
+      // Save text content
       const pageContent = {
         legacyTitle: document.getElementById('legacyTitle').value,
         legacyLead: document.getElementById('legacyLead').value,
         philosophyTitle: document.getElementById('philosophyTitle').value,
         philosophyLead: document.getElementById('philosophyLead').value,
-        pillar1Title: document.getElementById('pillar1Title').value,
-        pillar1Text: document.getElementById('pillar1Text').value,
-        pillar2Title: document.getElementById('pillar2Title').value,
-        pillar2Text: document.getElementById('pillar2Text').value,
-        pillar3Title: document.getElementById('pillar3Title').value,
-        pillar3Text: document.getElementById('pillar3Text').value,
+        philosophyVerse: document.getElementById('philosophyVerse').value,
+        philosophyVerseRef: document.getElementById('philosophyVerseRef').value,
         portfolioTitle: document.getElementById('portfolioTitle').value,
         portfolioLead: document.getElementById('portfolioLead').value,
         processTitle: document.getElementById('processTitle').value,
         contactTitle: document.getElementById('contactTitle').value,
         contactLead: document.getElementById('contactLead').value
       };
-
       localStorage.setItem('stoneside_content', JSON.stringify(pageContent));
-      showToast('Page content saved!', 'success');
+      
+      // Save timeline
+      const timelineItems = [];
+      document.querySelectorAll('#timelineList .editable-item').forEach(item => {
+        timelineItems.push({
+          year: item.querySelector('[data-field="year"]').value,
+          title: item.querySelector('[data-field="title"]').value,
+          text: item.querySelector('[data-field="text"]').value
+        });
+      });
+      localStorage.setItem('stoneside_timeline', JSON.stringify(timelineItems));
+      
+      // Save pillars
+      const pillarItems = [];
+      document.querySelectorAll('#pillarsList .editable-item').forEach(item => {
+        pillarItems.push({
+          num: item.querySelector('[data-field="num"]').value,
+          title: item.querySelector('[data-field="title"]').value,
+          text: item.querySelector('[data-field="text"]').value
+        });
+      });
+      localStorage.setItem('stoneside_pillars', JSON.stringify(pillarItems));
+      
+      // Save process steps
+      const processItems = [];
+      document.querySelectorAll('#processStepsList .editable-item').forEach(item => {
+        processItems.push({
+          num: item.querySelector('[data-field="num"]').value,
+          title: item.querySelector('[data-field="title"]').value,
+          text: item.querySelector('[data-field="text"]').value,
+          icon: item.querySelector('[data-field="icon"]').value
+        });
+      });
+      localStorage.setItem('stoneside_process', JSON.stringify(processItems));
+      
+      // Save contact info
+      const contactInfo = {
+        location: document.getElementById('contactLocation').value,
+        phone: document.getElementById('contactPhone').value,
+        email: document.getElementById('contactEmail').value,
+        response: document.getElementById('contactResponse').value
+      };
+      localStorage.setItem('stoneside_contact', JSON.stringify(contactInfo));
+      
+      showToast('All page content saved!', 'success');
     }
 
     function saveSettings() {
@@ -1232,79 +1779,61 @@
         scriptureVerse: document.getElementById('scriptureVerse').value,
         scriptureRef: document.getElementById('scriptureRef').value
       };
-
       localStorage.setItem('stoneside_settings', JSON.stringify(settings));
 
-      // Save credentials if changed
       const newUsername = document.getElementById('adminUsername').value;
       const newPassword = document.getElementById('adminPassword').value;
-
       if (newUsername && newPassword) {
-        localStorage.setItem('stoneside_admin_creds', JSON.stringify({
-          username: newUsername,
-          password: newPassword
-        }));
+        localStorage.setItem('stoneside_admin_creds', JSON.stringify({ username: newUsername, password: newPassword }));
       }
 
       showToast('Settings saved!', 'success');
     }
 
     function resetAllContent() {
-      if (confirm('Are you sure you want to reset all content to defaults? This cannot be undone.')) {
-        localStorage.removeItem('stoneside_hero');
-        localStorage.removeItem('stoneside_content');
-        localStorage.removeItem('stoneside_projects');
-        localStorage.removeItem('stoneside_settings');
-        loadContent();
-        showToast('All content reset to defaults', 'success');
-      }
+      if (!confirm('Are you sure you want to reset ALL content to defaults? This cannot be undone.')) return;
+      
+      localStorage.removeItem('stoneside_hero');
+      localStorage.removeItem('stoneside_content');
+      localStorage.removeItem('stoneside_timeline');
+      localStorage.removeItem('stoneside_pillars');
+      localStorage.removeItem('stoneside_process');
+      localStorage.removeItem('stoneside_contact');
+      localStorage.removeItem('stoneside_projects');
+      localStorage.removeItem('stoneside_testimonials');
+      localStorage.removeItem('stoneside_settings');
+      
+      loadAllContent();
+      showToast('All content reset to defaults', 'success');
     }
 
-    // ════════════════════════════════════════════════════════════
-    // LOAD CONTENT
-    // ════════════════════════════════════════════════════════════
-    function loadContent() {
-      // Load hero content
-      const heroContent = JSON.parse(localStorage.getItem('stoneside_hero') || 'null');
-      if (heroContent) {
-        document.getElementById('heroTitle1Word1').value = heroContent.title1Word1 || 'Where';
-        document.getElementById('heroTitle1Word2').value = heroContent.title1Word2 || 'Blueprints';
-        document.getElementById('heroTitle2Word1').value = heroContent.title2Word1 || 'Become';
-        document.getElementById('heroTitle2Word2').value = heroContent.title2Word2 || 'Legacy';
-        document.getElementById('heroSubtitle').value = heroContent.subtitle || '';
-        document.getElementById('heroLocation').value = heroContent.location || '';
-        document.getElementById('heroYears').value = heroContent.years || '40 Years';
-        document.getElementById('stat1Value').value = heroContent.stat1Value || '40+';
-        document.getElementById('stat1Label').value = heroContent.stat1Label || 'Years';
-        document.getElementById('stat2Value').value = heroContent.stat2Value || '∞';
-        document.getElementById('stat2Label').value = heroContent.stat2Label || 'Patience';
-        document.getElementById('stat3Value').value = heroContent.stat3Value || '1';
-        document.getElementById('stat3Label').value = heroContent.stat3Label || 'Promise';
-      }
-
-      // Load page content
-      const pageContent = JSON.parse(localStorage.getItem('stoneside_content') || 'null');
-      if (pageContent) {
-        Object.keys(pageContent).forEach(key => {
-          const el = document.getElementById(key);
-          if (el) el.value = pageContent[key];
-        });
-      }
-
-      // Load settings
-      const settings = JSON.parse(localStorage.getItem('stoneside_settings') || 'null');
-      if (settings) {
-        document.getElementById('companyName').value = settings.companyName || '';
-        document.getElementById('establishedYear').value = settings.establishedYear || '';
-        document.getElementById('siteLocation').value = settings.location || '';
-        document.getElementById('scriptureVerse').value = settings.scriptureVerse || '';
-        document.getElementById('scriptureRef').value = settings.scriptureRef || '';
-      }
+    function exportAllData() {
+      const data = {
+        hero: JSON.parse(localStorage.getItem('stoneside_hero') || 'null'),
+        content: JSON.parse(localStorage.getItem('stoneside_content') || 'null'),
+        timeline: JSON.parse(localStorage.getItem('stoneside_timeline') || 'null'),
+        pillars: JSON.parse(localStorage.getItem('stoneside_pillars') || 'null'),
+        process: JSON.parse(localStorage.getItem('stoneside_process') || 'null'),
+        contact: JSON.parse(localStorage.getItem('stoneside_contact') || 'null'),
+        projects: JSON.parse(localStorage.getItem('stoneside_projects') || 'null'),
+        testimonials: JSON.parse(localStorage.getItem('stoneside_testimonials') || 'null'),
+        settings: JSON.parse(localStorage.getItem('stoneside_settings') || 'null')
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'stoneside-data-export.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      showToast('Data exported!', 'success');
     }
 
-    // ════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     // TOAST NOTIFICATIONS
-    // ════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
     function showToast(message, type = 'success') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
@@ -1318,9 +1847,7 @@
         </svg>
         <span class="toast-message">${message}</span>
       `;
-
       container.appendChild(toast);
-
       setTimeout(() => {
         toast.style.animation = 'slideIn 0.3s ease-out reverse';
         setTimeout(() => toast.remove(), 300);

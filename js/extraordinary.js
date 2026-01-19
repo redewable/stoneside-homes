@@ -1,12 +1,15 @@
 // ════════════════════════════════════════════════════════════════════════════
-//  STONESIDE CUSTOM HOMES — Extraordinary JavaScript v3
-//  Now with admin dashboard integration
+//  STONESIDE CUSTOM HOMES — Extraordinary JavaScript v4
+//  Modal navigation, keyboard controls, testimonials, mobile fixes
 // ════════════════════════════════════════════════════════════════════════════
 
+// Track current modal project index globally
+let currentModalIndex = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
-  loadAdminContent(); // Load content from admin dashboard
+  loadAdminContent();
   initPreloader();
-  initPencilCursor();
+  initCursor();
   initHeader();
   initMobileNav();
   initHeroReveal();
@@ -15,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProcessSteps();
   initScrollAnimations();
   initModal();
+  initTestimonials();
   initContactForm();
   initSmoothScroll();
 });
@@ -26,7 +30,6 @@ function loadAdminContent() {
   // Load Hero Content
   const heroContent = JSON.parse(localStorage.getItem('stoneside_hero') || 'null');
   if (heroContent) {
-    // Title words
     const title1Words = document.querySelectorAll('.title-line-1 .word');
     const title2Words = document.querySelectorAll('.title-line-2 .word');
     
@@ -35,25 +38,21 @@ function loadAdminContent() {
     if (title2Words[0]) title2Words[0].textContent = heroContent.title2Word1 || 'Become';
     if (title2Words[1]) title2Words[1].textContent = heroContent.title2Word2 || 'Legacy';
     
-    // Subtitle
     const subtitle = document.querySelector('.hero-subtitle');
     if (subtitle && heroContent.subtitle) {
       subtitle.innerHTML = heroContent.subtitle.replace(/\n/g, '<br/>');
     }
     
-    // Location
     const location = document.querySelector('.location-text');
     if (location && heroContent.location) {
       location.textContent = heroContent.location;
     }
     
-    // Years divider
     const years = document.querySelector('.divider-year');
     if (years && heroContent.years) {
       years.textContent = heroContent.years;
     }
     
-    // Stats
     const statItems = document.querySelectorAll('.stat-item');
     if (statItems[0]) {
       const value = statItems[0].querySelector('.stat-value');
@@ -78,24 +77,20 @@ function loadAdminContent() {
   // Load Page Content
   const pageContent = JSON.parse(localStorage.getItem('stoneside_content') || 'null');
   if (pageContent) {
-    // Legacy
-    const legacyTitle = document.querySelector('.legacy .title-large');
+    const legacyTitle = document.querySelector('.legacy-title');
     const legacyLead = document.querySelector('.legacy-lead');
-    if (legacyTitle && pageContent.legacyTitle) legacyTitle.textContent = pageContent.legacyTitle;
+    if (legacyTitle && pageContent.legacyTitle) {
+      legacyTitle.innerHTML = pageContent.legacyTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    }
     if (legacyLead && pageContent.legacyLead) legacyLead.textContent = pageContent.legacyLead;
     
-    // Philosophy
     const philosophyTitle = document.querySelector('.philosophy-title');
     const philosophyLead = document.querySelector('.philosophy-lead');
     if (philosophyTitle && pageContent.philosophyTitle) {
-      const parts = pageContent.philosophyTitle.split(' ');
-      if (parts.length >= 2) {
-        philosophyTitle.innerHTML = `${parts[0]} ${parts[1]}<br/><em>${parts.slice(2).join(' ')}</em>`;
-      }
+      philosophyTitle.innerHTML = pageContent.philosophyTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
     }
     if (philosophyLead && pageContent.philosophyLead) philosophyLead.textContent = pageContent.philosophyLead;
     
-    // Pillars
     const pillars = document.querySelectorAll('.pillar');
     if (pillars[0]) {
       const title = pillars[0].querySelector('.pillar-title');
@@ -116,28 +111,22 @@ function loadAdminContent() {
       if (text && pageContent.pillar3Text) text.textContent = pageContent.pillar3Text;
     }
     
-    // Portfolio
     const portfolioTitle = document.querySelector('.portfolio-title');
     const portfolioLead = document.querySelector('.portfolio-lead');
     if (portfolioTitle && pageContent.portfolioTitle) {
-      const parts = pageContent.portfolioTitle.split(' ');
-      portfolioTitle.innerHTML = `${parts.slice(0, 2).join(' ')}<br/><em>${parts.slice(2).join(' ')}</em>`;
+      portfolioTitle.innerHTML = pageContent.portfolioTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
     }
     if (portfolioLead && pageContent.portfolioLead) portfolioLead.textContent = pageContent.portfolioLead;
     
-    // Process
     const processTitle = document.querySelector('.process-title');
     if (processTitle && pageContent.processTitle) {
-      const parts = pageContent.processTitle.split(' ');
-      processTitle.innerHTML = `${parts[0]} ${parts[1]}<br/><em>${parts[2]}</em><br/>${parts.slice(3).join(' ')}`;
+      processTitle.innerHTML = pageContent.processTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
     }
     
-    // Contact
     const contactTitle = document.querySelector('.contact-title');
     const contactLead = document.querySelector('.contact-lead');
     if (contactTitle && pageContent.contactTitle) {
-      const parts = pageContent.contactTitle.split(' ');
-      contactTitle.innerHTML = `${parts.slice(0, 2).join(' ')}<br/><em>${parts[2]}</em><br/>${parts.slice(3).join(' ')}`;
+      contactTitle.innerHTML = pageContent.contactTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
     }
     if (contactLead && pageContent.contactLead) contactLead.textContent = pageContent.contactLead;
   }
@@ -145,26 +134,14 @@ function loadAdminContent() {
   // Load Settings
   const settings = JSON.parse(localStorage.getItem('stoneside_settings') || 'null');
   if (settings) {
-    // Scripture verse
-    const verseElements = document.querySelectorAll('.verse-line, .side-verse .verse-line');
-    const verseRefs = document.querySelectorAll('.verse-ref');
-    
-    if (settings.scriptureVerse) {
-      const verseParts = settings.scriptureVerse.split(',');
-      verseElements.forEach((el, i) => {
-        if (verseParts[i]) el.textContent = verseParts[i].trim();
-      });
+    const philosophyVerse = document.querySelector('.philosophy-verse blockquote');
+    const philosophyVerseRef = document.querySelector('.philosophy-verse cite');
+    if (philosophyVerse && settings.scriptureVerse) {
+      philosophyVerse.textContent = `"${settings.scriptureVerse}"`;
     }
-    
-    if (settings.scriptureRef) {
-      verseRefs.forEach(el => el.textContent = `— ${settings.scriptureRef}`);
+    if (philosophyVerseRef && settings.scriptureRef) {
+      philosophyVerseRef.textContent = settings.scriptureRef;
     }
-    
-    // Footer
-    const footerName = document.querySelector('.footer-name');
-    const footerLocation = document.querySelector('.footer-location');
-    if (footerName && settings.companyName) footerName.textContent = settings.companyName;
-    if (footerLocation && settings.location) footerLocation.textContent = settings.location;
   }
 }
 
@@ -187,7 +164,6 @@ function initPreloader() {
     }, 1000);
   }, 3200);
 
-  // Fallback
   setTimeout(() => {
     if (!preloader.classList.contains('done')) {
       preloader.classList.add('done');
@@ -197,10 +173,33 @@ function initPreloader() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// PENCIL CURSOR
+// CURSOR — Only on desktop with mouse
 // ════════════════════════════════════════════════════════════════
-function initPencilCursor() {
-  if (window.matchMedia('(max-width: 1024px)').matches) return;
+function initCursor() {
+  // Check for touch device or mobile
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const isSmallScreen = window.matchMedia('(max-width: 1024px)').matches;
+  const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+  
+  // Hide old cursor elements completely on touch/mobile
+  const oldCursor = document.getElementById('cursor');
+  const oldGlow = document.getElementById('cursorGlow');
+  
+  if (isTouchDevice || isSmallScreen || hasCoarsePointer) {
+    if (oldCursor) {
+      oldCursor.style.display = 'none';
+      oldCursor.remove();
+    }
+    if (oldGlow) {
+      oldGlow.style.display = 'none';
+      oldGlow.remove();
+    }
+    return;
+  }
+  
+  // Desktop with mouse - create pencil cursor
+  if (oldCursor) oldCursor.style.display = 'none';
+  if (oldGlow) oldGlow.style.display = 'none';
   
   const pencil = document.createElement('div');
   pencil.className = 'pencil-cursor';
@@ -280,7 +279,7 @@ function initPencilCursor() {
 
   const style = document.createElement('style');
   style.textContent = `
-    @media (min-width: 1025px) {
+    @media (hover: hover) and (pointer: fine) {
       * { cursor: none !important; }
       .pencil-cursor {
         position: fixed;
@@ -314,11 +313,6 @@ function initPencilCursor() {
     }
   `;
   document.head.appendChild(style);
-
-  const oldCursor = document.getElementById('cursor');
-  const oldGlow = document.getElementById('cursorGlow');
-  if (oldCursor) oldCursor.style.display = 'none';
-  if (oldGlow) oldGlow.style.display = 'none';
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -349,74 +343,41 @@ function initHeader() {
 // MOBILE NAV
 // ════════════════════════════════════════════════════════════════
 function initMobileNav() {
-  const menuBtn = document.getElementById('headerMenu');
+  const menu = document.getElementById('headerMenu');
   const nav = document.getElementById('mobileNav');
-  const navLinks = nav?.querySelectorAll('a');
+  if (!menu || !nav) return;
 
-  if (!menuBtn || !nav) return;
-
-  const toggleNav = () => {
-    menuBtn.classList.toggle('active');
+  menu.addEventListener('click', () => {
+    menu.classList.toggle('active');
     nav.classList.toggle('active');
-    document.body.classList.toggle('locked');
-  };
-
-  menuBtn.addEventListener('click', toggleNav);
-
-  navLinks?.forEach(link => {
-    link.addEventListener('click', () => {
-      if (nav.classList.contains('active')) toggleNav();
-    });
+    nav.setAttribute('aria-hidden', !nav.classList.contains('active'));
+    document.body.classList.toggle('locked', nav.classList.contains('active'));
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && nav.classList.contains('active')) toggleNav();
+  nav.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('active');
+      nav.classList.remove('active');
+      nav.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('locked');
+    });
   });
 }
 
 // ════════════════════════════════════════════════════════════════
-// HERO REVEAL — More Sensitive
+// HERO REVEAL
 // ════════════════════════════════════════════════════════════════
 function initHeroReveal() {
   const hero = document.querySelector('.hero');
-  const photoLayer = document.querySelector('.hero-photo-layer');
-  
-  if (!hero || !photoLayer) return;
+  if (!hero) return;
 
-  let ticking = false;
+  setTimeout(() => hero.classList.add('revealed'), 4500);
 
-  const handleScroll = () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const scrollY = window.pageYOffset;
-        const heroHeight = hero.offsetHeight;
-        
-        // Start at 30px, complete by 25% of hero
-        const startPoint = 30;
-        const endPoint = heroHeight * 0.25;
-        
-        let progress = 0;
-        if (scrollY > startPoint) {
-          progress = Math.min((scrollY - startPoint) / (endPoint - startPoint), 1);
-        }
-        
-        const clipRight = 100 - (progress * 100);
-        photoLayer.style.clipPath = `polygon(${clipRight}% 0, 100% 0, 100% 100%, ${clipRight}% 100%)`;
-        
-        if (progress >= 1) {
-          hero.classList.add('revealed');
-        } else {
-          hero.classList.remove('revealed');
-        }
-
-        ticking = false;
-      });
-      ticking = true;
+  hero.addEventListener('click', (e) => {
+    if (!e.target.closest('a, button')) {
+      hero.classList.toggle('revealed');
     }
-  };
-
-  handleScroll();
-  window.addEventListener('scroll', handleScroll, { passive: true });
+  });
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -425,12 +386,9 @@ function initHeroReveal() {
 function initTimeline() {
   const track = document.getElementById('timelineTrack');
   const progressFill = document.getElementById('timelineProgress');
-  
   if (!track) return;
 
-  let isDown = false;
-  let startX;
-  let scrollLeft;
+  let isDown = false, startX, scrollLeft;
 
   track.addEventListener('mousedown', (e) => {
     isDown = true;
@@ -444,11 +402,10 @@ function initTimeline() {
   track.addEventListener('mousemove', (e) => {
     if (!isDown) return;
     e.preventDefault();
-    const x = e.pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX) * 2;
+    const walk = (e.pageX - track.offsetLeft - startX) * 2;
+    track.scrollLeft = scrollLeft - walk;
   });
 
-  // Touch
   let touchStartX, touchScrollLeft;
   track.addEventListener('touchstart', (e) => {
     touchStartX = e.touches[0].pageX;
@@ -482,12 +439,15 @@ function initPortfolio() {
 
   if (!track || typeof projects === 'undefined') return;
 
+  // Render gallery items with updated structure
   track.innerHTML = projects.map((project, index) => `
     <article class="gallery-item" data-id="${project.id}" data-index="${index}">
-      <img class="gallery-image" src="${project.photo || project.image}" alt="${project.title}" loading="lazy" />
-      <div class="gallery-overlay"></div>
+      <div class="gallery-media">
+        <img class="gallery-sketch" src="${project.sketch || project.photo || project.image}" alt="${project.title}" loading="lazy" />
+        <img class="gallery-photo" src="${project.photo || project.image}" alt="${project.title}" loading="lazy" />
+        <span class="gallery-tag">${project.type === 'custom' ? 'Custom Build' : 'Spec Home'}</span>
+      </div>
       <div class="gallery-info">
-        <span class="gallery-type">${project.type === 'custom' ? 'Custom Build' : 'Spec Home'}</span>
         <h3 class="gallery-title">${project.title}</h3>
         <span class="gallery-location">${project.location}</span>
       </div>
@@ -523,7 +483,10 @@ function initPortfolio() {
       return;
     }
     const item = e.target.closest('.gallery-item');
-    if (item) openModal(parseInt(item.dataset.id));
+    if (item) {
+      const index = parseInt(item.dataset.index);
+      openModal(index);
+    }
   });
 
   let currentIndex = 0;
@@ -561,7 +524,7 @@ function initPortfolio() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// PROCESS STEPS
+// PROCESS STEPS — Animated on scroll
 // ════════════════════════════════════════════════════════════════
 function initProcessSteps() {
   const steps = document.querySelectorAll('.step');
@@ -571,7 +534,7 @@ function initProcessSteps() {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const index = Array.from(steps).indexOf(entry.target);
-        setTimeout(() => entry.target.classList.add('visible'), index * 100);
+        setTimeout(() => entry.target.classList.add('visible'), index * 150);
         observer.unobserve(entry.target);
       }
     });
@@ -584,7 +547,7 @@ function initProcessSteps() {
 // SCROLL ANIMATIONS
 // ════════════════════════════════════════════════════════════════
 function initScrollAnimations() {
-  const elements = document.querySelectorAll('.reveal, .section-label, .legacy-title, .philosophy-title, .portfolio-title, .process-title, .contact-title, .legacy-lead, .philosophy-lead, .portfolio-lead, .contact-lead');
+  const elements = document.querySelectorAll('.reveal, .section-tag, .legacy-title, .philosophy-title, .portfolio-title, .process-title, .contact-title, .legacy-lead, .philosophy-lead, .portfolio-lead, .contact-lead');
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -599,49 +562,74 @@ function initScrollAnimations() {
     if (!el.classList.contains('reveal')) el.classList.add('reveal');
     observer.observe(el);
   });
-
-  // Count animation
-  const countElements = document.querySelectorAll('[data-count]');
-  const countObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCount(entry.target, parseInt(entry.target.dataset.count));
-        countObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  countElements.forEach(el => countObserver.observe(el));
-}
-
-function animateCount(element, target) {
-  const duration = 2000;
-  const startTime = performance.now();
-
-  function update(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    element.textContent = Math.floor((1 - Math.pow(1 - progress, 3)) * target);
-    if (progress < 1) requestAnimationFrame(update);
-    else element.textContent = target;
-  }
-
-  requestAnimationFrame(update);
 }
 
 // ════════════════════════════════════════════════════════════════
-// MODAL
+// TESTIMONIALS — Load from data
+// ════════════════════════════════════════════════════════════════
+function initTestimonials() {
+  const grid = document.getElementById('testimonialsGrid');
+  if (!grid) return;
+  
+  // Check for testimonials in localStorage or use defaults
+  const storedTestimonials = JSON.parse(localStorage.getItem('stoneside_testimonials') || 'null');
+  
+  const defaultTestimonials = [
+    {
+      quote: "The difference was clear from our first conversation. No sales pitch—just a builder who listened, explained, and delivered exactly what was promised.",
+      name: "The Martinez Family",
+      detail: "Custom Build, College Station • 2023"
+    },
+    {
+      quote: "After interviewing five builders, Stoneside was the only one who asked about our family's needs first and budget second. That told us everything.",
+      name: "The Thompson Family",
+      detail: "Custom Build, Bryan • 2022"
+    }
+  ];
+  
+  const testimonials = storedTestimonials || defaultTestimonials;
+  
+  if (testimonials.length > 0) {
+    grid.innerHTML = testimonials.map(t => `
+      <div class="testimonial-card">
+        <div class="testimonial-mark">"</div>
+        <blockquote class="testimonial-quote">${t.quote}</blockquote>
+        <div class="testimonial-author">
+          <span class="author-name">${t.name}</span>
+          <span class="author-detail">${t.detail}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// MODAL — With navigation
 // ════════════════════════════════════════════════════════════════
 function initModal() {
   const modal = document.getElementById('projectModal');
   if (!modal) return;
 
-  modal.querySelector('.modal-backdrop')?.addEventListener('click', closeModal);
+  // Close handlers
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
   document.getElementById('modalClose')?.addEventListener('click', closeModal);
+  
+  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    if (!modal.classList.contains('active')) return;
+    
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') navigateModal(-1);
+    if (e.key === 'ArrowRight') navigateModal(1);
   });
 
+  // Navigation buttons
+  document.getElementById('modalPrev')?.addEventListener('click', () => navigateModal(-1));
+  document.getElementById('modalNext')?.addEventListener('click', () => navigateModal(1));
+
+  // Reveal button
   document.getElementById('modalReveal')?.addEventListener('click', () => {
     const images = document.getElementById('modalImages');
     images?.classList.toggle('revealed');
@@ -649,18 +637,53 @@ function initModal() {
     const text = btn?.querySelector('.reveal-text');
     if (text) text.textContent = images?.classList.contains('revealed') ? 'Show Sketch' : 'Reveal Build';
   });
+  
+  // View details button
+  document.getElementById('modalViewDetails')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (typeof projects !== 'undefined' && projects[currentModalIndex]) {
+      const project = projects[currentModalIndex];
+      // Navigate to project page (will be created)
+      window.location.href = `project.html?id=${project.id}`;
+    }
+  });
 }
 
-function openModal(projectId) {
+function navigateModal(direction) {
+  if (typeof projects === 'undefined') return;
+  
+  const newIndex = currentModalIndex + direction;
+  if (newIndex >= 0 && newIndex < projects.length) {
+    openModal(newIndex);
+  }
+}
+
+function updateModalNavigation() {
+  if (typeof projects === 'undefined') return;
+  
+  const prevBtn = document.getElementById('modalPrev');
+  const nextBtn = document.getElementById('modalNext');
+  
+  if (prevBtn) {
+    prevBtn.classList.toggle('disabled', currentModalIndex === 0);
+  }
+  if (nextBtn) {
+    nextBtn.classList.toggle('disabled', currentModalIndex === projects.length - 1);
+  }
+}
+
+function openModal(projectIndex) {
   const modal = document.getElementById('projectModal');
   if (!modal || typeof projects === 'undefined') return;
 
-  const project = projects.find(p => p.id === projectId);
+  const project = projects[projectIndex];
   if (!project) return;
+  
+  currentModalIndex = projectIndex;
 
   const setContent = (id, value) => {
     const el = document.getElementById(id);
-    if (el) el.textContent = value;
+    if (el) el.textContent = value || '';
   };
 
   const setAttr = (id, attr, value) => {
@@ -671,20 +694,30 @@ function openModal(projectId) {
   setContent('modalType', project.type === 'custom' ? 'Custom Build' : 'Spec Home');
   setContent('modalTitle', project.title);
   setContent('modalLocation', project.location);
-  setContent('modalDescription', project.description || '');
+  setContent('modalDescription', project.description || 'A beautiful custom home built with care and attention to detail.');
   setContent('modalSqft', project.sqft);
   setContent('modalBeds', project.beds);
   setContent('modalBaths', project.baths);
   setContent('modalYear', project.year);
-  setContent('modalVerseText', project.verseText || '');
+  setContent('modalVerseText', project.verseText ? `"${project.verseText}"` : '');
   setContent('modalVerseRef', project.verseRef || '');
 
   setAttr('modalSketch', 'src', project.sketch || project.photo || project.image);
   setAttr('modalPhoto', 'src', project.photo || project.image);
 
+  // Reset reveal state
   document.getElementById('modalImages')?.classList.remove('revealed');
   const revealText = document.querySelector('#modalReveal .reveal-text');
   if (revealText) revealText.textContent = 'Reveal Build';
+
+  // Update navigation buttons
+  updateModalNavigation();
+  
+  // Update view details link
+  const viewDetailsBtn = document.getElementById('modalViewDetails');
+  if (viewDetailsBtn) {
+    viewDetailsBtn.href = `project.html?id=${project.id}`;
+  }
 
   modal.classList.add('active');
   document.body.classList.add('locked');
@@ -696,6 +729,7 @@ function closeModal() {
   document.body.classList.remove('locked');
 }
 
+// Expose globally
 window.openModal = openModal;
 window.closeModal = closeModal;
 
@@ -713,26 +747,28 @@ function initContactForm() {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const submitBtn = form.querySelector('.form-submit');
-    const submitText = submitBtn?.querySelector('.submit-text');
-    if (!submitBtn || !submitText) return;
+    if (!submitBtn) return;
 
-    const name = form.querySelector('#name');
+    const firstName = form.querySelector('#firstName');
+    const lastName = form.querySelector('#lastName');
     const email = form.querySelector('#email');
     const message = form.querySelector('#message');
 
-    if (!name?.value.trim() || !email?.value.trim() || !message?.value.trim()) {
-      [name, email, message].forEach(field => {
-        if (!field?.value.trim()) {
-          field.parentElement.classList.add('error');
-          setTimeout(() => field.parentElement.classList.remove('error'), 500);
-        }
-      });
-      return;
-    }
+    // Validate
+    let isValid = true;
+    [firstName, lastName, email, message].forEach(field => {
+      if (field && !field.value.trim()) {
+        field.parentElement.classList.add('error');
+        setTimeout(() => field.parentElement.classList.remove('error'), 500);
+        isValid = false;
+      }
+    });
+    
+    if (!isValid) return;
 
     submitBtn.disabled = true;
-    const originalText = submitText.textContent;
-    submitText.textContent = 'Sending...';
+    const originalHTML = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>Sending...</span>';
 
     try {
       const response = await fetch('/api/contact', {
@@ -743,15 +779,20 @@ function initContactForm() {
       if (!response.ok) throw new Error();
     } catch {}
 
-    submitText.textContent = 'Sent Successfully';
+    submitBtn.innerHTML = '<span>Sent Successfully ✓</span>';
     submitBtn.style.background = 'var(--bronze)';
     form.reset();
+    
+    // Show success message
+    const success = document.getElementById('formSuccess');
+    if (success) success.classList.add('visible');
 
     setTimeout(() => {
       submitBtn.disabled = false;
-      submitText.textContent = originalText;
+      submitBtn.innerHTML = originalHTML;
       submitBtn.style.background = '';
-    }, 3000);
+      if (success) success.classList.remove('visible');
+    }, 4000);
   });
 }
 

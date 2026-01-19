@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project | Stoneside Custom Homes</title>
+  <meta name="description" content="View this custom home built by Stoneside Custom Homes in Bryan-College Station, Texas." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/extraordinary.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+
+  <style>
+    /* Project Page Specific Styles */
+    .project-page {
+      min-height: 100vh;
+      background: var(--charcoal);
+    }
+
+    .project-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(26, 26, 24, 0.95), transparent);
+      transition: background 0.3s ease;
+    }
+
+    .project-header.scrolled {
+      background: rgba(26, 26, 24, 0.98);
+      backdrop-filter: blur(10px);
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--stone);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--cream);
+    }
+
+    .back-link svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .project-nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    .project-nav-btn {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50%;
+      color: var(--stone);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .project-nav-btn:hover:not(.disabled) {
+      background: var(--bronze);
+      border-color: var(--bronze);
+      color: var(--charcoal);
+    }
+
+    .project-nav-btn.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .project-nav-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Hero Section */
+    .project-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 500px;
+      overflow: hidden;
+    }
+
+    .project-hero-media {
+      position: absolute;
+      inset: 0;
+    }
+
+    .project-hero-sketch,
+    .project-hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.8s ease;
+    }
+
+    .project-hero-sketch {
+      opacity: 0.3;
+      filter: grayscale(1);
+    }
+
+    .project-hero-photo {
+      opacity: 1;
+    }
+
+    .project-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(26, 26, 24, 0.3) 0%,
+        rgba(26, 26, 24, 0.1) 40%,
+        rgba(26, 26, 24, 0.7) 80%,
+        rgba(26, 26, 24, 1) 100%
+      );
+    }
+
+    .project-hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 60px;
+      z-index: 2;
+    }
+
+    .project-type-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--bronze);
+      color: var(--charcoal);
+      font-size: 0.625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .project-location {
+      font-size: 1rem;
+      color: var(--stone);
+      letter-spacing: 0.02em;
+    }
+
+    /* Content Section */
+    .project-content {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 80px;
+    }
+
+    @media (max-width: 1000px) {
+      .project-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+    }
+
+    .project-main h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+
+    .project-description {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--stone);
+      margin-bottom: 48px;
+    }
+
+    .project-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .feature-item {
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+
+    .feature-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--stone);
+      margin-bottom: 8px;
+    }
+
+    .feature-value {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--cream);
+    }
+
+    /* Sidebar */
+    .project-sidebar {
+      position: sticky;
+      top: 120px;
+    }
+
+    .specs-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    .specs-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--stone);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .specs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .spec-label {
+      font-size: 0.875rem;
+      color: var(--stone);
+    }
+
+    .spec-value {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .verse-card {
+      background: linear-gradient(135deg, rgba(157, 123, 90, 0.1), rgba(157, 123, 90, 0.05));
+      border: 1px solid rgba(157, 123, 90, 0.2);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .verse-mark {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--bronze);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .verse-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.125rem;
+      color: var(--cream);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .verse-ref {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--bronze);
+    }
+
+    /* CTA Section */
+    .project-cta {
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .cta-text {
+      font-size: 1rem;
+      color: var(--stone);
+      margin-bottom: 24px;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background: var(--bronze);
+      color: var(--charcoal);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      background: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    .cta-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Related Projects */
+    .related-section {
+      padding: 80px 60px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .related-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .related-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--cream);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .related-card {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .related-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .related-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .related-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .related-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26, 26, 24, 0.9), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+    }
+
+    .related-card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+
+    .related-card-meta {
+      font-size: 0.75rem;
+      color: var(--stone);
+    }
+
+    /* Footer */
+    .project-footer {
+      padding: 40px 60px;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 0.875rem;
+      color: var(--stone);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .project-header {
+        padding: 16px 24px;
+      }
+
+      .project-hero-content {
+        padding: 40px 24px;
+      }
+
+      .project-content {
+        padding: 60px 24px;
+      }
+
+      .project-features {
+        grid-template-columns: 1fr;
+      }
+
+      .related-section {
+        padding: 60px 24px;
+      }
+
+      .project-footer {
+        padding: 32px 24px;
+      }
+    }
+
+    /* Loading State */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-size: 1rem;
+      color: var(--stone);
+    }
+
+    /* Error State */
+    .error-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .error-state h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--cream);
+      margin-bottom: 16px;
+    }
+
+    .error-state p {
+      color: var(--stone);
+      margin-bottom: 32px;
+    }
+  </style>
+</head>
+
+<body class="project-page">
+  <!-- Loading State -->
+  <div class="loading" id="loadingState">Loading project...</div>
+
+  <!-- Error State -->
+  <div class="error-state" id="errorState" style="display: none;">
+    <h1>Project Not Found</h1>
+    <p>The project you're looking for doesn't exist or has been removed.</p>
+    <a href="index.html#portfolio" class="cta-btn">
+      <span>View All Projects</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Main Content (hidden until loaded) -->
+  <div id="projectContent" style="display: none;">
+    <!-- Header -->
+    <header class="project-header" id="projectHeader">
+      <a href="index.html#portfolio" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Back to Portfolio</span>
+      </a>
+
+      <div class="project-nav">
+        <button class="project-nav-btn" id="prevProject" title="Previous Project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="project-nav-btn" id="nextProject" title="Next Project">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="project-hero">
+      <div class="project-hero-media">
+        <img class="project-hero-sketch" id="heroSketch" src="" alt="" />
+        <img class="project-hero-photo" id="heroPhoto" src="" alt="" />
+        <div class="project-hero-overlay"></div>
+      </div>
+
+      <div class="project-hero-content">
+        <span class="project-type-badge" id="projectType">Custom Build</span>
+        <h1 class="project-title" id="projectTitle">Loading...</h1>
+        <p class="project-location" id="projectLocation">Location</p>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="project-content">
+      <div class="project-grid">
+        <div class="project-main">
+          <h2>About This Home</h2>
+          <p class="project-description" id="projectDescription">
+            Loading project description...
+          </p>
+
+          <div class="project-features">
+            <div class="feature-item">
+              <div class="feature-label">Square Footage</div>
+              <div class="feature-value" id="featureSqft">—</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-label">Bedrooms</div>
+              <div class="feature-value" id="featureBeds">—</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-label">Bathrooms</div>
+              <div class="feature-value" id="featureBaths">—</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-label">Year Completed</div>
+              <div class="feature-value" id="featureYear">—</div>
+            </div>
+          </div>
+
+          <div class="project-cta">
+            <p class="cta-text">Interested in building a home like this? Let's start a conversation.</p>
+            <a href="index.html#contact" class="cta-btn">
+              <span>Start Your Project</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <aside class="project-sidebar">
+          <div class="specs-card">
+            <h3 class="specs-title">Project Specifications</h3>
+            <div class="specs-list">
+              <div class="spec-row">
+                <span class="spec-label">Type</span>
+                <span class="spec-value" id="specType">Custom Build</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Location</span>
+                <span class="spec-value" id="specLocation">—</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Size</span>
+                <span class="spec-value" id="specSize">—</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Beds / Baths</span>
+                <span class="spec-value" id="specBedBath">—</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Completed</span>
+                <span class="spec-value" id="specYear">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="verse-card" id="verseCard">
+            <div class="verse-mark">"</div>
+            <p class="verse-text" id="verseText">Loading...</p>
+            <span class="verse-ref" id="verseRef">—</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Related Projects -->
+    <section class="related-section">
+      <div class="related-header">
+        <h2 class="related-title">More Projects</h2>
+      </div>
+      <div class="related-grid" id="relatedGrid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="project-footer">
+      <p class="footer-text">© 2024 Stoneside Custom Homes · Bryan–College Station, Texas · Building Legacy Since 1984</p>
+    </footer>
+  </div>
+
+  <script>
+    // ════════════════════════════════════════════════════════════════
+    // PROJECT PAGE JAVASCRIPT
+    // ════════════════════════════════════════════════════════════════
+
+    let projects = [];
+    let currentProject = null;
+    let currentIndex = -1;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProjects();
+    });
+
+    function getDefaultProjects() {
+      return [
+        { id: 1, title: "The Oakwood Estate", type: "custom", location: "College Station, TX", sqft: "4,200", beds: "5", baths: "4.5", year: "2024", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "Designed for a growing family who wanted vaulted volume, long sightlines, and a backyard built for gathering. Every detail was chosen with intention—from the placement of windows to capture morning light, to the flow between kitchen and living spaces that makes everyday life feel effortless.", verseText: "By wisdom a house is built, and through understanding it is established.", verseRef: "Proverbs 24:3" },
+        { id: 2, title: "The Heritage Craftsman", type: "custom", location: "Bryan, TX", sqft: "3,600", beds: "4", baths: "3.5", year: "2023", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A classic exterior with thoughtful interior flow. Built for everyday living and long-term durability. The design honors traditional craftsman proportions while incorporating modern conveniences throughout.", verseText: "Unless the Lord builds the house, the builders labor in vain.", verseRef: "Psalm 127:1" },
+        { id: 3, title: "The Brazos Modern Ranch", type: "custom", location: "Bryan–College Station, TX", sqft: "3,950", beds: "4", baths: "3", year: "2024", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A modern ranch with practical planning: generous storage, clean transitions, and materials chosen for performance. Single-story living at its finest, with seamless indoor-outdoor connections.", verseText: "Commit your work to the Lord, and your plans will be established.", verseRef: "Proverbs 16:3" },
+        { id: 4, title: "The Stonegate Spec", type: "spec", location: "College Station, TX", sqft: "2,850", beds: "4", baths: "3", year: "2023", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A spec home built with custom-home discipline: strong details, clean scope, and straightforward value. Proof that thoughtful design doesn't require a custom budget.", verseText: "Let all that you do be done in love.", verseRef: "1 Corinthians 16:14" },
+        { id: 5, title: "The Traditions Porch House", type: "custom", location: "College Station, TX", sqft: "3,250", beds: "4", baths: "3.5", year: "2022", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "Designed around front-porch living and family gatherings. Traditional proportions with warm interior light. A home that invites neighbors in and sends family out with purpose.", verseText: "As for me and my house, we will serve the Lord.", verseRef: "Joshua 24:15" },
+        { id: 6, title: "The Midtown Bryan Build", type: "spec", location: "Bryan, TX", sqft: "2,640", beds: "3", baths: "2.5", year: "2022", photo: "assets/images/custom_home.jpg", sketch: "assets/images/hero-sketch.jpg", description: "A clean, durable build with strong planning and honest finishes. Built for real life—and built to last. Efficient without feeling small, practical without sacrificing style.", verseText: "Whatever you do, work at it with all your heart.", verseRef: "Colossians 3:23" }
+      ];
+    }
+
+    function loadProjects() {
+      // Load from localStorage or use defaults
+      projects = JSON.parse(localStorage.getItem('stoneside_projects') || 'null') || getDefaultProjects();
+      
+      // Get project ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const projectId = parseInt(urlParams.get('id'));
+      
+      if (!projectId) {
+        showError();
+        return;
+      }
+
+      // Find project
+      currentIndex = projects.findIndex(p => p.id === projectId);
+      currentProject = projects[currentIndex];
+      
+      if (!currentProject) {
+        showError();
+        return;
+      }
+
+      // Display project
+      displayProject();
+    }
+
+    function showError() {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').style.display = 'flex';
+    }
+
+    function displayProject() {
+      const p = currentProject;
+
+      // Update page title
+      document.title = `${p.title} | Stoneside Custom Homes`;
+
+      // Hero
+      document.getElementById('heroSketch').src = p.sketch || p.photo || 'assets/images/hero-sketch.jpg';
+      document.getElementById('heroPhoto').src = p.photo || 'assets/images/custom_home.jpg';
+      document.getElementById('projectType').textContent = p.type === 'custom' ? 'Custom Build' : 'Spec Home';
+      document.getElementById('projectTitle').textContent = p.title;
+      document.getElementById('projectLocation').textContent = p.location;
+
+      // Description
+      document.getElementById('projectDescription').textContent = p.description || 'A beautiful custom home built with care and attention to detail by Stoneside Custom Homes.';
+
+      // Features
+      document.getElementById('featureSqft').textContent = p.sqft ? `${p.sqft} sq ft` : '—';
+      document.getElementById('featureBeds').textContent = p.beds || '—';
+      document.getElementById('featureBaths').textContent = p.baths || '—';
+      document.getElementById('featureYear').textContent = p.year || '—';
+
+      // Specs sidebar
+      document.getElementById('specType').textContent = p.type === 'custom' ? 'Custom Build' : 'Spec Home';
+      document.getElementById('specLocation').textContent = p.location || '—';
+      document.getElementById('specSize').textContent = p.sqft ? `${p.sqft} sq ft` : '—';
+      document.getElementById('specBedBath').textContent = `${p.beds || '—'} / ${p.baths || '—'}`;
+      document.getElementById('specYear').textContent = p.year || '—';
+
+      // Verse
+      const verseCard = document.getElementById('verseCard');
+      if (p.verseText) {
+        document.getElementById('verseText').textContent = p.verseText;
+        document.getElementById('verseRef').textContent = p.verseRef || '';
+        verseCard.style.display = 'block';
+      } else {
+        verseCard.style.display = 'none';
+      }
+
+      // Navigation
+      updateNavigation();
+
+      // Related projects
+      displayRelatedProjects();
+
+      // Show content
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('projectContent').style.display = 'block';
+
+      // Initialize header scroll
+      initHeaderScroll();
+    }
+
+    function updateNavigation() {
+      const prevBtn = document.getElementById('prevProject');
+      const nextBtn = document.getElementById('nextProject');
+
+      if (currentIndex <= 0) {
+        prevBtn.classList.add('disabled');
+        prevBtn.onclick = null;
+      } else {
+        prevBtn.classList.remove('disabled');
+        prevBtn.onclick = () => navigateTo(currentIndex - 1);
+      }
+
+      if (currentIndex >= projects.length - 1) {
+        nextBtn.classList.add('disabled');
+        nextBtn.onclick = null;
+      } else {
+        nextBtn.classList.remove('disabled');
+        nextBtn.onclick = () => navigateTo(currentIndex + 1);
+      }
+    }
+
+    function navigateTo(index) {
+      const project = projects[index];
+      if (project) {
+        window.location.href = `project.html?id=${project.id}`;
+      }
+    }
+
+    function displayRelatedProjects() {
+      const grid = document.getElementById('relatedGrid');
+      
+      // Get other projects (excluding current)
+      const otherProjects = projects.filter(p => p.id !== currentProject.id);
+      
+      // Show up to 3 related projects
+      const related = otherProjects.slice(0, 3);
+
+      grid.innerHTML = related.map(p => `
+        <a href="project.html?id=${p.id}" class="related-card">
+          <img src="${p.photo || 'assets/images/custom_home.jpg'}" alt="${p.title}" />
+          <div class="related-card-overlay">
+            <h3 class="related-card-title">${p.title}</h3>
+            <p class="related-card-meta">${p.location} · ${p.year}</p>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    function initHeaderScroll() {
+      const header = document.getElementById('projectHeader');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }, { passive: true });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        navigateTo(currentIndex - 1);
+      } else if (e.key === 'ArrowRight' && currentIndex < projects.length - 1) {
+        navigateTo(currentIndex + 1);
+      }
+    });
+  </script>
+</body>
+</html>
