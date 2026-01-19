@@ -152,6 +152,13 @@ function initPreloader() {
   const preloader = document.getElementById('preloader');
   if (!preloader) return;
 
+  // SESSION MEMORY: Skip animation if already seen this session
+  if (sessionStorage.getItem('stoneside_visited')) {
+    preloader.classList.add('done');
+    document.querySelector('.hero')?.classList.add('loaded');
+    return;
+  }
+
   document.body.classList.add('locked');
 
   setTimeout(() => {
@@ -161,6 +168,7 @@ function initPreloader() {
       preloader.classList.add('done');
       document.body.classList.remove('locked');
       document.querySelector('.hero')?.classList.add('loaded');
+      sessionStorage.setItem('stoneside_visited', 'true');
     }, 1000);
   }, 3200);
 
@@ -168,6 +176,7 @@ function initPreloader() {
     if (!preloader.classList.contains('done')) {
       preloader.classList.add('done');
       document.body.classList.remove('locked');
+      sessionStorage.setItem('stoneside_visited', 'true');
     }
   }, 5000);
 }
