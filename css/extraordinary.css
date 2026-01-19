@@ -320,14 +320,11 @@ button {
 }
 
 .logo-image {
-  height: 52px;
-  width: auto;
+  height: 78px; /* Increased from 52px */
 }
 
 @media (max-width: 768px) {
-  .logo-image {
-    height: 42px;
-  }
+  .logo-image, .footer-logo-img { height: 48px; }
 }
 
 .logo-icon {
@@ -512,7 +509,7 @@ button {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   HERO — Glow Effects, Clean Subtitle
+   HERO — Pristine, Professional, Brand-Aligned
 ═══════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
@@ -595,7 +592,7 @@ button {
   min-height: 100dvh;
 }
 
-/* UPDATED: Location centered with glow */
+/* UPDATED: Top Label - No Glow, Crisp */
 .hero-top {
   position: absolute;
   top: calc(var(--header-height) + var(--space-lg));
@@ -611,28 +608,17 @@ button {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-weight: 500;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--charcoal);
-}
-
-@keyframes subtleGlow {
-  0% { text-shadow: 0 0 10px rgba(157, 123, 90, 0.3); }
-  100% { text-shadow: 0 0 25px rgba(157, 123, 90, 0.7), 0 0 50px rgba(157, 123, 90, 0.3); }
+  color: var(--ink);
+  opacity: 0.7;
 }
 
 .location-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background: var(--bronze);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--bronze), 0 0 20px var(--bronze);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--bronze), 0 0 20px var(--bronze); }
-  50% { opacity: 0.7; transform: scale(0.9); box-shadow: 0 0 5px var(--bronze); }
 }
 
 .hero-center {
@@ -676,7 +662,7 @@ button {
   color: var(--bronze);
 }
 
-/* UPDATED: 40 Years with glow */
+/* UPDATED: Divider - Clean, No Glow */
 .hero-divider {
   display: flex;
   align-items: center;
@@ -690,27 +676,23 @@ button {
 .divider-line {
   width: 50px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--bronze), transparent);
-  box-shadow: 0 0 15px rgba(157, 123, 90, 0.6);
+  background: var(--bronze);
+  opacity: 0.3;
 }
 
 .divider-year {
   font-family: var(--font-mono);
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--bronze);
-  text-shadow: 0 0 20px rgba(157, 123, 90, 0.8), 0 0 40px rgba(157, 123, 90, 0.5), 0 0 60px rgba(157, 123, 90, 0.3);
-  animation: yearGlow 3s ease-in-out infinite alternate;
 }
 
-@keyframes yearGlow {
-  0% { text-shadow: 0 0 15px rgba(157, 123, 90, 0.6), 0 0 30px rgba(157, 123, 90, 0.3); }
-  100% { text-shadow: 0 0 30px rgba(157, 123, 90, 1), 0 0 60px rgba(157, 123, 90, 0.6), 0 0 90px rgba(157, 123, 90, 0.3); }
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
-/* UPDATED: Clean subtitle without box */
 .hero-subtitle {
   max-width: 620px;
   margin: 0 auto;
@@ -724,6 +706,7 @@ button {
   animation: fadeIn 0.8s var(--ease-out) 1s forwards;
 }
 
+/* UPDATED: Bottom Layout */
 .hero-bottom {
   position: absolute;
   bottom: var(--space-xl);
@@ -732,11 +715,14 @@ button {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  /* Add padding to move stats away from edge */
+  padding-left: var(--space-2xl);
+  padding-right: var(--space-2xl);
 }
 
 .hero-stats {
   display: flex;
-  gap: var(--space-xl);
+  gap: var(--space-2xl); /* More space between numbers */
   opacity: 0;
   animation: fadeIn 0.8s var(--ease-out) 1.2s forwards;
 }
@@ -747,10 +733,11 @@ button {
 
 .stat-value {
   display: block;
-  font-family: var(--font-display);
+  font-family: var(--font-body); /* Changed to body font for cleaner look */
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   line-height: 1;
   color: var(--ink);
+  font-weight: 300;
 }
 
 .stat-label {
@@ -758,12 +745,18 @@ button {
   margin-top: var(--space-xs);
   font-family: var(--font-mono);
   font-size: 0.5625rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--stone);
+  color: var(--charcoal);
+  font-weight: 600;
 }
 
+/* UPDATED: Centered Button */
 .hero-cta {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
   opacity: 0;
   animation: fadeIn 0.8s var(--ease-out) 1.3s forwards;
 }
@@ -772,19 +765,20 @@ button {
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  padding: 12px 24px;
+  padding: 16px 32px; /* Larger click area */
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink);
+  background: transparent;
   border: 1px solid var(--ink);
   border-radius: 0;
   transition: all 0.4s var(--ease-out);
 }
 
 .hero-btn:hover {
-  color: var(--cream);
+  color: var(--white);
   background: var(--ink);
 }
 
@@ -798,16 +792,70 @@ button {
   transform: translate(3px, -3px);
 }
 
-@media (max-width: 768px) {
+/* UPDATED: Minimal Scroll Indicator */
+.hero-scroll {
+  /* Moved slightly up */
+  position: relative;
+  bottom: 10px;
+  opacity: 0;
+  animation: fadeIn 0.8s var(--ease-out) 1.4s forwards;
+}
+
+.scroll-text {
+  display: none; /* Hide the text */
+}
+
+.scroll-indicator {
+  border: 1px solid var(--bronze);
+  height: 40px;
+  width: 24px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.scroll-dot {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--bronze);
+  border-radius: 50%;
+  animation: scrollDrop 2s infinite;
+}
+
+@keyframes scrollDrop {
+  0% { transform: translate(-50%, 0); opacity: 0; }
+  20% { opacity: 1; }
+  80% { transform: translate(-50%, 15px); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@media (max-width: 900px) {
   .hero-bottom {
+    padding-left: 0;
+    padding-right: 0;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-lg);
+    align-items: center;
+    gap: 30px;
+  }
+  
+  .hero-cta {
+    position: relative;
+    left: auto;
+    transform: none;
+    order: -1; /* Button above stats on mobile */
   }
   
   .hero-stats {
-    flex-direction: column;
-    gap: var(--space-md);
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .hero-scroll {
+    display: none;
   }
 }
 
@@ -1538,10 +1586,7 @@ button {
    TESTIMONIALS — Support multiple testimonials
 ═══════════════════════════════════════════════════════════ */
 .testimonial {
-  position: relative;
-  padding: var(--space-2xl) 0;
-  background: var(--cream);
-  overflow: hidden;
+  background: var(--white); /* Cleaner background */
 }
 
 .testimonial-bg {
@@ -1574,13 +1619,15 @@ button {
   }
 }
 
+/* Add label styling inside CSS directly to avoid HTML changes if possible, 
+   but for the label text "Client Stories", you need to add HTML (Step 3 below). */
 .testimonial-card {
-  background: var(--white);
-  padding: var(--space-xl);
-  border-radius: 12px;
-  border: 1px solid var(--pearl);
-  text-align: left;
-  transition: all 0.4s var(--ease-out);
+  border: none;
+  background: var(--cream);
+  box-shadow: none;
+  border-left: 2px solid var(--bronze); /* Elegant accent */
+  border-radius: 0; /* Sharper */
+  padding: var(--space-2xl);
 }
 
 .testimonial-card:hover {
@@ -1589,21 +1636,17 @@ button {
 }
 
 .testimonial-mark {
-  font-family: var(--font-display);
-  font-size: 4rem;
-  line-height: 0.5;
   color: var(--bronze);
-  opacity: 0.3;
-  margin-bottom: var(--space-md);
+  opacity: 1;
+  font-size: 2rem;
+  font-family: var(--font-display);
 }
 
 .testimonial-quote {
   font-family: var(--font-display);
-  font-size: clamp(1.125rem, 2vw, 1.375rem);
-  font-weight: 400;
-  line-height: 1.5;
+  font-size: 1.5rem;
   color: var(--ink);
-  margin-bottom: var(--space-lg);
+  line-height: 1.4;
 }
 
 .testimonial-author {
@@ -1613,17 +1656,15 @@ button {
 }
 
 .author-name {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bronze);
 }
 
 .author-detail {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--stone);
+  display: none; /* Simplify visuals */
 }
 
 /* Single testimonial fallback (centered) */
@@ -1872,10 +1913,8 @@ button {
 }
 
 .footer-logo-img {
-  height: 50px;
-  width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.9;
+  height: 75px; /* Increased from 50px */
+  opacity: 1; /* Remove transparency for crispness */
 }
 
 .footer-tagline {

@@ -27,18 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // CLOUD DATA LOADER — Reads from Firebase Realtime Database
 // ════════════════════════════════════════════════════════════════
 function loadAdminContent() {
-  // Use the connection we created in the <head>
   const db = firebase.database();
 
-  // Listen for data
   db.ref('/').on('value', (snapshot) => {
     const DATA = snapshot.val();
-    
-    // If database is empty (first time), don't crash
-    if (!DATA) {
-      console.log("Waiting for Admin to save data...");
-      return; 
-    }
+    if (!DATA) return;
 
     // --- 1. HERO ---
     const hero = DATA.hero || {};
@@ -50,18 +43,24 @@ function loadAdminContent() {
     if (title2Words[0]) title2Words[0].textContent = hero.title2Word1 || 'Become';
     if (title2Words[1]) title2Words[1].textContent = hero.title2Word2 || 'Legacy';
     if (hero.subtitle) document.querySelector('.hero-subtitle').textContent = hero.subtitle;
+    if (hero.location) document.querySelector('.location-text').textContent = hero.location;
+    if (hero.years) document.querySelector('.divider-year').textContent = hero.years;
     
     const statItems = document.querySelectorAll('.stat-item');
-    if (statItems[0] && hero.stat1Value) {
+    if (statItems[0]) {
        statItems[0].querySelector('.stat-value').textContent = hero.stat1Value;
        statItems[0].querySelector('.stat-label').textContent = hero.stat1Label;
     }
-    if (statItems[1] && hero.stat2Value) {
+    if (statItems[1]) {
        statItems[1].querySelector('.stat-value').textContent = hero.stat2Value;
        statItems[1].querySelector('.stat-label').textContent = hero.stat2Label;
     }
+    if (statItems[2]) {
+       statItems[2].querySelector('.stat-value').textContent = hero.stat3Value;
+       statItems[2].querySelector('.stat-label').textContent = hero.stat3Label;
+    }
 
-    // --- 2. CONTENT ---
+    // --- 2. CONTENT (Titles/Leads) ---
     const content = DATA.content || {};
     const setHtml = (sel, val) => { const el = document.querySelector(sel); if(el && val) el.innerHTML = val.replace(/\*([^*]+)\*/g, '<em>$1</em>'); };
     const setText = (sel, val) => { const el = document.querySelector(sel); if(el && val) el.textContent = val; };
@@ -75,20 +74,86 @@ function loadAdminContent() {
     setHtml('.process-title', content.processTitle);
     setHtml('.contact-title', content.contactTitle);
     setText('.contact-lead', content.contactLead);
+    
+    // Verse
+    if(content.philosophyVerse) document.querySelector('.philosophy-verse blockquote').textContent = `"${content.philosophyVerse}"`;
+    if(content.philosophyVerseRef) document.querySelector('.philosophy-verse cite').textContent = content.philosophyVerseRef;
 
-    // --- 3. PROJECTS ---
-    if (DATA.projects) {
-        // Ensure it's an array even if Firebase returns an object
-        window.projects = Array.isArray(DATA.projects) ? DATA.projects : Object.values(DATA.projects);
-        initPortfolio(); // Refresh gallery
+    // --- 3. DYNAMIC LISTS (The Missing Part) ---
+    const toArray = (obj) => obj ? (Array.isArray(obj) ? obj : Object.values(obj)) : [];
+
+    // Timeline
+    if (DATA.timeline) {
+        const track = document.getElementById('timelineTrack');
+        if(track) {
+            track.innerHTML = toArray(DATA.timeline).map(item => `
+                <div class="timeline-item">
+                    <div class="timeline-year">${item.year}</div>
+                    <div class="timeline-content"><h3>${item.title}</h3><p>${item.text}</p></div>
+                </div>`).join('');
+        }
     }
 
-    // --- 4. TESTIMONIALS ---
+    // Pillars
+    if (DATA.pillars) {
+        const list = document.querySelector('.philosophy-pillars');
+        if(list) {
+            list.innerHTML = toArray(DATA.pillars).map(item => `
+              <div class="pillar">
+                <span class="pillar-num">${item.num}</span>
+                <div class="pillar-content">
+                  <h3 class="pillar-title">${item.title}</h3>
+                  <p class="pillar-text">${item.text}</p>
+                </div>
+              </div>`).join('');
+        }
+    }
+
+    // Process Steps
+    if (DATA.process) {
+        const list = document.querySelector('.process-steps');
+        if(list) {
+            // Helper for icons
+            const getIcon = (name) => {
+                const icons = {
+                    plus: '<circle cx="24" cy="24" r="20"/><path d="M24 16v16M16 24h16"/>',
+                    grid: '<rect x="8" y="8" width="32" height="32" rx="2"/><path d="M8 20h32M20 8v32"/>',
+                    arrow: '<path d="M12 36l24-24M12 12h24v24"/>',
+                    home: '<path d="M24 8L8 20v20h32V20L24 8z"/><path d="M18 40V28h12v12"/>',
+                    check: '<circle cx="24" cy="24" r="20"/><path d="M16 24l6 6 10-12"/>'
+                };
+                return icons[name] || icons.plus;
+            };
+
+            list.innerHTML = toArray(DATA.process).map(item => `
+              <div class="step">
+                <div class="step-number">${item.num}</div>
+                <div class="step-content">
+                  <h3 class="step-title">${item.title}</h3>
+                  <p class="step-text">${item.text}</p>
+                </div>
+                <div class="step-visual">
+                  <div class="visual-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                        ${getIcon(item.icon)}
+                    </svg>
+                  </div>
+                </div>
+              </div>`).join('');
+        }
+    }
+
+    // --- 4. PROJECTS ---
+    if (DATA.projects) {
+        window.projects = toArray(DATA.projects);
+        initPortfolio();
+    }
+
+    // --- 5. TESTIMONIALS ---
     if (DATA.testimonials) {
-      const tData = Array.isArray(DATA.testimonials) ? DATA.testimonials : Object.values(DATA.testimonials);
       const grid = document.getElementById('testimonialsGrid');
       if(grid) {
-        grid.innerHTML = tData.map(t => `
+        grid.innerHTML = toArray(DATA.testimonials).map(t => `
           <div class="testimonial-card">
             <div class="testimonial-mark">"</div>
             <blockquote class="testimonial-quote">${t.quote}</blockquote>
