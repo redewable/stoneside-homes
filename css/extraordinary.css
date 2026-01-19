@@ -1583,106 +1583,109 @@ button {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   TESTIMONIALS — Support multiple testimonials
+   TESTIMONIALS — Editorial Masonry Layout
 ═══════════════════════════════════════════════════════════ */
 .testimonial {
-  background: var(--white); /* Cleaner background */
-}
-
-.testimonial-bg {
-  position: absolute;
-  inset: 0;
-}
-
-.testimonial-texture {
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse 40% 40% at 20% 50%, rgba(157, 123, 90, 0.06), transparent),
-    radial-gradient(ellipse 30% 30% at 80% 50%, rgba(157, 123, 90, 0.04), transparent);
+  position: relative;
+  padding: var(--space-3xl) 0;
+  background-color: var(--cream);
+  /* Subtle pattern overlay */
+  background-image: radial-gradient(var(--pearl) 1px, transparent 1px);
+  background-size: 40px 40px;
+  overflow: hidden;
 }
 
 .testimonial-content {
   position: relative;
+  z-index: 2;
 }
 
-/* Testimonials grid for multiple */
+/* Masonry Layout for organic flow */
 .testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-xl);
+  column-count: 2;
+  column-gap: var(--space-lg);
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-@media (max-width: 500px) {
+@media (min-width: 1200px) {
   .testimonials-grid {
-    grid-template-columns: 1fr;
+    column-count: 3;
   }
 }
 
-/* Add label styling inside CSS directly to avoid HTML changes if possible, 
-   but for the label text "Client Stories", you need to add HTML (Step 3 below). */
+@media (max-width: 768px) {
+  .testimonials-grid {
+    column-count: 1;
+  }
+}
+
 .testimonial-card {
-  border: none;
-  background: var(--cream);
-  box-shadow: none;
-  border-left: 2px solid var(--bronze); /* Elegant accent */
-  border-radius: 0; /* Sharper */
-  padding: var(--space-2xl);
+  break-inside: avoid; /* Prevents card from splitting across columns */
+  background: var(--white);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg); /* Bottom spacing for masonry items */
+  border-radius: 4px;
+  border-left: 4px solid var(--bronze); /* Thicker, more substantial accent */
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.02), 
+    0 10px 15px -3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
 }
 
 .testimonial-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px);
+  box-shadow: 
+    0 10px 20px -5px rgba(0, 0, 0, 0.05), 
+    0 20px 25px -5px rgba(0, 0, 0, 0.05);
 }
 
+/* Quote Mark */
 .testimonial-mark {
-  color: var(--bronze);
-  opacity: 1;
-  font-size: 2rem;
   font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--bronze);
+  opacity: 0.2;
+  margin-bottom: -10px; /* Pull closer to text */
+  margin-left: -2px;
 }
 
+/* The Quote Text */
 .testimonial-quote {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--ink);
+  font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+  font-weight: 400;
   line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: var(--space-lg);
+  position: relative;
 }
 
+/* Author Section */
 .testimonial-author {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--pearl);
 }
 
 .author-name {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--charcoal);
   text-transform: uppercase;
-  color: var(--bronze);
 }
 
 .author-detail {
-  display: none; /* Simplify visuals */
-}
-
-/* Single testimonial fallback (centered) */
-.testimonial-single {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.testimonial-single .testimonial-mark {
-  font-size: 6rem;
-  opacity: 0.2;
-}
-
-.testimonial-single .testimonial-quote {
-  font-size: clamp(1.25rem, 3vw, 2rem);
-  line-height: 1.4;
-  margin: var(--space-lg) 0;
+  font-family: var(--font-mono);
+  font-size: 0.625rem; /* Small & sharp */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bronze);
 }
 
 /* ═══════════════════════════════════════════════════════════
