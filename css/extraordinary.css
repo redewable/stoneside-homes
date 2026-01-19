@@ -1490,6 +1490,7 @@ button {
   margin: 0 auto;
 }
 
+/* Desktop Layout (Default) */
 .step {
   display: grid;
   grid-template-columns: 80px 1fr 60px;
@@ -1510,15 +1511,6 @@ button {
 .step:hover {
   background: linear-gradient(90deg, rgba(157, 123, 90, 0.03), transparent);
   padding-left: calc(var(--space-lg) + 10px);
-}
-
-@media (max-width: 768px) {
-  .step {
-    grid-template-columns: 60px 1fr;
-    gap: var(--space-md);
-  }
-  
-  .step-visual { display: none; }
 }
 
 .step-number {
@@ -1580,6 +1572,33 @@ button {
   opacity: 1;
   transform: rotate(10deg) scale(1.1);
   background: rgba(157, 123, 90, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PROCESS MOBILE OVERRIDES (Placed at the end for priority)
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .step {
+    /* 2 Columns: Number on left, Text on right */
+    grid-template-columns: 50px 1fr; 
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    align-items: flex-start; /* Align number with top of text */
+  }
+
+  .step-number {
+    font-size: 2rem; 
+    line-height: 1.1;
+  }
+
+  /* Hide the icon to fix the layout break */
+  .step-visual {
+    display: none !important; 
+  }
+
+  .step-content {
+    text-align: left; 
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
