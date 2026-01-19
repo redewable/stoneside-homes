@@ -24,125 +24,83 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ════════════════════════════════════════════════════════════════
-// ADMIN CONTENT LOADER — Reads from localStorage
+// CLOUD DATA LOADER — Reads from Firebase Realtime Database
 // ════════════════════════════════════════════════════════════════
 function loadAdminContent() {
-  // Load Hero Content
-  const heroContent = JSON.parse(localStorage.getItem('stoneside_hero') || 'null');
-  if (heroContent) {
+  // Use the connection we created in the <head>
+  const db = firebase.database();
+
+  // Listen for data
+  db.ref('/').on('value', (snapshot) => {
+    const DATA = snapshot.val();
+    
+    // If database is empty (first time), don't crash
+    if (!DATA) {
+      console.log("Waiting for Admin to save data...");
+      return; 
+    }
+
+    // --- 1. HERO ---
+    const hero = DATA.hero || {};
     const title1Words = document.querySelectorAll('.title-line-1 .word');
     const title2Words = document.querySelectorAll('.title-line-2 .word');
     
-    if (title1Words[0]) title1Words[0].textContent = heroContent.title1Word1 || 'Where';
-    if (title1Words[1]) title1Words[1].textContent = heroContent.title1Word2 || 'Blueprints';
-    if (title2Words[0]) title2Words[0].textContent = heroContent.title2Word1 || 'Become';
-    if (title2Words[1]) title2Words[1].textContent = heroContent.title2Word2 || 'Legacy';
-    
-    const subtitle = document.querySelector('.hero-subtitle');
-    if (subtitle && heroContent.subtitle) {
-      subtitle.innerHTML = heroContent.subtitle.replace(/\n/g, '<br/>');
-    }
-    
-    const location = document.querySelector('.location-text');
-    if (location && heroContent.location) {
-      location.textContent = heroContent.location;
-    }
-    
-    const years = document.querySelector('.divider-year');
-    if (years && heroContent.years) {
-      years.textContent = heroContent.years;
-    }
+    if (title1Words[0]) title1Words[0].textContent = hero.title1Word1 || 'Where';
+    if (title1Words[1]) title1Words[1].textContent = hero.title1Word2 || 'Blueprints';
+    if (title2Words[0]) title2Words[0].textContent = hero.title2Word1 || 'Become';
+    if (title2Words[1]) title2Words[1].textContent = hero.title2Word2 || 'Legacy';
+    if (hero.subtitle) document.querySelector('.hero-subtitle').textContent = hero.subtitle;
     
     const statItems = document.querySelectorAll('.stat-item');
-    if (statItems[0]) {
-      const value = statItems[0].querySelector('.stat-value');
-      const label = statItems[0].querySelector('.stat-label');
-      if (value && heroContent.stat1Value) value.innerHTML = heroContent.stat1Value;
-      if (label && heroContent.stat1Label) label.textContent = heroContent.stat1Label;
+    if (statItems[0] && hero.stat1Value) {
+       statItems[0].querySelector('.stat-value').textContent = hero.stat1Value;
+       statItems[0].querySelector('.stat-label').textContent = hero.stat1Label;
     }
-    if (statItems[1]) {
-      const value = statItems[1].querySelector('.stat-value');
-      const label = statItems[1].querySelector('.stat-label');
-      if (value && heroContent.stat2Value) value.textContent = heroContent.stat2Value;
-      if (label && heroContent.stat2Label) label.textContent = heroContent.stat2Label;
+    if (statItems[1] && hero.stat2Value) {
+       statItems[1].querySelector('.stat-value').textContent = hero.stat2Value;
+       statItems[1].querySelector('.stat-label').textContent = hero.stat2Label;
     }
-    if (statItems[2]) {
-      const value = statItems[2].querySelector('.stat-value');
-      const label = statItems[2].querySelector('.stat-label');
-      if (value && heroContent.stat3Value) value.textContent = heroContent.stat3Value;
-      if (label && heroContent.stat3Label) label.textContent = heroContent.stat3Label;
-    }
-  }
 
-  // Load Page Content
-  const pageContent = JSON.parse(localStorage.getItem('stoneside_content') || 'null');
-  if (pageContent) {
-    const legacyTitle = document.querySelector('.legacy-title');
-    const legacyLead = document.querySelector('.legacy-lead');
-    if (legacyTitle && pageContent.legacyTitle) {
-      legacyTitle.innerHTML = pageContent.legacyTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-    }
-    if (legacyLead && pageContent.legacyLead) legacyLead.textContent = pageContent.legacyLead;
-    
-    const philosophyTitle = document.querySelector('.philosophy-title');
-    const philosophyLead = document.querySelector('.philosophy-lead');
-    if (philosophyTitle && pageContent.philosophyTitle) {
-      philosophyTitle.innerHTML = pageContent.philosophyTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-    }
-    if (philosophyLead && pageContent.philosophyLead) philosophyLead.textContent = pageContent.philosophyLead;
-    
-    const pillars = document.querySelectorAll('.pillar');
-    if (pillars[0]) {
-      const title = pillars[0].querySelector('.pillar-title');
-      const text = pillars[0].querySelector('.pillar-text');
-      if (title && pageContent.pillar1Title) title.textContent = pageContent.pillar1Title;
-      if (text && pageContent.pillar1Text) text.textContent = pageContent.pillar1Text;
-    }
-    if (pillars[1]) {
-      const title = pillars[1].querySelector('.pillar-title');
-      const text = pillars[1].querySelector('.pillar-text');
-      if (title && pageContent.pillar2Title) title.textContent = pageContent.pillar2Title;
-      if (text && pageContent.pillar2Text) text.textContent = pageContent.pillar2Text;
-    }
-    if (pillars[2]) {
-      const title = pillars[2].querySelector('.pillar-title');
-      const text = pillars[2].querySelector('.pillar-text');
-      if (title && pageContent.pillar3Title) title.textContent = pageContent.pillar3Title;
-      if (text && pageContent.pillar3Text) text.textContent = pageContent.pillar3Text;
-    }
-    
-    const portfolioTitle = document.querySelector('.portfolio-title');
-    const portfolioLead = document.querySelector('.portfolio-lead');
-    if (portfolioTitle && pageContent.portfolioTitle) {
-      portfolioTitle.innerHTML = pageContent.portfolioTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-    }
-    if (portfolioLead && pageContent.portfolioLead) portfolioLead.textContent = pageContent.portfolioLead;
-    
-    const processTitle = document.querySelector('.process-title');
-    if (processTitle && pageContent.processTitle) {
-      processTitle.innerHTML = pageContent.processTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-    }
-    
-    const contactTitle = document.querySelector('.contact-title');
-    const contactLead = document.querySelector('.contact-lead');
-    if (contactTitle && pageContent.contactTitle) {
-      contactTitle.innerHTML = pageContent.contactTitle.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-    }
-    if (contactLead && pageContent.contactLead) contactLead.textContent = pageContent.contactLead;
-  }
+    // --- 2. CONTENT ---
+    const content = DATA.content || {};
+    const setHtml = (sel, val) => { const el = document.querySelector(sel); if(el && val) el.innerHTML = val.replace(/\*([^*]+)\*/g, '<em>$1</em>'); };
+    const setText = (sel, val) => { const el = document.querySelector(sel); if(el && val) el.textContent = val; };
 
-  // Load Settings
-  const settings = JSON.parse(localStorage.getItem('stoneside_settings') || 'null');
-  if (settings) {
-    const philosophyVerse = document.querySelector('.philosophy-verse blockquote');
-    const philosophyVerseRef = document.querySelector('.philosophy-verse cite');
-    if (philosophyVerse && settings.scriptureVerse) {
-      philosophyVerse.textContent = `"${settings.scriptureVerse}"`;
+    setHtml('.legacy-title', content.legacyTitle);
+    setText('.legacy-lead', content.legacyLead);
+    setHtml('.philosophy-title', content.philosophyTitle);
+    setText('.philosophy-lead', content.philosophyLead);
+    setHtml('.portfolio-title', content.portfolioTitle);
+    setText('.portfolio-lead', content.portfolioLead);
+    setHtml('.process-title', content.processTitle);
+    setHtml('.contact-title', content.contactTitle);
+    setText('.contact-lead', content.contactLead);
+
+    // --- 3. PROJECTS ---
+    if (DATA.projects) {
+        // Ensure it's an array even if Firebase returns an object
+        window.projects = Array.isArray(DATA.projects) ? DATA.projects : Object.values(DATA.projects);
+        initPortfolio(); // Refresh gallery
     }
-    if (philosophyVerseRef && settings.scriptureRef) {
-      philosophyVerseRef.textContent = settings.scriptureRef;
+
+    // --- 4. TESTIMONIALS ---
+    if (DATA.testimonials) {
+      const tData = Array.isArray(DATA.testimonials) ? DATA.testimonials : Object.values(DATA.testimonials);
+      const grid = document.getElementById('testimonialsGrid');
+      if(grid) {
+        grid.innerHTML = tData.map(t => `
+          <div class="testimonial-card">
+            <div class="testimonial-mark">"</div>
+            <blockquote class="testimonial-quote">${t.quote}</blockquote>
+            <div class="testimonial-author">
+              <span class="author-name">${t.name}</span>
+              <span class="author-detail">${t.detail}</span>
+            </div>
+          </div>
+        `).join('');
+      }
     }
-  }
+  });
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -574,42 +532,11 @@ function initScrollAnimations() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// TESTIMONIALS — Load from data
+// TESTIMONIALS — Logic moved to loadAdminContent()
 // ════════════════════════════════════════════════════════════════
 function initTestimonials() {
-  const grid = document.getElementById('testimonialsGrid');
-  if (!grid) return;
-  
-  // Check for testimonials in localStorage or use defaults
-  const storedTestimonials = JSON.parse(localStorage.getItem('stoneside_testimonials') || 'null');
-  
-  const defaultTestimonials = [
-    {
-      quote: "The difference was clear from our first conversation. No sales pitch—just a builder who listened, explained, and delivered exactly what was promised.",
-      name: "The Martinez Family",
-      detail: "Custom Build, College Station • 2023"
-    },
-    {
-      quote: "After interviewing five builders, Stoneside was the only one who asked about our family's needs first and budget second. That told us everything.",
-      name: "The Thompson Family",
-      detail: "Custom Build, Bryan • 2022"
-    }
-  ];
-  
-  const testimonials = storedTestimonials || defaultTestimonials;
-  
-  if (testimonials.length > 0) {
-    grid.innerHTML = testimonials.map(t => `
-      <div class="testimonial-card">
-        <div class="testimonial-mark">"</div>
-        <blockquote class="testimonial-quote">${t.quote}</blockquote>
-        <div class="testimonial-author">
-          <span class="author-name">${t.name}</span>
-          <span class="author-detail">${t.detail}</span>
-        </div>
-      </div>
-    `).join('');
-  }
+  // This function is intentionally empty.
+  // Testimonials are now loaded by loadAdminContent() via data.js
 }
 
 // ════════════════════════════════════════════════════════════════

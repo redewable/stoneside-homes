@@ -12,6 +12,26 @@
 
   <link rel="stylesheet" href="css/extraordinary.css" />
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  // Your specific Stoneside configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBHlWoOF3rSzCpXwazwbAMZI2MbezolZ4c",
+    authDomain: "stoneside-homes.firebaseapp.com",
+    projectId: "stoneside-homes",
+    storageBucket: "stoneside-homes.firebasestorage.app",
+    messagingSenderId: "1065540993417",
+    appId: "1:1065540993417:web:b081764db2ec18bad1a158"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database(); // Now 'db' is ready to use in your other scripts
+</script>
+
 </head>
 
 <body>

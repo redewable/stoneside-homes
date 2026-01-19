@@ -2309,150 +2309,163 @@ button {
 .text-right { text-align: right; }
 
 /* ═══════════════════════════════════════════════════════════
-   MOBILE FIXES — Padding, centering, projects
+   MOBILE & RESPONSIVE REPAIRS (The Fix)
 ═══════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
+
+@media (max-width: 900px) {
   :root {
-    --container: min(1400px, 92vw);
+    --header-height: 60px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
   }
-  
-  /* Header mobile */
-  .header {
-    padding: 0 var(--space-md);
-  }
-  
-  /* Hero mobile */
+
+  /* 1. HERO FIX: Remove overlap, use flex column */
   .hero-content {
-    padding: calc(var(--header-height) + var(--space-md)) var(--space-md) var(--space-lg);
+    padding: calc(var(--header-height) + 20px) 20px 40px;
+    justify-content: flex-start;
+    min-height: auto;
+    /* Ensure content sits naturally */
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
   }
-  
-  .hero-bottom {
-    left: var(--space-md);
-    right: var(--space-md);
-    bottom: var(--space-lg);
+
+  .hero-top {
+    position: relative;
+    top: auto;
+    margin-bottom: 20px;
   }
-  
+
   .hero-center {
-    padding: var(--space-xl) var(--space-sm);
+    padding: 0;
+    margin: 0;
+  }
+
+  .hero-bottom {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+
+  /* Fix Title Size & Wrapping */
+  .hero-title {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    width: 100%;
+    justify-items: center;
   }
   
-  /* Section padding mobile */
-  .legacy,
-  .philosophy,
-  .portfolio,
-  .process,
-  .testimonials,
-  .contact {
-    padding-left: var(--space-md);
-    padding-right: var(--space-md);
-  }
-  
-  /* Gallery/Projects mobile - prevent cut off */
-  .gallery-wrapper {
-    margin: 0 calc(-1 * var(--space-md));
-  }
-  
-  .gallery-track {
-    padding: var(--space-sm) var(--space-md);
-    gap: var(--space-sm);
-  }
-  
-  .gallery-item {
-    flex: 0 0 min(320px, 85vw);
-  }
-  
-  /* Center blocks */
-  .section-tag {
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .legacy-title,
-  .philosophy-title,
-  .portfolio-title,
-  .process-title {
-    text-align: center;
-  }
-  
-  /* Timeline mobile */
-  .timeline {
-    padding-left: var(--space-md);
-  }
-  
-  .timeline::before {
-    left: 0;
-  }
-  
-  .timeline-item {
-    padding-left: var(--space-lg);
-  }
-  
-  /* Process steps mobile */
-  .process-steps {
-    gap: var(--space-lg);
-  }
-  
-  .process-step {
-    text-align: center;
-  }
-  
-  .step-icon {
-    margin: 0 auto var(--space-md);
-  }
-  
-  /* Contact mobile */
-  .contact-grid {
-    gap: var(--space-lg);
-  }
-  
-  /* Numbers grid mobile */
-  .numbers-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
-    text-align: center;
-  }
-  
-  .number-item {
-    text-align: center;
-  }
+  .stat-value { font-size: 1.75rem; }
+  .stat-label { font-size: 0.5rem; }
 }
 
-@media (max-width: 480px) {
-  :root {
-    --container: min(1400px, 94vw);
+@media (max-width: 768px) {
+  
+  /* 2. SECTION PADDING: Prevent content touching edges */
+  .container {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .legacy, .philosophy, .portfolio, .process, .testimonial, .contact {
+    padding: 40px 0;
+  }
+
+  /* 3. SCROLL CONTAINERS: Fix "Cutoff" on last item */
+  .gallery-wrapper, .timeline-wrapper {
+    margin: 20px 0;
+    width: 100%;
+  }
+
+  .gallery-track, .timeline-track {
+    padding: 10px 20px; /* Left padding */
+    padding-right: 20px; /* Critical: Right padding for scroll end */
+    scroll-snap-type: x mandatory;
+  }
+
+  .gallery-item, .timeline-item {
+    scroll-snap-align: center;
+    flex: 0 0 85vw; /* Show slightly less than full width to encourage scroll */
+    margin-right: 15px;
   }
   
-  .header {
-    padding: 0 var(--space-sm);
+  /* Ensure last item doesn't get stuck */
+  .gallery-item:last-child, .timeline-item:last-child {
+    margin-right: 20px; 
+  }
+
+  /* 4. MODAL FIX: Enable scrolling on small screens */
+  .modal-overlay {
+    align-items: flex-start; /* Start from top */
+    padding: 0;
+    overflow-y: auto; /* Allow overlay to scroll if needed */
+  }
+
+  .modal {
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
+    max-height: none; /* Let it grow */
+    transform: none !important;
+  }
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .modal-gallery {
+    height: 300px; /* Fixed height for image area */
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  .modal-info {
+    padding: 24px 20px 40px; /* Bottom padding for scroll space */
+  }
+
+  .modal-close {
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.5); /* Make more visible */
+  }
+
+  /* 5. TYPOGRAPHY SCALING */
+  .philosophy-title, .legacy-title, .portfolio-title {
+    font-size: 2.25rem; /* Manageable size */
+    word-wrap: break-word; /* Prevent overflow */
+  }
+
+  .philosophy-body {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
   
-  .hero-content {
-    padding: calc(var(--header-height) + var(--space-sm)) var(--space-sm) var(--space-md);
+  /* Fix philosophy pillar cutoff */
+  .pillar {
+    grid-template-columns: 30px 1fr;
+    padding: 15px;
   }
   
-  .hero-bottom {
-    left: var(--space-sm);
-    right: var(--space-sm);
-  }
-  
-  .gallery-item {
-    flex: 0 0 min(280px, 90vw);
-  }
-  
-  .gallery-track {
-    padding: var(--space-xs) var(--space-sm);
-  }
-  
-  /* Even smaller text on very small screens */
-  .hero-title {
-    font-size: clamp(2rem, 10vw, 4rem);
-  }
-  
-  .philosophy-title {
-    font-size: clamp(1.75rem, 8vw, 3rem);
-  }
-  
-  .numbers-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  .pillar-num { font-size: 1.25rem; }
 }
