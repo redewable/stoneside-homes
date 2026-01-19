@@ -140,6 +140,10 @@ function loadAdminContent() {
                   </div>
                 </div>
               </div>`).join('');
+            // ★ CRITICAL FIX: Restart the animation observer now that content exists
+            setTimeout(() => {
+                initProcessSteps();
+            }, 100);  
         }
     }
 
