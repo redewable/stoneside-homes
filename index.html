@@ -4,714 +4,761 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stoneside Custom Homes | Bryan–College Station Heritage Builder Since 1984</title>
-  <meta name="description" content="Four decades of craftsmanship in Bryan–College Station. Custom homes built with the patience of experience, the discipline of tradition, and the care of a family name." />
+  <meta name="description" content="Four decades of craftsmanship in Bryan–College Station. Custom homes built with the patience of experience, the discipline of tradition, and the care of a family name. New website coming soon." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="css/extraordinary.css" />
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
 
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBHlWoOF3rSzCpXwazwbAMZI2MbezolZ4c",
+      authDomain: "stoneside-homes.firebaseapp.com",
+      projectId: "stoneside-homes",
+      storageBucket: "stoneside-homes.firebasestorage.app",
+      messagingSenderId: "1065540993417",
+      appId: "1:1065540993417:web:b081764db2ec18bad1a158"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+  </script>
 
-<script>
-  // Your specific Stoneside configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBHlWoOF3rSzCpXwazwbAMZI2MbezolZ4c",
-    authDomain: "stoneside-homes.firebaseapp.com",
-    projectId: "stoneside-homes",
-    storageBucket: "stoneside-homes.firebasestorage.app",
-    messagingSenderId: "1065540993417",
-    appId: "1:1065540993417:web:b081764db2ec18bad1a158"
-  };
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       DESIGN TOKENS — Matching Stoneside Brand System
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      --black: #0a0a0a;
+      --ink: #1a1a1a;
+      --charcoal: #2d2d2d;
+      --slate: #4a4a4a;
+      --stone: #8a8a8a;
+      --silver: #b8b8b8;
+      --pearl: #e8e8e8;
+      --cream: #f5f5f3;
+      --white: #fafafa;
+      --bronze: #9d7b5a;
+      --bronze-light: #c4a882;
+      --bronze-dark: #6b5239;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Space Grotesk', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    }
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database(); // Now 'db' is ready to use in your other scripts
-</script>
+    /* ═══════════════════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--cream);
+      overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       BACKGROUND TEXTURE
+    ═══════════════════════════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(157,123,90,0.04), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 90%, rgba(157,123,90,0.03), transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Subtle grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════════════════════════ */
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 48px 24px 40px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER / LOGO
+    ═══════════════════════════════════════════════════════════ */
+    .logo-mark {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--pearl);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      opacity: 0;
+      transform: scale(0.9);
+      animation: fadeScale 0.8s var(--ease-out) 0.2s forwards;
+    }
+
+    .brand-header {
+      text-align: center;
+      margin-top: 32px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s var(--ease-out) 0.4s forwards;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-top: 8px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       DIVIDER LINE
+    ═══════════════════════════════════════════════════════════ */
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--bronze);
+      margin: 36px auto;
+      opacity: 0;
+      animation: fadeIn 0.6s var(--ease-out) 0.6s forwards;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       COMING SOON MESSAGE
+    ═══════════════════════════════════════════════════════════ */
+    .message-block {
+      text-align: center;
+      max-width: 520px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s var(--ease-out) 0.7s forwards;
+    }
+
+    .message-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 16px;
+    }
+
+    .message-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
+      font-weight: 400;
+      color: var(--charcoal);
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .message-heading em {
+      font-style: italic;
+      color: var(--bronze);
+    }
+
+    .message-body {
+      font-size: 0.9rem;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FORM CARD
+    ═══════════════════════════════════════════════════════════ */
+    .form-card {
+      width: 100%;
+      max-width: 480px;
+      margin-top: 40px;
+      background: var(--white);
+      border: 1px solid var(--pearl);
+      border-radius: 12px;
+      padding: 36px 32px 32px;
+      box-shadow:
+        0 1px 3px rgba(0,0,0,0.03),
+        0 8px 32px rgba(0,0,0,0.04);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s var(--ease-out) 0.9s forwards;
+    }
+
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .form-subtitle {
+      font-size: 0.78rem;
+      color: var(--stone);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    /* Fields */
+    .field-group {
+      margin-bottom: 18px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 6px;
+    }
+
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--ink);
+      background: var(--cream);
+      border: 1px solid var(--pearl);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      border-color: var(--bronze-light);
+      box-shadow: 0 0 0 3px rgba(157,123,90,0.08);
+    }
+
+    .field-group input::placeholder,
+    .field-group textarea::placeholder {
+      color: var(--silver);
+    }
+
+    .field-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .field-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238a8a8a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Honeypot */
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      height: 0;
+      width: 0;
+      pointer-events: none;
+    }
+
+    /* Submit */
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin-top: 24px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--ink);
+      border: 1px solid var(--charcoal);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      background: var(--charcoal);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit-btn .btn-text { transition: opacity 0.2s ease; }
+    .submit-btn.sending .btn-text { opacity: 0; }
+    .submit-btn .btn-loader {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .submit-btn.sending .btn-loader { opacity: 1; }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(245,245,243,0.3);
+      border-top-color: var(--cream);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    /* Success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 24px 0;
+    }
+
+    .form-success.show {
+      display: block;
+      animation: fadeUp 0.5s var(--ease-out) forwards;
+    }
+
+    .success-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bronze), var(--bronze-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--cream);
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-heading {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .success-body {
+      font-size: 0.85rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CONTACT STRIP
+    ═══════════════════════════════════════════════════════════ */
+    .contact-strip {
+      margin-top: 40px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 0.6s var(--ease-out) 1.1s forwards;
+    }
+
+    .contact-strip p {
+      font-size: 0.78rem;
+      color: var(--stone);
+      margin-bottom: 10px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .contact-links a {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s ease;
+    }
+
+    .contact-links a:hover {
+      color: var(--bronze);
+    }
+
+    .contact-links a svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--bronze);
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════ */
+    .footer {
+      margin-top: auto;
+      padding-top: 48px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 0.6s var(--ease-out) 1.3s forwards;
+    }
+
+    .footer-line {
+      width: 32px;
+      height: 1px;
+      background: var(--pearl);
+      margin: 0 auto 14px;
+    }
+
+    .footer p {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--silver);
+    }
+
+    .footer .heritage {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.78rem;
+      color: var(--stone);
+      margin-bottom: 4px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TOAST NOTIFICATION
+    ═══════════════════════════════════════════════════════════ */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--cream);
+      background: var(--ink);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s var(--ease-out);
+      z-index: 100;
+    }
+
+    .toast.error {
+      background: #8b3a3a;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════════════════ */
+    @media (max-width: 540px) {
+      .page { padding: 36px 20px 32px; }
+      .form-card { padding: 28px 22px 24px; }
+      .field-row { grid-template-columns: 1fr; gap: 0; }
+      .contact-links { flex-direction: column; align-items: center; gap: 14px; }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- ═══════════════════════════════════════════════════════════
-       PRELOADER — Cinematic Brand Reveal
-  ═══════════════════════════════════════════════════════════ -->
-  <div class="preloader" id="preloader" aria-hidden="true">
-    <div class="preloader-inner">
-      <div class="preloader-year">
-        <span class="year-start">1984</span>
-        <span class="year-line"></span>
-        <span class="year-end">2024</span>
-      </div>
-      <div class="preloader-brand">
-        <span class="brand-letter">S</span>
-        <span class="brand-letter">T</span>
-        <span class="brand-letter">O</span>
-        <span class="brand-letter">N</span>
-        <span class="brand-letter">E</span>
-        <span class="brand-letter">S</span>
-        <span class="brand-letter">I</span>
-        <span class="brand-letter">D</span>
-        <span class="brand-letter">E</span>
-      </div>
-      <div class="preloader-tagline">Four Decades of Legacy</div>
-      <div class="preloader-progress">
-        <div class="progress-track">
-          <div class="progress-fill"></div>
+  <div class="page">
+
+    <!-- Logo -->
+    <img src="assets/images/logo.png" alt="Stoneside Custom Homes" class="logo-mark" />
+
+    <!-- Brand -->
+    <div class="brand-header">
+      <h1 class="brand-name">Stoneside Custom Homes</h1>
+      <p class="brand-sub">Bryan–College Station · Since 1984</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Message -->
+    <div class="message-block">
+      <p class="message-label">New Experience Coming Soon</p>
+      <h2 class="message-heading">Something <em>extraordinary</em> is being built.</h2>
+      <p class="message-body">We're crafting a new online home to match the quality we've put into every house for the last four decades. In the meantime, we'd love to hear about your project.</p>
+    </div>
+
+    <!-- Intake Form -->
+    <div class="form-card">
+      <h3 class="form-title">Start the Conversation</h3>
+      <p class="form-subtitle">Tell us a little about what you're dreaming of.</p>
+
+      <form id="intakeForm" novalidate>
+        <!-- Honeypot -->
+        <div class="hp-field" aria-hidden="true">
+          <input type="text" name="company" tabindex="-1" autocomplete="off" />
         </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="field-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="(979) 555-0000" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required />
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="location">Build Location</label>
+            <input type="text" id="location" name="location" placeholder="City or area" />
+          </div>
+          <div class="field-group">
+            <label for="interest">I'm Interested In</label>
+            <select id="interest" name="interest">
+              <option value="" disabled selected>Select one</option>
+              <option value="Custom Home">Custom Home</option>
+              <option value="Starter Home">Starter Home</option>
+              <option value="Remodel / Addition">Remodel / Addition</option>
+              <option value="I Have Land">I Have Land</option>
+              <option value="Just Exploring">Just Exploring</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="message">Tell Us More</label>
+          <textarea id="message" name="message" placeholder="Budget range, timeline, must-haves — anything helps..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="btn-text">Get in Touch</span>
+          <span class="btn-loader"><span class="spinner"></span></span>
+        </button>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
+        </div>
+        <h4 class="success-heading">We've got it.</h4>
+        <p class="success-body">Someone from the Stoneside team will reach out to you soon. We're excited to hear about your project.</p>
       </div>
     </div>
-    <div class="preloader-wipe"></div>
-  </div>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       CURSOR — Hidden on Mobile/Touch
-  ═══════════════════════════════════════════════════════════ -->
-  <div class="cursor" id="cursor" aria-hidden="true">
-    <svg class="cursor-icon cursor-default" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1"/>
-    </svg>
-    <svg class="cursor-icon cursor-pointer" viewBox="0 0 24 24" fill="none">
-      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5"/>
-    </svg>
-    <svg class="cursor-icon cursor-view" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/>
-      <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1"/>
-    </svg>
-  </div>
-  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       HEADER — Minimal, Elegant Navigation
-  ═══════════════════════════════════════════════════════════ -->
-  <header class="header" id="header">
-    <a href="#" class="header-logo">
-      <img src="assets/images/logo.png" alt="Stoneside Custom Homes" class="logo-image" />
-    </a>
-
-    <nav class="header-nav" id="headerNav">
-      <a href="#legacy" class="nav-item">Legacy</a>
-      <a href="#philosophy" class="nav-item">Philosophy</a>
-      <a href="#portfolio" class="nav-item">Homes</a>
-      <a href="#process" class="nav-item">Process</a>
-    </nav>
-
-    <a href="#contact" class="header-cta">
-      <span class="cta-text">Start Building</span>
-      <span class="cta-arrow">→</span>
-    </a>
-
-    <button class="header-menu" id="headerMenu" aria-label="Open Menu">
-      <span class="menu-line"></span>
-      <span class="menu-line"></span>
-    </button>
-  </header>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       MOBILE NAV — Full Screen Takeover
-  ═══════════════════════════════════════════════════════════ -->
-  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-    <div class="mobile-nav-inner">
-      <nav class="mobile-nav-links">
-        <a href="#legacy" class="mobile-link">
-          <span class="mobile-link-num">01</span>
-          <span class="mobile-link-text">Legacy</span>
+    <!-- Contact -->
+    <div class="contact-strip">
+      <p>Rather talk directly?</p>
+      <div class="contact-links">
+        <a href="tel:+19797165359">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (979) 716-5359
         </a>
-        <a href="#philosophy" class="mobile-link">
-          <span class="mobile-link-num">02</span>
-          <span class="mobile-link-text">Philosophy</span>
+        <a href="mailto:info@stonesidecustomhomes.com">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          info@stonesidecustomhomes.com
         </a>
-        <a href="#portfolio" class="mobile-link">
-          <span class="mobile-link-num">03</span>
-          <span class="mobile-link-text">Homes</span>
-        </a>
-        <a href="#process" class="mobile-link">
-          <span class="mobile-link-num">04</span>
-          <span class="mobile-link-text">Process</span>
-        </a>
-        <a href="#contact" class="mobile-link mobile-link-cta">
-          <span class="mobile-link-num">05</span>
-          <span class="mobile-link-text">Begin Your Home</span>
-        </a>
-      </nav>
-      <div class="mobile-nav-footer">
-        <p>Bryan–College Station, Texas</p>
-        <p class="mobile-verse">"Unless the Lord builds the house..."</p>
       </div>
     </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-line"></div>
+      <p class="heritage">Four decades of building trust</p>
+      <p>&copy; 2025 Stoneside Custom Homes. Bryan–College Station, Texas.</p>
+    </div>
+
   </div>
 
-  <main>
-    <!-- ═══════════════════════════════════════════════════════════
-         HERO — Immersive Full-Screen Experience
-    ═══════════════════════════════════════════════════════════ -->
-    <section class="hero" id="hero">
-      <!-- Blueprint Grid Background -->
-      <div class="hero-grid" aria-hidden="true">
-        <div class="grid-lines"></div>
-        <div class="grid-numbers">
-          <span>A1</span><span>A2</span><span>A3</span><span>A4</span><span>A5</span>
-        </div>
-      </div>
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
-      <!-- Parallax Image Layers -->
-      <div class="hero-media">
-        <div class="hero-sketch-layer">
-          <img src="assets/images/hero-sketch.jpg" alt="" class="hero-sketch" />
-        </div>
-        <div class="hero-photo-layer">
-          <img src="assets/images/hero-photo.jpg" alt="Stoneside Custom Home" class="hero-photo" />
-        </div>
-        <div class="hero-overlay"></div>
-      </div>
+  <script>
+    const form = document.getElementById('intakeForm');
+    const btn = document.getElementById('submitBtn');
+    const successEl = document.getElementById('formSuccess');
+    const toastEl = document.getElementById('toast');
 
-      <!-- Content -->
-      <div class="hero-content">
-        <div class="hero-top">
-          <div class="hero-location">
-            <span class="location-dot"></span>
-            <span class="location-text">Bryan–College Station, Texas</span>
-          </div>
-        </div>
+    let toastTimer;
 
-        <div class="hero-center">
-          <h1 class="hero-title">
-            <span class="title-line title-line-1">
-              <span class="word">Where</span>
-              <span class="word">Blueprints</span>
-            </span>
-            <span class="title-line title-line-2">
-              <span class="word">Become</span>
-              <span class="word word-accent">Legacy</span>
-            </span>
-          </h1>
+    function showToast(msg, isError = false) {
+      clearTimeout(toastTimer);
+      toastEl.textContent = msg;
+      toastEl.className = 'toast' + (isError ? ' error' : '');
+      requestAnimationFrame(() => toastEl.classList.add('show'));
+      toastTimer = setTimeout(() => toastEl.classList.remove('show'), 4000);
+    }
 
-          <div class="hero-divider">
-            <span class="divider-line"></span>
-            <span class="divider-year">40 Years</span>
-            <span class="divider-line"></span>
-          </div>
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-          <p class="hero-subtitle">
-            Custom homes built with the patience of experience,
-            the discipline of tradition, and the care of a family name.
-          </p>
-        </div>
+      // Honeypot check
+      if (form.company.value) return;
 
-        <div class="hero-bottom">
-          <!-- UPDATED: Removed + from 40 -->
-          <div class="hero-stats">
-            <div class="stat-item">
-              <span class="stat-value">40</span>
-              <span class="stat-label">Years of Excellence</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">∞</span>
-              <span class="stat-label">Patience</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Promise</span>
-            </div>
-          </div>
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const location = form.location.value.trim();
+      const interest = form.interest.value;
+      const message = form.message.value.trim();
 
-          <div class="hero-cta">
-            <a href="#portfolio" class="hero-btn">
-              <span class="btn-text">Explore Our Homes</span>
-              <span class="btn-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                </svg>
-              </span>
-            </a>
-          </div>
+      // Validation
+      if (!name || !email) {
+        showToast('Please fill in your name and email.', true);
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast('Please enter a valid email address.', true);
+        return;
+      }
 
-          <div class="hero-scroll">
-            <div class="scroll-indicator">
-              <span class="scroll-dot"></span>
-            </div>
-            <span class="scroll-text">Scroll to Discover</span>
-          </div>
-        </div>
-      </div>
+      btn.classList.add('sending');
+      btn.disabled = true;
 
-      <!-- Side Elements -->
-      <div class="hero-side-left">
-        <div class="side-verse">
-          <span class="verse-line">"Unless the Lord builds the house,</span>
-          <span class="verse-line">the builders labor in vain."</span>
-          <span class="verse-ref">— Psalm 127:1</span>
-        </div>
-      </div>
+      try {
+        // Save to Firebase
+        const submission = {
+          name,
+          email,
+          phone: phone || null,
+          location: location || null,
+          interest: interest || null,
+          message: message || null,
+          source: 'coming-soon',
+          timestamp: Date.now(),
+          submitted_at: new Date().toISOString()
+        };
 
-      <div class="hero-side-right">
-        <div class="side-label">
-          <span>Heritage Builder</span>
-          <span>Since 1984</span>
-        </div>
-      </div>
-    </section>
+        await db.ref('inquiries').push(submission);
 
-    <!-- ═══════════════════════════════════════════════════════════
-         LEGACY — 40 Years Timeline Section
-    ═══════════════════════════════════════════════════════════ -->
-    <section class="legacy" id="legacy">
-      <div class="legacy-intro">
-        <div class="container">
-          <div class="section-tag">
-            <span>Our Legacy</span>
-            <span>01</span>
-          </div>
+        // Also try the email API (non-blocking)
+        if (message || interest) {
+          const fullMessage = [
+            interest ? `Interest: ${interest}` : '',
+            message || ''
+          ].filter(Boolean).join('\n\n');
 
-          <div class="legacy-header">
-            <h2 class="legacy-title">
-              Four Decades of <em>Unwavering Excellence</em>
-            </h2>
-            <p class="legacy-lead">
-              In 1984, when most builders chased volume, we chose a different path—
-              one measured not in units built, but in families served with excellence.
-            </p>
-          </div>
-        </div>
-      </div>
+          fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, phone, location, message: fullMessage })
+          }).catch(() => {});
+        }
 
-      <!-- Horizontal Scrolling Timeline -->
-      <div class="timeline-wrapper">
-        <div class="timeline-track" id="timelineTrack">
-          <div class="timeline-item">
-            <div class="timeline-year">1984</div>
-            <div class="timeline-content">
-              <h3>The Beginning</h3>
-              <p>Founded in Bryan–College Station with a simple promise: build homes as if our name depended on it. Because it does.</p>
-            </div>
-          </div>
+        // Show success
+        form.style.display = 'none';
+        document.querySelector('.form-title').style.display = 'none';
+        document.querySelector('.form-subtitle').style.display = 'none';
+        successEl.classList.add('show');
 
-          <div class="timeline-item">
-            <div class="timeline-year">1994</div>
-            <div class="timeline-content">
-              <h3>First Decade</h3>
-              <p>A decade of learning the land, understanding families, and refining our craft. Never more than a handful of homes per year.</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-year">2004</div>
-            <div class="timeline-content">
-              <h3>Deep Roots</h3>
-              <p>Twenty years of building relationships as strong as our foundations. Children of our first clients now building with us.</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-year">2014</div>
-            <div class="timeline-content">
-              <h3>Generational</h3>
-              <p>Three decades of families trusting their dreams to our hands. The work speaks for itself.</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-year">2024</div>
-            <div class="timeline-content">
-              <h3>Four Decades Strong</h3>
-              <p>Forty years of keeping one promise: every home built with the patience and care it deserves.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-progress">
-          <div class="progress-bar">
-            <div class="progress-fill" id="timelineProgress"></div>
-          </div>
-          <div class="progress-years">
-            <span>1984</span>
-            <span>2024</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats Numbers -->
-      <div class="legacy-numbers">
-        <div class="container">
-          <div class="numbers-grid">
-            <div class="number-item">
-              <span class="number-value">40<span class="number-suffix">+</span></span>
-              <span class="number-label">Years Building</span>
-            </div>
-            <div class="number-item">
-              <span class="number-value">200<span class="number-suffix">+</span></span>
-              <span class="number-label">Homes Completed</span>
-            </div>
-            <div class="number-item">
-              <span class="number-value">100<span class="number-suffix">%</span></span>
-              <span class="number-label">Client Referrals</span>
-            </div>
-            <div class="number-item">
-              <span class="number-value">1</span>
-              <span class="number-label">Family Name</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         PHILOSOPHY — Dark Dramatic Section
-    ═══════════════════════════════════════════════════════════ -->
-    <section class="philosophy" id="philosophy">
-      <div class="philosophy-bg">
-        <div class="philosophy-grain"></div>
-        <div class="philosophy-gradient"></div>
-      </div>
-
-      <div class="container">
-        <div class="philosophy-content">
-          <div class="section-tag" style="color: var(--stone);">
-            <span>Our Philosophy</span>
-            <span>02</span>
-          </div>
-
-          <div class="philosophy-statement">
-            <h2 class="philosophy-title">
-              Building Is <em>Stewardship</em>
-            </h2>
-          </div>
-
-          <div class="philosophy-body">
-            <p class="philosophy-lead">
-              A home is where your children will take their first steps. Where holidays 
-              will gather decades of memories. Where legacy is quietly built.
-            </p>
-
-            <div class="philosophy-pillars">
-              <div class="pillar">
-                <span class="pillar-num">I</span>
-                <div class="pillar-content">
-                  <h3 class="pillar-title">Clarity Before Commitment</h3>
-                  <p class="pillar-text">You'll understand every detail before we break ground.</p>
-                </div>
-              </div>
-              <div class="pillar">
-                <span class="pillar-num">II</span>
-                <div class="pillar-content">
-                  <h3 class="pillar-title">Peace During the Build</h3>
-                  <p class="pillar-text">Weekly communication. Clean sites. No surprises.</p>
-                </div>
-              </div>
-              <div class="pillar">
-                <span class="pillar-num">III</span>
-                <div class="pillar-content">
-                  <h3 class="pillar-title">Accountability After Keys</h3>
-                  <p class="pillar-text">Our relationship doesn't end at closing. Ever.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="philosophy-verse">
-            <blockquote>
-              "As for me and my house, we will serve the Lord."
-            </blockquote>
-            <cite>Joshua 24:15</cite>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         PORTFOLIO — Horizontal Scroll Gallery (UPDATED HEADER)
-    ═══════════════════════════════════════════════════════════ -->
-    <section class="portfolio" id="portfolio">
-      <div class="container">
-        <div class="section-tag">
-          <span>Our Homes</span>
-          <span>03</span>
-        </div>
-
-        <!-- UPDATED: Portfolio header with title left, lead right -->
-        <div class="portfolio-header">
-          <div class="portfolio-header-left">
-            <h2 class="portfolio-title">
-              Homes That <em>Tell Stories</em>
-            </h2>
-          </div>
-          <p class="portfolio-lead">
-            Every home begins as a drawing. What matters is what it becomes—
-            a vessel for your family's story.
-          </p>
-        </div>
-      </div>
-
-      <div class="gallery-wrapper">
-        <div class="gallery-track" id="galleryTrack">
-          <!-- Gallery items populated by JS -->
-        </div>
-      </div>
-
-      <div class="portfolio-controls">
-        <div class="container">
-          <div class="gallery-nav">
-            <button class="gallery-btn gallery-prev" id="galleryPrev" aria-label="Previous">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-              </svg>
-            </button>
-            <div class="gallery-count">
-              <span class="count-current" id="galleryCount">01</span>
-              <span class="count-divider">/</span>
-              <span class="count-total" id="galleryTotal">06</span>
-            </div>
-            <button class="gallery-btn gallery-next" id="galleryNext" aria-label="Next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </button>
-          </div>
-
-          <a href="#contact" class="portfolio-cta">
-            <span>Start Your Custom Home</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M7 17L17 7M17 7H7M17 7v10"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         PROCESS — UPDATED: Full-width centered title
-    ═══════════════════════════════════════════════════════════ -->
-    <section class="process" id="process">
-      <div class="container">
-        <div class="section-tag text-center" style="justify-content: center;">
-          <span>Our Process</span>
-          <span>04</span>
-        </div>
-
-        <!-- UPDATED: Centered full-width title -->
-        <div class="process-header">
-          <h2 class="process-title">
-            From First <em>Conversation</em> to Forever Home
-          </h2>
-        </div>
-
-        <div class="process-steps">
-            </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         TESTIMONIALS — UPDATED: Multiple testimonial cards
-    ═══════════════════════════════════════════════════════════ -->
-    <section class="testimonial">
-      <div class="container">
-        <div class="testimonial-content">
-          
-          <div class="section-tag" style="justify-content: center; margin-bottom: 60px;">
-            <span>Client Stories</span>
-            <span>05</span>
-          </div>
-
-          <div class="testimonials-grid" id="testimonialsGrid">
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         CONTACT — Start the Conversation
-    ═══════════════════════════════════════════════════════════ -->
-    <section class="contact" id="contact">
-      <div class="contact-bg">
-        <div class="contact-grid"></div>
-      </div>
-
-      <div class="container">
-        <div class="contact-wrapper">
-          <div class="contact-info">
-            <div class="section-tag">
-              <span>Begin Here</span>
-              <span>05</span>
-            </div>
-
-            <h2 class="contact-title">
-              Let's Build <em>Something</em> That Lasts
-            </h2>
-
-            <p class="contact-lead">
-              A short note is enough to begin. We'll schedule a call to 
-              discuss your vision, timeline, and whether we're the right fit.
-            </p>
-
-            <div class="contact-details">
-              <div class="detail-item">
-                <span class="detail-label">Location</span>
-                <span class="detail-value">Bryan–College Station, TX</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Phone</span>
-                <span class="detail-value"><a href="tel:+19795551984">(979) 555-1984</a></span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Email</span>
-                <span class="detail-value"><a href="mailto:build@stonesidehomes.com">build@stonesidehomes.com</a></span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Response</span>
-                <span class="detail-value">Within 24 Hours</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="contact-form-wrapper">
-            <form class="contact-form" id="contactForm">
-              <div class="form-row">
-                <div class="form-grid">
-                  <div class="form-group">
-                    <label class="form-label" for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" class="form-input" required />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" class="form-input" required />
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-grid">
-                  <div class="form-group">
-                    <label class="form-label" for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-input" required />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone" class="form-input" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label" for="message">Tell Us About Your Vision</label>
-                  <textarea id="message" name="message" class="form-textarea" rows="5" required></textarea>
-                </div>
-              </div>
-
-              <button type="submit" class="form-submit">
-                <span>Send Message</span>
-                <span class="submit-arrow">→</span>
-              </button>
-
-              <div class="form-success" id="formSuccess">
-                Thank you. We'll be in touch within 24 hours.
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       FOOTER — Simplified
-  ═══════════════════════════════════════════════════════════ -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <img src="assets/images/logo.png" alt="Stoneside Custom Homes" class="footer-logo-img" />
-        <span class="footer-tagline">Building Legacy Since 1984</span>
-        <span class="footer-copy">© 2024 Stoneside Custom Homes · Bryan–College Station, Texas</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       PROJECT MODAL — UPDATED: Navigation arrows, View Details button
-  ═══════════════════════════════════════════════════════════ -->
-  <div class="modal-overlay" id="projectModal" aria-hidden="true">
-    <!-- Navigation Arrows -->
-    <button class="modal-nav prev" id="modalPrev" aria-label="Previous Project">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
-    </button>
-    <button class="modal-nav next" id="modalNext" aria-label="Next Project">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </button>
-
-    <div class="modal">
-      <button class="modal-close" id="modalClose" aria-label="Close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
-
-      <div class="modal-content">
-        <div class="modal-gallery">
-          <div class="modal-images" id="modalImages">
-            <img class="modal-sketch" id="modalSketch" src="" alt="" />
-            <img class="modal-photo" id="modalPhoto" src="" alt="" />
-          </div>
-          <button class="modal-reveal" id="modalReveal">
-            <span class="reveal-text">Reveal Build</span>
-          </button>
-        </div>
-
-        <div class="modal-info">
-          <div class="modal-header">
-            <span class="modal-type" id="modalType"></span>
-            <h3 class="modal-title" id="modalTitle"></h3>
-            <span class="modal-location" id="modalLocation"></span>
-          </div>
-
-          <p class="modal-description" id="modalDescription"></p>
-
-          <div class="modal-specs">
-            <div class="modal-spec">
-              <span class="spec-value" id="modalSqft"></span>
-              <span class="spec-label">Sq Ft</span>
-            </div>
-            <div class="modal-spec">
-              <span class="spec-value" id="modalBeds"></span>
-              <span class="spec-label">Beds</span>
-            </div>
-            <div class="modal-spec">
-              <span class="spec-value" id="modalBaths"></span>
-              <span class="spec-label">Baths</span>
-            </div>
-            <div class="modal-spec">
-              <span class="spec-value" id="modalYear"></span>
-              <span class="spec-label">Year</span>
-            </div>
-          </div>
-
-          <div class="modal-verse">
-            <blockquote id="modalVerseText"></blockquote>
-            <cite id="modalVerseRef"></cite>
-          </div>
-
-          <!-- View Details Button -->
-          <div class="modal-actions">
-            <a href="#" class="modal-btn modal-btn-primary" id="modalViewDetails">
-              <span>View Full Details</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 17L17 7M17 7H7M17 7v10"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="js/data.js"></script>
-  <script src="js/extraordinary.js"></script>
+      } catch (err) {
+        console.error('Submission error:', err);
+        showToast('Something went wrong. Please try calling us directly.', true);
+      } finally {
+        btn.classList.remove('sending');
+        btn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>

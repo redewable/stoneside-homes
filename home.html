@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stoneside Custom Homes | Bryan–College Station Heritage Builder Since 1984</title>
+  <meta name="description" content="Four decades of craftsmanship in Bryan–College Station. Custom homes built with the patience of experience, the discipline of tradition, and the care of a family name." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/extraordinary.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  // Your specific Stoneside configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBHlWoOF3rSzCpXwazwbAMZI2MbezolZ4c",
+    authDomain: "stoneside-homes.firebaseapp.com",
+    projectId: "stoneside-homes",
+    storageBucket: "stoneside-homes.firebasestorage.app",
+    messagingSenderId: "1065540993417",
+    appId: "1:1065540993417:web:b081764db2ec18bad1a158"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database(); // Now 'db' is ready to use in your other scripts
+</script>
+
+</head>
+
+<body>
+  <!-- ═══════════════════════════════════════════════════════════
+       PRELOADER — Cinematic Brand Reveal
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="preloader-year">
+        <span class="year-start">1984</span>
+        <span class="year-line"></span>
+        <span class="year-end">2024</span>
+      </div>
+      <div class="preloader-brand">
+        <span class="brand-letter">S</span>
+        <span class="brand-letter">T</span>
+        <span class="brand-letter">O</span>
+        <span class="brand-letter">N</span>
+        <span class="brand-letter">E</span>
+        <span class="brand-letter">S</span>
+        <span class="brand-letter">I</span>
+        <span class="brand-letter">D</span>
+        <span class="brand-letter">E</span>
+      </div>
+      <div class="preloader-tagline">Four Decades of Legacy</div>
+      <div class="preloader-progress">
+        <div class="progress-track">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+    <div class="preloader-wipe"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CURSOR — Hidden on Mobile/Touch
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <svg class="cursor-icon cursor-default" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1"/>
+    </svg>
+    <svg class="cursor-icon cursor-pointer" viewBox="0 0 24 24" fill="none">
+      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    <svg class="cursor-icon cursor-view" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1"/>
+      <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER — Minimal, Elegant Navigation
+  ═══════════════════════════════════════════════════════════ -->
+  <header class="header" id="header">
+    <a href="#" class="header-logo">
+      <img src="assets/images/logo.png" alt="Stoneside Custom Homes" class="logo-image" />
+    </a>
+
+    <nav class="header-nav" id="headerNav">
+      <a href="#legacy" class="nav-item">Legacy</a>
+      <a href="#philosophy" class="nav-item">Philosophy</a>
+      <a href="#portfolio" class="nav-item">Homes</a>
+      <a href="#process" class="nav-item">Process</a>
+    </nav>
+
+    <a href="#contact" class="header-cta">
+      <span class="cta-text">Start Building</span>
+      <span class="cta-arrow">→</span>
+    </a>
+
+    <button class="header-menu" id="headerMenu" aria-label="Open Menu">
+      <span class="menu-line"></span>
+      <span class="menu-line"></span>
+    </button>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MOBILE NAV — Full Screen Takeover
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <div class="mobile-nav-inner">
+      <nav class="mobile-nav-links">
+        <a href="#legacy" class="mobile-link">
+          <span class="mobile-link-num">01</span>
+          <span class="mobile-link-text">Legacy</span>
+        </a>
+        <a href="#philosophy" class="mobile-link">
+          <span class="mobile-link-num">02</span>
+          <span class="mobile-link-text">Philosophy</span>
+        </a>
+        <a href="#portfolio" class="mobile-link">
+          <span class="mobile-link-num">03</span>
+          <span class="mobile-link-text">Homes</span>
+        </a>
+        <a href="#process" class="mobile-link">
+          <span class="mobile-link-num">04</span>
+          <span class="mobile-link-text">Process</span>
+        </a>
+        <a href="#contact" class="mobile-link mobile-link-cta">
+          <span class="mobile-link-num">05</span>
+          <span class="mobile-link-text">Begin Your Home</span>
+        </a>
+      </nav>
+      <div class="mobile-nav-footer">
+        <p>Bryan–College Station, Texas</p>
+        <p class="mobile-verse">"Unless the Lord builds the house..."</p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- ═══════════════════════════════════════════════════════════
+         HERO — Immersive Full-Screen Experience
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <!-- Blueprint Grid Background -->
+      <div class="hero-grid" aria-hidden="true">
+        <div class="grid-lines"></div>
+        <div class="grid-numbers">
+          <span>A1</span><span>A2</span><span>A3</span><span>A4</span><span>A5</span>
+        </div>
+      </div>
+
+      <!-- Parallax Image Layers -->
+      <div class="hero-media">
+        <div class="hero-sketch-layer">
+          <img src="assets/images/hero-sketch.jpg" alt="" class="hero-sketch" />
+        </div>
+        <div class="hero-photo-layer">
+          <img src="assets/images/hero-photo.jpg" alt="Stoneside Custom Home" class="hero-photo" />
+        </div>
+        <div class="hero-overlay"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="hero-content">
+        <div class="hero-top">
+          <div class="hero-location">
+            <span class="location-dot"></span>
+            <span class="location-text">Bryan–College Station, Texas</span>
+          </div>
+        </div>
+
+        <div class="hero-center">
+          <h1 class="hero-title">
+            <span class="title-line title-line-1">
+              <span class="word">Where</span>
+              <span class="word">Blueprints</span>
+            </span>
+            <span class="title-line title-line-2">
+              <span class="word">Become</span>
+              <span class="word word-accent">Legacy</span>
+            </span>
+          </h1>
+
+          <div class="hero-divider">
+            <span class="divider-line"></span>
+            <span class="divider-year">40 Years</span>
+            <span class="divider-line"></span>
+          </div>
+
+          <p class="hero-subtitle">
+            Custom homes built with the patience of experience,
+            the discipline of tradition, and the care of a family name.
+          </p>
+        </div>
+
+        <div class="hero-bottom">
+          <!-- UPDATED: Removed + from 40 -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-value">40</span>
+              <span class="stat-label">Years of Excellence</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">∞</span>
+              <span class="stat-label">Patience</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Promise</span>
+            </div>
+          </div>
+
+          <div class="hero-cta">
+            <a href="#portfolio" class="hero-btn">
+              <span class="btn-text">Explore Our Homes</span>
+              <span class="btn-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+
+          <div class="hero-scroll">
+            <div class="scroll-indicator">
+              <span class="scroll-dot"></span>
+            </div>
+            <span class="scroll-text">Scroll to Discover</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Elements -->
+      <div class="hero-side-left">
+        <div class="side-verse">
+          <span class="verse-line">"Unless the Lord builds the house,</span>
+          <span class="verse-line">the builders labor in vain."</span>
+          <span class="verse-ref">— Psalm 127:1</span>
+        </div>
+      </div>
+
+      <div class="hero-side-right">
+        <div class="side-label">
+          <span>Heritage Builder</span>
+          <span>Since 1984</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         LEGACY — 40 Years Timeline Section
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="legacy" id="legacy">
+      <div class="legacy-intro">
+        <div class="container">
+          <div class="section-tag">
+            <span>Our Legacy</span>
+            <span>01</span>
+          </div>
+
+          <div class="legacy-header">
+            <h2 class="legacy-title">
+              Four Decades of <em>Unwavering Excellence</em>
+            </h2>
+            <p class="legacy-lead">
+              In 1984, when most builders chased volume, we chose a different path—
+              one measured not in units built, but in families served with excellence.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal Scrolling Timeline -->
+      <div class="timeline-wrapper">
+        <div class="timeline-track" id="timelineTrack">
+          <div class="timeline-item">
+            <div class="timeline-year">1984</div>
+            <div class="timeline-content">
+              <h3>The Beginning</h3>
+              <p>Founded in Bryan–College Station with a simple promise: build homes as if our name depended on it. Because it does.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-year">1994</div>
+            <div class="timeline-content">
+              <h3>First Decade</h3>
+              <p>A decade of learning the land, understanding families, and refining our craft. Never more than a handful of homes per year.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-year">2004</div>
+            <div class="timeline-content">
+              <h3>Deep Roots</h3>
+              <p>Twenty years of building relationships as strong as our foundations. Children of our first clients now building with us.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-year">2014</div>
+            <div class="timeline-content">
+              <h3>Generational</h3>
+              <p>Three decades of families trusting their dreams to our hands. The work speaks for itself.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-year">2024</div>
+            <div class="timeline-content">
+              <h3>Four Decades Strong</h3>
+              <p>Forty years of keeping one promise: every home built with the patience and care it deserves.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="timelineProgress"></div>
+          </div>
+          <div class="progress-years">
+            <span>1984</span>
+            <span>2024</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Numbers -->
+      <div class="legacy-numbers">
+        <div class="container">
+          <div class="numbers-grid">
+            <div class="number-item">
+              <span class="number-value">40<span class="number-suffix">+</span></span>
+              <span class="number-label">Years Building</span>
+            </div>
+            <div class="number-item">
+              <span class="number-value">200<span class="number-suffix">+</span></span>
+              <span class="number-label">Homes Completed</span>
+            </div>
+            <div class="number-item">
+              <span class="number-value">100<span class="number-suffix">%</span></span>
+              <span class="number-label">Client Referrals</span>
+            </div>
+            <div class="number-item">
+              <span class="number-value">1</span>
+              <span class="number-label">Family Name</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PHILOSOPHY — Dark Dramatic Section
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="philosophy" id="philosophy">
+      <div class="philosophy-bg">
+        <div class="philosophy-grain"></div>
+        <div class="philosophy-gradient"></div>
+      </div>
+
+      <div class="container">
+        <div class="philosophy-content">
+          <div class="section-tag" style="color: var(--stone);">
+            <span>Our Philosophy</span>
+            <span>02</span>
+          </div>
+
+          <div class="philosophy-statement">
+            <h2 class="philosophy-title">
+              Building Is <em>Stewardship</em>
+            </h2>
+          </div>
+
+          <div class="philosophy-body">
+            <p class="philosophy-lead">
+              A home is where your children will take their first steps. Where holidays 
+              will gather decades of memories. Where legacy is quietly built.
+            </p>
+
+            <div class="philosophy-pillars">
+              <div class="pillar">
+                <span class="pillar-num">I</span>
+                <div class="pillar-content">
+                  <h3 class="pillar-title">Clarity Before Commitment</h3>
+                  <p class="pillar-text">You'll understand every detail before we break ground.</p>
+                </div>
+              </div>
+              <div class="pillar">
+                <span class="pillar-num">II</span>
+                <div class="pillar-content">
+                  <h3 class="pillar-title">Peace During the Build</h3>
+                  <p class="pillar-text">Weekly communication. Clean sites. No surprises.</p>
+                </div>
+              </div>
+              <div class="pillar">
+                <span class="pillar-num">III</span>
+                <div class="pillar-content">
+                  <h3 class="pillar-title">Accountability After Keys</h3>
+                  <p class="pillar-text">Our relationship doesn't end at closing. Ever.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="philosophy-verse">
+            <blockquote>
+              "As for me and my house, we will serve the Lord."
+            </blockquote>
+            <cite>Joshua 24:15</cite>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PORTFOLIO — Horizontal Scroll Gallery (UPDATED HEADER)
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="portfolio" id="portfolio">
+      <div class="container">
+        <div class="section-tag">
+          <span>Our Homes</span>
+          <span>03</span>
+        </div>
+
+        <!-- UPDATED: Portfolio header with title left, lead right -->
+        <div class="portfolio-header">
+          <div class="portfolio-header-left">
+            <h2 class="portfolio-title">
+              Homes That <em>Tell Stories</em>
+            </h2>
+          </div>
+          <p class="portfolio-lead">
+            Every home begins as a drawing. What matters is what it becomes—
+            a vessel for your family's story.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery-wrapper">
+        <div class="gallery-track" id="galleryTrack">
+          <!-- Gallery items populated by JS -->
+        </div>
+      </div>
+
+      <div class="portfolio-controls">
+        <div class="container">
+          <div class="gallery-nav">
+            <button class="gallery-btn gallery-prev" id="galleryPrev" aria-label="Previous">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+            </button>
+            <div class="gallery-count">
+              <span class="count-current" id="galleryCount">01</span>
+              <span class="count-divider">/</span>
+              <span class="count-total" id="galleryTotal">06</span>
+            </div>
+            <button class="gallery-btn gallery-next" id="galleryNext" aria-label="Next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+          <a href="#contact" class="portfolio-cta">
+            <span>Start Your Custom Home</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17L17 7M17 7H7M17 7v10"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PROCESS — UPDATED: Full-width centered title
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="process" id="process">
+      <div class="container">
+        <div class="section-tag text-center" style="justify-content: center;">
+          <span>Our Process</span>
+          <span>04</span>
+        </div>
+
+        <!-- UPDATED: Centered full-width title -->
+        <div class="process-header">
+          <h2 class="process-title">
+            From First <em>Conversation</em> to Forever Home
+          </h2>
+        </div>
+
+        <div class="process-steps">
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TESTIMONIALS — UPDATED: Multiple testimonial cards
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="testimonial">
+      <div class="container">
+        <div class="testimonial-content">
+          
+          <div class="section-tag" style="justify-content: center; margin-bottom: 60px;">
+            <span>Client Stories</span>
+            <span>05</span>
+          </div>
+
+          <div class="testimonials-grid" id="testimonialsGrid">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         CONTACT — Start the Conversation
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="contact" id="contact">
+      <div class="contact-bg">
+        <div class="contact-grid"></div>
+      </div>
+
+      <div class="container">
+        <div class="contact-wrapper">
+          <div class="contact-info">
+            <div class="section-tag">
+              <span>Begin Here</span>
+              <span>05</span>
+            </div>
+
+            <h2 class="contact-title">
+              Let's Build <em>Something</em> That Lasts
+            </h2>
+
+            <p class="contact-lead">
+              A short note is enough to begin. We'll schedule a call to 
+              discuss your vision, timeline, and whether we're the right fit.
+            </p>
+
+            <div class="contact-details">
+              <div class="detail-item">
+                <span class="detail-label">Location</span>
+                <span class="detail-value">Bryan–College Station, TX</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Phone</span>
+                <span class="detail-value"><a href="tel:+19795551984">(979) 555-1984</a></span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Email</span>
+                <span class="detail-value"><a href="mailto:build@stonesidehomes.com">build@stonesidehomes.com</a></span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Response</span>
+                <span class="detail-value">Within 24 Hours</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrapper">
+            <form class="contact-form" id="contactForm">
+              <div class="form-row">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" class="form-input" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" class="form-input" required />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="message">Tell Us About Your Vision</label>
+                  <textarea id="message" name="message" class="form-textarea" rows="5" required></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="form-submit">
+                <span>Send Message</span>
+                <span class="submit-arrow">→</span>
+              </button>
+
+              <div class="form-success" id="formSuccess">
+                Thank you. We'll be in touch within 24 hours.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER — Simplified
+  ═══════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <img src="assets/images/logo.png" alt="Stoneside Custom Homes" class="footer-logo-img" />
+        <span class="footer-tagline">Building Legacy Since 1984</span>
+        <span class="footer-copy">© 2024 Stoneside Custom Homes · Bryan–College Station, Texas</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PROJECT MODAL — UPDATED: Navigation arrows, View Details button
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="projectModal" aria-hidden="true">
+    <!-- Navigation Arrows -->
+    <button class="modal-nav prev" id="modalPrev" aria-label="Previous Project">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+    </button>
+    <button class="modal-nav next" id="modalNext" aria-label="Next Project">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <div class="modal">
+      <button class="modal-close" id="modalClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div class="modal-content">
+        <div class="modal-gallery">
+          <div class="modal-images" id="modalImages">
+            <img class="modal-sketch" id="modalSketch" src="" alt="" />
+            <img class="modal-photo" id="modalPhoto" src="" alt="" />
+          </div>
+          <button class="modal-reveal" id="modalReveal">
+            <span class="reveal-text">Reveal Build</span>
+          </button>
+        </div>
+
+        <div class="modal-info">
+          <div class="modal-header">
+            <span class="modal-type" id="modalType"></span>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <span class="modal-location" id="modalLocation"></span>
+          </div>
+
+          <p class="modal-description" id="modalDescription"></p>
+
+          <div class="modal-specs">
+            <div class="modal-spec">
+              <span class="spec-value" id="modalSqft"></span>
+              <span class="spec-label">Sq Ft</span>
+            </div>
+            <div class="modal-spec">
+              <span class="spec-value" id="modalBeds"></span>
+              <span class="spec-label">Beds</span>
+            </div>
+            <div class="modal-spec">
+              <span class="spec-value" id="modalBaths"></span>
+              <span class="spec-label">Baths</span>
+            </div>
+            <div class="modal-spec">
+              <span class="spec-value" id="modalYear"></span>
+              <span class="spec-label">Year</span>
+            </div>
+          </div>
+
+          <div class="modal-verse">
+            <blockquote id="modalVerseText"></blockquote>
+            <cite id="modalVerseRef"></cite>
+          </div>
+
+          <!-- View Details Button -->
+          <div class="modal-actions">
+            <a href="#" class="modal-btn modal-btn-primary" id="modalViewDetails">
+              <span>View Full Details</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/extraordinary.js"></script>
+</body>
+</html>
