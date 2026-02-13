@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stoneside Admin Dashboard</title>
+  <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -1164,9 +1165,9 @@
         const username = document.getElementById('loginUsername').value;
         const password = document.getElementById('loginPassword').value;
         
-        // You can hardcode your admin password here if you want
-        // Current: admin / stoneside2024
-        if (username === "admin" && password === "stoneside2024") {
+        // You can change your admin password here
+        // Current: admin / Stoneside!2026
+        if (username === "admin" && password === "Stoneside!2026") {
           sessionStorage.setItem('stoneside_auth', 'true');
           showDashboard();
           showToast('Welcome back!', 'success');

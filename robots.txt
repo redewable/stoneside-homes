@@ -1,0 +1,7 @@
+# Stoneside Custom Homes — robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://www.stonesidehomes.com/sitemap.xml

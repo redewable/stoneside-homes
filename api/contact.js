@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    const from = process.env.CONTACT_FROM_EMAIL || 'Stoneside Website <onboarding@resend.dev>';
+    const from = process.env.CONTACT_FROM_EMAIL || 'Stoneside Website <noreply@stonesidehomes.com>';
     const subjectPrefix = process.env.CONTACT_SUBJECT_PREFIX || 'Stoneside Inquiry:';
 
     const subject = `${subjectPrefix} ${name}`;

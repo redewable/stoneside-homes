@@ -43,8 +43,8 @@ window.STONESIDE_DATA = {
 
   contact: {
     location: "Bryan–College Station, TX",
-    phone: "(979) 555-1984",
-    email: "build@stonesidehomes.com",
+    phone: "(979) 398-7313",
+    email: "sales@stonesidehomes.com",
     response: "Within 24 Hours"
   },
 
@@ -77,8 +77,8 @@ window.STONESIDE_DATA = {
       beds: "5",
       baths: "4.5",
       year: "2024",
-      photo: "assets/images/custom_home.jpg",
-      sketch: "assets/images/hero-sketch.jpg",
+      photo: "assets/images/projects/oakwood-photo.jpg",
+      sketch: "assets/images/projects/oakwood-sketch.jpg",
       description: "Designed for a growing family who wanted vaulted volume, long sightlines, and a backyard built for gathering. Warm finishes, disciplined layout, and details that age well.",
       verseText: "By wisdom a house is built, and through understanding it is established.",
       verseRef: "Proverbs 24:3"
@@ -92,8 +92,8 @@ window.STONESIDE_DATA = {
       beds: "4",
       baths: "3.5",
       year: "2023",
-      photo: "assets/images/custom_home.jpg",
-      sketch: "assets/images/hero-sketch.jpg",
+      photo: "assets/images/projects/heritage-photo.jpg",
+      sketch: "assets/images/projects/heritage-sketch.jpg",
       description: "A classic exterior with thoughtful interior flow. Built for everyday living, long-term durability, and a finish level that doesn't chase trends.",
       verseText: "Unless the Lord builds the house, the builders labor in vain.",
       verseRef: "Psalm 127:1"
@@ -107,8 +107,8 @@ window.STONESIDE_DATA = {
       beds: "4",
       baths: "3",
       year: "2024",
-      photo: "assets/images/custom_home.jpg",
-      sketch: "assets/images/hero-sketch.jpg",
+      photo: "assets/images/projects/brazos-photo.jpg",
+      sketch: "assets/images/projects/brazos-sketch.jpg",
       description: "A modern ranch with practical planning: generous storage, clean transitions, and materials chosen for how they perform over time.",
       verseText: "Commit your work to the Lord, and your plans will be established.",
       verseRef: "Proverbs 16:3"
@@ -122,8 +122,8 @@ window.STONESIDE_DATA = {
       beds: "4",
       baths: "3",
       year: "2023",
-      photo: "assets/images/custom_home.jpg",
-      sketch: "assets/images/hero-sketch.jpg",
+      photo: "assets/images/projects/stonegate-photo.jpg",
+      sketch: "assets/images/projects/stonegate-sketch.jpg",
       description: "A spec home built with custom-home discipline: strong details, clean scope, and straightforward value for families who want quality without the noise.",
       verseText: "Let all that you do be done in love.",
       verseRef: "1 Corinthians 16:14"
@@ -137,8 +137,8 @@ window.STONESIDE_DATA = {
       beds: "4",
       baths: "3.5",
       year: "2022",
-      photo: "assets/images/custom_home.jpg",
-      sketch: "assets/images/hero-sketch.jpg",
+      photo: "assets/images/projects/traditions-photo.jpg",
+      sketch: "assets/images/projects/traditions-sketch.jpg",
       description: "Designed around front-porch living and family gatherings. Traditional proportions, warm interior light, and a layout that feels settled.",
       verseText: "As for me and my house, we will serve the Lord.",
       verseRef: "Joshua 24:15"
@@ -152,8 +152,8 @@ window.STONESIDE_DATA = {
       beds: "3",
       baths: "2.5",
       year: "2022",
-      photo: "assets/images/custom_home.jpg",
-      sketch: "assets/images/hero-sketch.jpg",
+      photo: "assets/images/projects/midtown-photo.jpg",
+      sketch: "assets/images/projects/midtown-sketch.jpg",
       description: "A clean, durable build with strong planning and honest finishes. Built for real life — and built to last.",
       verseText: "Whatever you do, work at it with all your heart.",
       verseRef: "Colossians 3:23"

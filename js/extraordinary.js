@@ -776,10 +776,29 @@ function initContactForm() {
     submitBtn.innerHTML = '<span>Sending...</span>';
 
     try {
+      // Save to Firebase first
+      const formData = Object.fromEntries(new FormData(form));
+      const submission = {
+        name: (formData.firstName || '') + ' ' + (formData.lastName || ''),
+        email: formData.email || '',
+        phone: formData.phone || null,
+        message: formData.message || null,
+        source: 'main-site',
+        timestamp: Date.now(),
+        submitted_at: new Date().toISOString()
+      };
+      await db.ref('inquiries').push(submission);
+
+      // Also try email API (non-blocking)
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        body: JSON.stringify({
+          name: submission.name,
+          email: submission.email,
+          phone: submission.phone,
+          message: submission.message
+        })
       });
       if (!response.ok) throw new Error();
     } catch {}
