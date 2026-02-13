@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
@@ -568,14 +569,15 @@
       <div class="login-subtitle">Admin Dashboard</div>
       <form class="login-form" id="loginForm">
         <div class="form-group">
-          <label class="form-label">Username</label>
-          <input type="text" class="form-input" id="loginUsername" required />
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="loginEmail" required />
         </div>
         <div class="form-group">
           <label class="form-label">Password</label>
           <input type="password" class="form-input" id="loginPassword" required />
         </div>
-        <button type="submit" class="btn btn-primary login-btn">Sign In</button>
+        <button type="submit" class="btn btn-primary login-btn" id="loginBtn">Sign In</button>
+        <p id="loginError" style="color: #f87171; font-size: 0.8rem; margin-top: 12px; display: none;"></p>
       </form>
     </div>
   </div>
@@ -1030,16 +1032,15 @@
 
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">Admin Credentials</h2>
+            <h2 class="card-title">Change Password</h2>
           </div>
           <div class="form-grid">
             <div class="form-group">
-              <label class="form-label">Username</label>
-              <input type="text" class="form-input" id="adminUsername" placeholder="Leave blank to keep current" />
-            </div>
-            <div class="form-group">
               <label class="form-label">New Password</label>
-              <input type="password" class="form-input" id="adminPassword" placeholder="Leave blank to keep current" />
+              <input type="password" class="form-input" id="newPassword" placeholder="Min 6 characters" />
+            </div>
+            <div class="form-group" style="display: flex; align-items: flex-end;">
+              <button class="btn btn-secondary" id="changePasswordBtn">Update Password</button>
             </div>
           </div>
         </div>
@@ -1150,36 +1151,80 @@
     });
 
     // ════════════════════════════════════════════════════════════════
-    // AUTHENTICATION (Simple Session)
+    // AUTHENTICATION (Firebase Auth)
     // ════════════════════════════════════════════════════════════════
     function initAuth() {
       const loginForm = document.getElementById('loginForm');
+      const loginBtn = document.getElementById('loginBtn');
+      const loginError = document.getElementById('loginError');
       const logoutBtn = document.getElementById('logoutBtn');
-      
-      if (sessionStorage.getItem('stoneside_auth') === 'true') {
-        showDashboard();
-      }
+      const auth = firebase.auth();
 
-      loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const username = document.getElementById('loginUsername').value;
-        const password = document.getElementById('loginPassword').value;
-        
-        // You can change your admin password here
-        // Current: admin / Stoneside!2026
-        if (username === "admin" && password === "Stoneside!2026") {
-          sessionStorage.setItem('stoneside_auth', 'true');
+      // Listen for auth state changes
+      auth.onAuthStateChanged((user) => {
+        if (user) {
           showDashboard();
-          showToast('Welcome back!', 'success');
         } else {
-          showToast('Invalid credentials', 'error');
+          document.getElementById('loginScreen').classList.remove('hidden');
+          document.getElementById('adminDashboard').classList.add('hidden');
         }
       });
 
-      logoutBtn.addEventListener('click', () => {
-        sessionStorage.removeItem('stoneside_auth');
+      // Login handler
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loginError.style.display = 'none';
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Signing in...';
+
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        try {
+          await auth.signInWithEmailAndPassword(email, password);
+          showToast('Welcome back!', 'success');
+        } catch (err) {
+          let msg = 'Invalid credentials. Please try again.';
+          if (err.code === 'auth/user-not-found') msg = 'No account found with this email.';
+          if (err.code === 'auth/wrong-password') msg = 'Incorrect password.';
+          if (err.code === 'auth/too-many-requests') msg = 'Too many attempts. Try again later.';
+          if (err.code === 'auth/invalid-credential') msg = 'Invalid email or password.';
+          loginError.textContent = msg;
+          loginError.style.display = 'block';
+        } finally {
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Sign In';
+        }
+      });
+
+      // Logout handler
+      logoutBtn.addEventListener('click', async () => {
+        await auth.signOut();
         location.reload();
       });
+
+      // Change password handler
+      const changePwBtn = document.getElementById('changePasswordBtn');
+      if (changePwBtn) {
+        changePwBtn.addEventListener('click', async () => {
+          const newPass = document.getElementById('newPassword').value;
+          if (!newPass || newPass.length < 6) {
+            showToast('Password must be at least 6 characters.', 'error');
+            return;
+          }
+          try {
+            await auth.currentUser.updatePassword(newPass);
+            document.getElementById('newPassword').value = '';
+            showToast('Password updated!', 'success');
+          } catch (err) {
+            if (err.code === 'auth/requires-recent-login') {
+              showToast('Please log out and log back in, then try changing your password.', 'error');
+            } else {
+              showToast('Error: ' + err.message, 'error');
+            }
+          }
+        });
+      }
     }
 
     function showDashboard() {
