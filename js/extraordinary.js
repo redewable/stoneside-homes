@@ -148,10 +148,13 @@ function loadAdminContent() {
     }
 
     // --- 4. PROJECTS ---
-    if (DATA.projects) {
+    // Prefer STONESIDE_DATA (from data.js) over Firebase for projects
+    if (window.STONESIDE_DATA && window.STONESIDE_DATA.projects) {
+        window.projects = window.STONESIDE_DATA.projects;
+    } else if (DATA.projects) {
         window.projects = toArray(DATA.projects);
-        initPortfolio();
     }
+    initPortfolio();
 
     // --- 5. TESTIMONIALS ---
     if (DATA.testimonials) {
@@ -473,6 +476,12 @@ function initPortfolio() {
   const countCurrent = document.getElementById('galleryCount');
   const countTotal = document.getElementById('galleryTotal');
 
+  // Initialize projects from STONESIDE_DATA if not yet set by Firebase
+  if (typeof projects === 'undefined' || !window.projects) {
+    if (window.STONESIDE_DATA && window.STONESIDE_DATA.projects) {
+      window.projects = window.STONESIDE_DATA.projects;
+    }
+  }
   if (!track || typeof projects === 'undefined') return;
 
   // Render gallery items with updated structure
