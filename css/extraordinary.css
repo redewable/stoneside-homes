@@ -18,6 +18,9 @@
   --cream: #f5f5f3;
   --white: #fafafa;
   
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
   /* Accent */
   --bronze: #9d7b5a;
   --bronze-light: #c4a882;
@@ -39,7 +42,7 @@
   
   /* Layout */
   --container: min(1400px, 90vw);
-  --header-height: 72px;
+  --header-height: 100px;
   
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -320,11 +323,12 @@ button {
 }
 
 .logo-image {
-  height: 78px; /* Increased from 52px */
+  height: 110px;
 }
 
 @media (max-width: 768px) {
-  .logo-image, .footer-logo-img { height: 48px; }
+  .logo-image { height: 72px; }
+  .footer-logo-img { height: 48px; }
 }
 
 .logo-icon {
@@ -592,35 +596,6 @@ button {
   min-height: 100dvh;
 }
 
-/* UPDATED: Top Label - No Glow, Crisp */
-.hero-top {
-  position: absolute;
-  top: calc(var(--header-height) + var(--space-lg));
-  left: 0;
-  right: 0;
-  text-align: center;
-}
-
-.hero-location {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink);
-  opacity: 0.7;
-}
-
-.location-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--bronze);
-  border-radius: 50%;
-}
-
 .hero-center {
   text-align: center;
   padding: var(--space-2xl) 0;
@@ -662,32 +637,6 @@ button {
   color: var(--bronze);
 }
 
-/* UPDATED: Divider - Clean, No Glow */
-.hero-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-lg);
-  opacity: 0;
-  animation: fadeIn 0.8s var(--ease-out) 0.8s forwards;
-}
-
-.divider-line {
-  width: 50px;
-  height: 1px;
-  background: var(--bronze);
-  opacity: 0.3;
-}
-
-.divider-year {
-  font-family: var(--font-mono);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--bronze);
-}
 
 @keyframes fadeIn {
   to { opacity: 1; }
@@ -706,57 +655,40 @@ button {
   animation: fadeIn 0.8s var(--ease-out) 1s forwards;
 }
 
-/* UPDATED: Bottom Layout */
+/* Hero Bottom - Badge, Button, Scroll */
 .hero-bottom {
-  position: absolute;
-  bottom: var(--space-xl);
-  left: var(--space-xl);
-  right: var(--space-xl);
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  /* Add padding to move stats away from edge */
-  padding-left: var(--space-2xl);
-  padding-right: var(--space-2xl);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding-top: var(--space-xl);
 }
 
-.hero-stats {
-  display: flex;
-  gap: var(--space-2xl); /* More space between numbers */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bronze);
+  background: rgba(157, 123, 90, 0.08);
+  border: 1px solid rgba(157, 123, 90, 0.2);
+  border-radius: 4px;
   opacity: 0;
   animation: fadeIn 0.8s var(--ease-out) 1.2s forwards;
 }
 
-.stat-item {
-  text-align: left;
-}
-
-.stat-value {
+.badge-text {
   display: block;
-  font-family: var(--font-body); /* Changed to body font for cleaner look */
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  line-height: 1;
-  color: var(--ink);
-  font-weight: 300;
 }
 
-.stat-label {
-  display: block;
-  margin-top: var(--space-xs);
-  font-family: var(--font-mono);
-  font-size: 0.5625rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--charcoal);
-  font-weight: 600;
-}
-
-/* UPDATED: Centered Button */
+/* Hero CTA Button */
 .hero-cta {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
   opacity: 0;
   animation: fadeIn 0.8s var(--ease-out) 1.3s forwards;
 }
@@ -792,17 +724,10 @@ button {
   transform: translate(3px, -3px);
 }
 
-/* UPDATED: Minimal Scroll Indicator */
+/* Minimal Scroll Indicator */
 .hero-scroll {
-  /* Moved slightly up */
-  position: relative;
-  bottom: 10px;
   opacity: 0;
   animation: fadeIn 0.8s var(--ease-out) 1.4s forwards;
-}
-
-.scroll-text {
-  display: none; /* Hide the text */
 }
 
 .scroll-indicator {
@@ -867,8 +792,8 @@ button {
   align-items: center;
   gap: var(--space-sm);
   font-family: var(--font-mono);
-  font-size: 0.5625rem;
-  letter-spacing: 0.2em;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--stone);
   margin-bottom: var(--space-lg);
@@ -1351,8 +1276,8 @@ button {
   left: var(--space-md);
   padding: var(--space-xs) var(--space-sm);
   font-family: var(--font-mono);
-  font-size: 0.5rem;
-  letter-spacing: 0.15em;
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--cream);
   background: rgba(10, 10, 10, 0.7);
@@ -1361,20 +1286,21 @@ button {
 }
 
 .gallery-info {
-  padding: 0 var(--space-xs);
+  padding: var(--space-sm) var(--space-xs) 0;
 }
 
 .gallery-title {
   font-family: var(--font-display);
-  font-size: 1.375rem;
+  font-size: 1.5rem;
   font-weight: 400;
   color: var(--ink);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 4px;
 }
 
 .gallery-location {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--slate);
+  line-height: 1.4;
 }
 
 /* Gallery Controls */
@@ -1546,8 +1472,8 @@ button {
 }
 
 .step-text {
-  font-size: 0.9375rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.7;
   color: var(--slate);
 }
 
@@ -2366,7 +2292,7 @@ button {
 
 @media (max-width: 900px) {
   :root {
-    --header-height: 60px;
+    --header-height: 80px;
     --space-xl: 32px;
     --space-2xl: 48px;
   }
@@ -2376,17 +2302,10 @@ button {
     padding: calc(var(--header-height) + 20px) 20px 40px;
     justify-content: flex-start;
     min-height: auto;
-    /* Ensure content sits naturally */
-    height: auto; 
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
-  }
-
-  .hero-top {
-    position: relative;
-    top: auto;
-    margin-bottom: 20px;
   }
 
   .hero-center {
@@ -2395,10 +2314,6 @@ button {
   }
 
   .hero-bottom {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    right: auto;
     flex-direction: column;
     align-items: center;
     gap: 30px;
@@ -2416,16 +2331,10 @@ button {
     padding: 0 10px;
   }
 
-  .hero-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px;
-    width: 100%;
-    justify-items: center;
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 12px 16px;
   }
-  
-  .stat-value { font-size: 1.75rem; }
-  .stat-label { font-size: 0.5rem; }
 }
 
 @media (max-width: 768px) {
@@ -2455,13 +2364,32 @@ button {
 
   .gallery-item, .timeline-item {
     scroll-snap-align: center;
-    flex: 0 0 85vw; /* Show slightly less than full width to encourage scroll */
-    margin-right: 15px;
+    flex: 0 0 80vw;
+    margin-right: 12px;
   }
-  
-  /* Ensure last item doesn't get stuck */
+
   .gallery-item:last-child, .timeline-item:last-child {
-    margin-right: 20px; 
+    margin-right: 20px;
+  }
+
+  .gallery-count {
+    font-size: 0.75rem;
+  }
+
+  .gallery-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .gallery-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .portfolio-controls .container {
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: center;
   }
 
   /* 4. MODAL FIX: Enable scrolling on small screens */

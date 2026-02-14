@@ -109,8 +109,9 @@ function loadAdminContent() {
         }
     }
 
-    // Process Steps
-    if (DATA.process) {
+    // Process Steps - prefer STONESIDE_DATA over Firebase
+    const processData = (window.STONESIDE_DATA && window.STONESIDE_DATA.process) || DATA.process;
+    if (processData) {
         const list = document.querySelector('.process-steps');
         if(list) {
             // Helper for icons
@@ -125,7 +126,7 @@ function loadAdminContent() {
                 return icons[name] || icons.plus;
             };
 
-            list.innerHTML = toArray(DATA.process).map(item => `
+            list.innerHTML = toArray(processData).map(item => `
               <div class="step">
                 <div class="step-number">${item.num}</div>
                 <div class="step-content">
@@ -156,11 +157,12 @@ function loadAdminContent() {
     }
     initPortfolio();
 
-    // --- 5. TESTIMONIALS ---
-    if (DATA.testimonials) {
+    // --- 5. TESTIMONIALS --- prefer STONESIDE_DATA
+    const testimonialsData = (window.STONESIDE_DATA && window.STONESIDE_DATA.testimonials) || DATA.testimonials;
+    if (testimonialsData) {
       const grid = document.getElementById('testimonialsGrid');
       if(grid) {
-        grid.innerHTML = toArray(DATA.testimonials).map(t => `
+        grid.innerHTML = toArray(testimonialsData).map(t => `
           <div class="testimonial-card">
             <div class="testimonial-mark">"</div>
             <blockquote class="testimonial-quote">${t.quote}</blockquote>

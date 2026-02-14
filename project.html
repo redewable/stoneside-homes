@@ -14,12 +14,16 @@
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
 
   <style>
-    /* Project Page Specific Styles */
+    /* ════════════════════════════════════════════════════════════════
+       PROJECT PAGE STYLES
+       ════════════════════════════════════════════════════════════════ */
+
     .project-page {
       min-height: 100vh;
       background: var(--charcoal);
     }
 
+    /* Header */
     .project-header {
       position: fixed;
       top: 0;
@@ -176,11 +180,223 @@
       letter-spacing: 0.02em;
     }
 
+    /* Gallery Section */
+    .project-gallery {
+      padding: 80px 60px;
+      background: var(--charcoal);
+    }
+
+    .gallery-header {
+      margin-bottom: 48px;
+    }
+
+    .gallery-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    .gallery-subtitle {
+      font-size: 0.875rem;
+      color: var(--stone);
+      letter-spacing: 0.02em;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      border-color: var(--bronze);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-item-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 20px;
+      background: linear-gradient(to top, rgba(26, 26, 24, 0.95), transparent);
+      font-size: 0.875rem;
+      color: var(--cream);
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-item-label {
+      opacity: 1;
+    }
+
+    /* Lightbox Styles */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.95);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 40px 20px;
+    }
+
+    .lightbox-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-container {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lightbox-image-wrapper {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: var(--cream);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .lightbox-close:hover {
+      background: var(--bronze);
+      border-color: var(--bronze);
+      color: var(--charcoal);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: var(--cream);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .lightbox-nav:hover {
+      background: var(--bronze);
+      border-color: var(--bronze);
+      color: var(--charcoal);
+    }
+
+    .lightbox-nav.prev {
+      left: 20px;
+    }
+
+    .lightbox-nav.next {
+      right: 20px;
+    }
+
+    .lightbox-nav svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .lightbox-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      color: var(--cream);
+      font-size: 0.875rem;
+    }
+
+    .lightbox-label {
+      font-weight: 500;
+    }
+
+    .lightbox-counter {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--stone);
+    }
+
     /* Content Section */
     .project-content {
       padding: 80px 60px;
       max-width: 1400px;
       margin: 0 auto;
+      background: var(--charcoal);
     }
 
     .project-grid {
@@ -216,6 +432,12 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
       margin-bottom: 48px;
+    }
+
+    @media (max-width: 600px) {
+      .project-features {
+        grid-template-columns: 1fr;
+      }
     }
 
     .feature-item {
@@ -464,6 +686,10 @@
         padding: 40px 24px;
       }
 
+      .project-gallery {
+        padding: 60px 24px;
+      }
+
       .project-content {
         padding: 60px 24px;
       }
@@ -479,9 +705,22 @@
       .project-footer {
         padding: 32px 24px;
       }
+
+      .lightbox-nav {
+        width: 40px;
+        height: 40px;
+      }
+
+      .lightbox-nav.prev {
+        left: 10px;
+      }
+
+      .lightbox-nav.next {
+        right: 10px;
+      }
     }
 
-    /* Loading State */
+    /* Loading & Error States */
     .loading {
       display: flex;
       align-items: center;
@@ -491,7 +730,6 @@
       color: var(--stone);
     }
 
-    /* Error State */
     .error-state {
       display: flex;
       flex-direction: column;
@@ -524,7 +762,7 @@
   <div class="error-state" id="errorState" style="display: none;">
     <h1>Project Not Found</h1>
     <p>The project you're looking for doesn't exist or has been removed.</p>
-    <a href="index.html#portfolio" class="cta-btn">
+    <a href="home.html#portfolio" class="cta-btn">
       <span>View All Projects</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -532,11 +770,11 @@
     </a>
   </div>
 
-  <!-- Main Content (hidden until loaded) -->
+  <!-- Main Content -->
   <div id="projectContent" style="display: none;">
     <!-- Header -->
     <header class="project-header" id="projectHeader">
-      <a href="index.html#portfolio" class="back-link">
+      <a href="home.html#portfolio" class="back-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
@@ -572,6 +810,17 @@
       </div>
     </section>
 
+    <!-- Gallery Section -->
+    <section class="project-gallery">
+      <div class="gallery-header">
+        <h2 class="gallery-title">Gallery</h2>
+        <p class="gallery-subtitle">Click any image to view in fullscreen</p>
+      </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Populated by JavaScript -->
+      </div>
+    </section>
+
     <!-- Content -->
     <section class="project-content">
       <div class="project-grid">
@@ -595,14 +844,14 @@
               <div class="feature-value" id="featureBaths">—</div>
             </div>
             <div class="feature-item">
-              <div class="feature-label">Year Completed</div>
-              <div class="feature-value" id="featureYear">—</div>
+              <div class="feature-label">Garage</div>
+              <div class="feature-value" id="featureGarage">—</div>
             </div>
           </div>
 
           <div class="project-cta">
             <p class="cta-text">Interested in building a home like this? Let's start a conversation.</p>
-            <a href="index.html#contact" class="cta-btn">
+            <a href="home.html#contact" class="cta-btn">
               <span>Start Your Project</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M7 17L17 7M17 7H7M17 7v10"/>
@@ -632,6 +881,10 @@
                 <span class="spec-value" id="specBedBath">—</span>
               </div>
               <div class="spec-row">
+                <span class="spec-label">Garage</span>
+                <span class="spec-value" id="specGarage">—</span>
+              </div>
+              <div class="spec-row">
                 <span class="spec-label">Completed</span>
                 <span class="spec-value" id="specYear">—</span>
               </div>
@@ -659,10 +912,36 @@
 
     <!-- Footer -->
     <footer class="project-footer">
-      <p class="footer-text">© 2024 Stoneside Custom Homes · Bryan–College Station, Texas · Building Legacy Since 1984</p>
+      <p class="footer-text">© 2025 Stoneside Custom Homes · Bryan–College Station, Texas · Building Legacy Since 1984</p>
     </footer>
   </div>
 
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-container">
+      <div class="lightbox-image-wrapper">
+        <img class="lightbox-image" id="lightboxImage" src="" alt="" />
+        <button class="lightbox-close" id="lightboxClose">✕</button>
+        <button class="lightbox-nav prev" id="lightboxPrev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="lightbox-nav next" id="lightboxNext">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+      <div class="lightbox-info">
+        <span class="lightbox-label" id="lightboxLabel">Image</span>
+        <span class="lightbox-counter"><span id="lightboxCurrent">1</span> / <span id="lightboxTotal">1</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load data and project script -->
+  <script src="js/data.js"></script>
   <script>
     // ════════════════════════════════════════════════════════════════
     // PROJECT PAGE JAVASCRIPT
@@ -671,30 +950,34 @@
     let projects = [];
     let currentProject = null;
     let currentIndex = -1;
+    let galleryImages = [];
+    let lightboxIndex = -1;
 
     document.addEventListener('DOMContentLoaded', () => {
       loadProjects();
+      initLightbox();
     });
 
     function getDefaultProjects() {
       return [
-        { id: 1, title: "The Brandon", type: "spec", location: "569 Harvest Lk Dr, Snook, TX", sqft: "1,625", beds: "4", baths: "2", garage: "2 Car", year: "2025", photo: "https://cdn.aryeo.com/listings/569-harvest-lk-dr-snook-tx-77878-21718865/resized/large/large-019bec64-6619-714c-b5e4-6f21ab0bcf94.jpeg", sketch: "https://cdn.aryeo.com/listings/569-harvest-lk-dr-snook-tx-77878-21718865/resized/large/large-019bec64-5f80-7084-a9f8-1d05d55c75e6.jpeg", description: "The Brandon model features a clean, modern farmhouse exterior with an open-concept interior. White cabinetry, granite counters, and dark hardwood floors create a crisp, timeless finish throughout.", verseText: "By wisdom a house is built, and through understanding it is established.", verseRef: "Proverbs 24:3" },
-        { id: 2, title: "The Bayley", type: "spec", location: "581 Harvest Lk Dr, Snook, TX", sqft: "1,749", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "https://cdn.aryeo.com/listings/581-harvest-lk-dr-snook-tx-77878-21718935/resized/large/large-019bec66-637d-72ae-b1ed-59efa2497cfe.jpeg", sketch: "https://cdn.aryeo.com/listings/581-harvest-lk-dr-snook-tx-77878-21718935/resized/large/large-019bec66-60f4-72a1-a815-83ca33d1490e.jpeg", description: "The Bayley model delivers charm and efficiency in a compact footprint. Warm wood floors, a bright open kitchen, and thoughtful storage make this home feel larger than its square footage suggests.", verseText: "Unless the Lord builds the house, the builders labor in vain.", verseRef: "Psalm 127:1" },
-        { id: 3, title: "The Dustin", type: "spec", location: "557 Harvest Lk Dr, Snook, TX", sqft: "1,710", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "https://cdn.aryeo.com/listings/557-harvest-lk-dr-snook-tx-77878-21718795/resized/large/large-019bec62-01b7-7056-9d15-34f96a528efa.jpeg", sketch: "https://cdn.aryeo.com/listings/557-harvest-lk-dr-snook-tx-77878-21718795/resized/large/large-019bec61-f794-721f-8f22-ce66f1527372.jpeg", description: "The Dustin model at Harvest Lake features generous living spaces, clean finishes, and a layout designed for growing families. Situated on a corner lot with views of the community pond.", verseText: "Commit your work to the Lord, and your plans will be established.", verseRef: "Proverbs 16:3" },
-        { id: 4, title: "The Dustin", type: "spec", location: "545 Harvest Lk Dr, Snook, TX", sqft: "1,710", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "https://cdn.aryeo.com/listings/545-harvest-lk-dr-snook-tx-77878-21718725/resized/large/large-019bec5f-612a-713e-a6c3-f212f1dd7ba3.jpeg", sketch: "https://cdn.aryeo.com/listings/545-harvest-lk-dr-snook-tx-77878-21718725/resized/large/large-019bec5f-5dbf-72bc-b563-d410a9b7313c.jpeg", description: "Another Dustin model build on Harvest Lake Drive — same trusted floor plan with unique lot positioning and finish selections. Dark countertops and warm cabinetry give this one its own character.", verseText: "Let all that you do be done in love.", verseRef: "1 Corinthians 16:14" },
-        { id: 5, title: "The Caylen", type: "spec", location: "436 Brazos Bnd, Snook, TX", sqft: "1,781", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "https://cdn.aryeo.com/listings/436-brazos-bnd-snook-tx-77878-21718473/resized/large/large-019bec57-ad59-70d9-b3cc-5384cb10eded.jpeg", sketch: "https://cdn.aryeo.com/listings/436-brazos-bnd-snook-tx-77878-21718473/resized/large/large-019bec57-a852-71ab-9f9e-c9b8a122613d.jpeg", description: "The Caylen model features a striking stone-and-siding exterior with a covered entry. Inside, you'll find an open floor plan with clean transitions, quality cabinetry, and a layout built for daily life.", verseText: "As for me and my house, we will serve the Lord.", verseRef: "Joshua 24:15" },
-        { id: 6, title: "The Dustin", type: "spec", location: "424 Brazos Ct, Caldwell, TX", sqft: "1,710", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "https://cdn.aryeo.com/listings/424-brazos-ct-caldwell-tx-77836-21718375/resized/large/large-019bec54-0b64-7214-a48b-3a7245e53f23.jpeg", sketch: "https://cdn.aryeo.com/listings/424-brazos-ct-caldwell-tx-77836-21718375/resized/large/large-019bec54-05a3-7256-a172-9f056ba96d06.jpeg", description: "The Dustin model in Caldwell brings the same disciplined floor plan to a new community. Modern gray exterior, covered porch, and an interior with clean lines and durable finishes throughout.", verseText: "Whatever you do, work at it with all your heart.", verseRef: "Colossians 3:23" }
+        { id: 1, title: "The Brandon", model: "brandon", type: "spec", location: "569 Harvest Lk Dr, Snook, TX", sqft: "1,625", beds: "4", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/brandon-569/brandon-exterior-main.jpg", sketch: "assets/images/projects/brandon-569/brandon-interior-main.jpg", description: "The Brandon model features a clean, modern farmhouse exterior with an open-concept interior. White cabinetry, granite counters, and dark hardwood floors create a crisp, timeless finish throughout.", verseText: "By wisdom a house is built, and through understanding it is established.", verseRef: "Proverbs 24:3", gallery: [{ src: "assets/images/projects/brandon-569/brandon-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/brandon-569/brandon-entry.jpg", label: "Entry" }, { src: "assets/images/projects/brandon-569/brandon-interior-main.jpg", label: "Living Area" }, { src: "assets/images/projects/brandon-569/brandon-kitchen.jpg", label: "Kitchen" }, { src: "assets/images/projects/brandon-569/brandon-master-bedroom.jpg", label: "Master Bedroom" }] },
+        { id: 2, title: "The Bayley", model: "bayley", type: "spec", location: "581 Harvest Lk Dr, Snook, TX", sqft: "1,749", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/bayley-581/bayley-exterior-main.jpg", sketch: "assets/images/projects/bayley-581/bayley-interior-main.jpg", description: "The Bayley model delivers charm and efficiency in a compact footprint. Warm wood floors, a bright open kitchen, and thoughtful storage make this home feel larger than its square footage suggests.", verseText: "Unless the Lord builds the house, the builders labor in vain.", verseRef: "Psalm 127:1", gallery: [{ src: "assets/images/projects/bayley-581/bayley-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/bayley-581/bayley-interior-main.jpg", label: "Living Area" }, { src: "assets/images/projects/bayley-581/bayley-kitchen-1.jpg", label: "Kitchen" }] },
+        { id: 3, title: "The Dustin", model: "dustin", type: "spec", location: "557 Harvest Lk Dr, Snook, TX", sqft: "1,710", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/dustin-557/dustin-557-exterior-main.jpg", sketch: "assets/images/projects/dustin-557/dustin-557-interior-main.jpg", description: "The Dustin model at Harvest Lake features generous living spaces, clean finishes, and a layout designed for growing families. Situated on a corner lot with views of the community pond.", verseText: "Commit your work to the Lord, and your plans will be established.", verseRef: "Proverbs 16:3", gallery: [{ src: "assets/images/projects/dustin-557/dustin-557-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/dustin-557/dustin-557-interior-main.jpg", label: "Living Area" }] },
       ];
     }
 
     function loadProjects() {
-      // Load from localStorage or use defaults
-      projects = JSON.parse(localStorage.getItem('stoneside_projects') || 'null') || getDefaultProjects();
-      
+      // Try to load from STONESIDE_DATA (from data.js), fallback to defaults
+      if (window.STONESIDE_DATA && window.STONESIDE_DATA.projects) {
+        projects = window.STONESIDE_DATA.projects;
+      } else {
+        projects = getDefaultProjects();
+      }
+
       // Get project ID from URL
       const urlParams = new URLSearchParams(window.location.search);
       const projectId = parseInt(urlParams.get('id'));
-      
+
       if (!projectId) {
         showError();
         return;
@@ -703,7 +986,7 @@
       // Find project
       currentIndex = projects.findIndex(p => p.id === projectId);
       currentProject = projects[currentIndex];
-      
+
       if (!currentProject) {
         showError();
         return;
@@ -738,13 +1021,14 @@
       document.getElementById('featureSqft').textContent = p.sqft ? `${p.sqft} sq ft` : '—';
       document.getElementById('featureBeds').textContent = p.beds || '—';
       document.getElementById('featureBaths').textContent = p.baths || '—';
-      document.getElementById('featureYear').textContent = p.year || '—';
+      document.getElementById('featureGarage').textContent = p.garage || '—';
 
       // Specs sidebar
       document.getElementById('specType').textContent = p.type === 'custom' ? 'Custom Build' : 'Spec Home';
       document.getElementById('specLocation').textContent = p.location || '—';
       document.getElementById('specSize').textContent = p.sqft ? `${p.sqft} sq ft` : '—';
       document.getElementById('specBedBath').textContent = `${p.beds || '—'} / ${p.baths || '—'}`;
+      document.getElementById('specGarage').textContent = p.garage || '—';
       document.getElementById('specYear').textContent = p.year || '—';
 
       // Verse
@@ -756,6 +1040,9 @@
       } else {
         verseCard.style.display = 'none';
       }
+
+      // Gallery
+      displayGallery();
 
       // Navigation
       updateNavigation();
@@ -769,6 +1056,27 @@
 
       // Initialize header scroll
       initHeaderScroll();
+    }
+
+    function displayGallery() {
+      const gallery = currentProject.gallery || [];
+      const grid = document.getElementById('galleryGrid');
+
+      galleryImages = gallery;
+
+      grid.innerHTML = gallery.map((item, index) => `
+        <div class="gallery-item" data-index="${index}">
+          <img src="${item.src}" alt="${item.label}" loading="lazy" />
+          <div class="gallery-item-label">${item.label}</div>
+        </div>
+      `).join('');
+
+      // Add click handlers
+      grid.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          openLightbox(parseInt(item.dataset.index));
+        });
+      });
     }
 
     function updateNavigation() {
@@ -801,10 +1109,10 @@
 
     function displayRelatedProjects() {
       const grid = document.getElementById('relatedGrid');
-      
+
       // Get other projects (excluding current)
       const otherProjects = projects.filter(p => p.id !== currentProject.id);
-      
+
       // Show up to 3 related projects
       const related = otherProjects.slice(0, 3);
 
@@ -821,7 +1129,7 @@
 
     function initHeaderScroll() {
       const header = document.getElementById('projectHeader');
-      
+
       window.addEventListener('scroll', () => {
         if (window.scrollY > 100) {
           header.classList.add('scrolled');
@@ -831,12 +1139,85 @@
       }, { passive: true });
     }
 
-    // Keyboard navigation
+    // ════════════════════════════════════════════════════════════════
+    // LIGHTBOX FUNCTIONS
+    // ════════════════════════════════════════════════════════════════
+
+    function initLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      const close = document.getElementById('lightboxClose');
+      const prev = document.getElementById('lightboxPrev');
+      const next = document.getElementById('lightboxNext');
+
+      close.addEventListener('click', closeLightbox);
+      prev.addEventListener('click', () => showPrevImage());
+      next.addEventListener('click', () => showNextImage());
+
+      // Close on overlay click
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('active')) {
+          if (e.key === 'ArrowLeft') showPrevImage();
+          if (e.key === 'ArrowRight') showNextImage();
+          if (e.key === 'Escape') closeLightbox();
+        }
+      });
+    }
+
+    function openLightbox(index) {
+      lightboxIndex = index;
+      const lightbox = document.getElementById('lightbox');
+      updateLightboxImage();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+      lightboxIndex = -1;
+    }
+
+    function updateLightboxImage() {
+      if (lightboxIndex < 0 || lightboxIndex >= galleryImages.length) return;
+
+      const image = galleryImages[lightboxIndex];
+      document.getElementById('lightboxImage').src = image.src;
+      document.getElementById('lightboxLabel').textContent = image.label;
+      document.getElementById('lightboxCurrent').textContent = lightboxIndex + 1;
+      document.getElementById('lightboxTotal').textContent = galleryImages.length;
+    }
+
+    function showNextImage() {
+      if (lightboxIndex < galleryImages.length - 1) {
+        lightboxIndex++;
+        updateLightboxImage();
+      }
+    }
+
+    function showPrevImage() {
+      if (lightboxIndex > 0) {
+        lightboxIndex--;
+        updateLightboxImage();
+      }
+    }
+
+    // Keyboard navigation for project browsing
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft' && currentIndex > 0) {
-        navigateTo(currentIndex - 1);
-      } else if (e.key === 'ArrowRight' && currentIndex < projects.length - 1) {
-        navigateTo(currentIndex + 1);
+      const lightbox = document.getElementById('lightbox');
+      if (!lightbox.classList.contains('active')) {
+        if (e.key === 'ArrowLeft' && currentIndex > 0) {
+          navigateTo(currentIndex - 1);
+        } else if (e.key === 'ArrowRight' && currentIndex < projects.length - 1) {
+          navigateTo(currentIndex + 1);
+        }
       }
     });
   </script>
