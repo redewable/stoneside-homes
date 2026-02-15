@@ -414,7 +414,10 @@ function initHeroReveal() {
   const hero = document.querySelector('.hero');
   if (!hero) return;
 
-  setTimeout(() => hero.classList.add('revealed'), 4500);
+  // If preloader was skipped (repeat visit), reveal hero photo sooner
+  const visited = sessionStorage.getItem('stoneside_visited');
+  const delay = visited ? 800 : 4500;
+  setTimeout(() => hero.classList.add('revealed'), delay);
 
   hero.addEventListener('click', (e) => {
     if (!e.target.closest('a, button')) {
@@ -473,6 +476,9 @@ function initTimeline() {
 // ════════════════════════════════════════════════════════════════
 // PORTFOLIO
 // ════════════════════════════════════════════════════════════════
+let portfolioListenersBound = false;
+let galleryCurrentIndex = 0;
+
 function initPortfolio() {
   const track = document.getElementById('galleryTrack');
   const prevBtn = document.getElementById('galleryPrev');
@@ -504,6 +510,10 @@ function initPortfolio() {
   `).join('');
 
   if (countTotal) countTotal.textContent = String(projects.length).padStart(2, '0');
+
+  // Only bind event listeners once to prevent double-firing
+  if (portfolioListenersBound) return;
+  portfolioListenersBound = true;
 
   let isDown = false, startX, scrollLeft, isDragging = false;
 
@@ -538,15 +548,13 @@ function initPortfolio() {
     }
   });
 
-  let currentIndex = 0;
-  
   const updateCount = () => {
     if (!countCurrent) return;
     const items = track.querySelectorAll('.gallery-item');
     const scrollCenter = track.scrollLeft + track.clientWidth / 2;
     items.forEach((item, index) => {
       if (Math.abs(scrollCenter - (item.offsetLeft + item.offsetWidth / 2)) < item.offsetWidth / 2) {
-        currentIndex = index;
+        galleryCurrentIndex = index;
         countCurrent.textContent = String(index + 1).padStart(2, '0');
       }
     });
@@ -562,13 +570,13 @@ function initPortfolio() {
   };
 
   prevBtn?.addEventListener('click', () => {
-    currentIndex = Math.max(0, currentIndex - 1);
-    scrollToIndex(currentIndex);
+    galleryCurrentIndex = Math.max(0, galleryCurrentIndex - 1);
+    scrollToIndex(galleryCurrentIndex);
   });
 
   nextBtn?.addEventListener('click', () => {
-    currentIndex = Math.min(projects.length - 1, currentIndex + 1);
-    scrollToIndex(currentIndex);
+    galleryCurrentIndex = Math.min(projects.length - 1, galleryCurrentIndex + 1);
+    scrollToIndex(galleryCurrentIndex);
   });
 }
 

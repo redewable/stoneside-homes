@@ -1259,13 +1259,15 @@ button {
 .gallery-wrapper {
   position: relative;
   margin: 0 calc(-1 * var(--space-xl));
+  overflow: visible;
 }
 
 .gallery-track {
   display: flex;
   gap: var(--space-md);
-  padding: var(--space-sm) 5vw;
+  padding: 20px 5vw 50px;
   overflow-x: auto;
+  overflow-y: visible;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   cursor: grab;
@@ -2703,8 +2705,7 @@ button {
   }
 
   .gallery-track, .timeline-track {
-    padding: 10px 20px; /* Left padding */
-    padding-right: 20px; /* Critical: Right padding for scroll end */
+    padding: 20px 20px 50px; /* Top/sides padding + extra bottom for hover shadow */
     scroll-snap-type: x mandatory;
   }
 
