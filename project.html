@@ -469,7 +469,7 @@
     }
 
     .specs-card {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-subtle);
       border-radius: 16px;
       padding: 32px;
@@ -481,34 +481,48 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--stone);
+      color: var(--bronze);
       margin-bottom: 24px;
       padding-bottom: 16px;
       border-bottom: 1px solid var(--border-subtle);
     }
 
     .specs-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 480px) {
+      .specs-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
     }
 
     .spec-row {
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .spec-label {
-      font-size: 0.875rem;
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: var(--stone);
     }
 
     .spec-value {
-      font-family: var(--font-mono);
-      font-size: 0.875rem;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
       color: var(--cream);
-      font-weight: 500;
+      font-weight: 400;
     }
 
     .verse-card {
@@ -1071,9 +1085,9 @@
 
     function getDefaultProjects() {
       return [
-        { id: 1, title: "The Brandon", model: "brandon", type: "spec", location: "569 Harvest Lk Dr, Snook, TX", sqft: "1,625", beds: "4", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/brandon-569/brandon-exterior-main.jpg", sketch: "assets/images/projects/brandon-569/brandon-interior-main.jpg", description: "The Brandon model features a clean, modern farmhouse exterior with an open-concept interior. White cabinetry, granite counters, and dark hardwood floors create a crisp, timeless finish throughout.", verseText: "By wisdom a house is built, and through understanding it is established.", verseRef: "Proverbs 24:3", gallery: [{ src: "assets/images/projects/brandon-569/brandon-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/brandon-569/brandon-entry.jpg", label: "Entry" }, { src: "assets/images/projects/brandon-569/brandon-interior-main.jpg", label: "Living Area" }, { src: "assets/images/projects/brandon-569/brandon-kitchen.jpg", label: "Kitchen" }, { src: "assets/images/projects/brandon-569/brandon-master-bedroom.jpg", label: "Master Bedroom" }] },
-        { id: 2, title: "The Bayley", model: "bayley", type: "spec", location: "581 Harvest Lk Dr, Snook, TX", sqft: "1,749", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/bayley-581/bayley-exterior-main.jpg", sketch: "assets/images/projects/bayley-581/bayley-interior-main.jpg", description: "The Bayley model delivers charm and efficiency in a compact footprint. Warm wood floors, a bright open kitchen, and thoughtful storage make this home feel larger than its square footage suggests.", verseText: "Unless the Lord builds the house, the builders labor in vain.", verseRef: "Psalm 127:1", gallery: [{ src: "assets/images/projects/bayley-581/bayley-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/bayley-581/bayley-interior-main.jpg", label: "Living Area" }, { src: "assets/images/projects/bayley-581/bayley-kitchen-1.jpg", label: "Kitchen" }] },
-        { id: 3, title: "The Dustin", model: "dustin", type: "spec", location: "557 Harvest Lk Dr, Snook, TX", sqft: "1,710", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/dustin-557/dustin-557-exterior-main.jpg", sketch: "assets/images/projects/dustin-557/dustin-557-interior-main.jpg", description: "The Dustin model at Harvest Lake features generous living spaces, clean finishes, and a layout designed for growing families. Situated on a corner lot with views of the community pond.", verseText: "Commit your work to the Lord, and your plans will be established.", verseRef: "Proverbs 16:3", gallery: [{ src: "assets/images/projects/dustin-557/dustin-557-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/dustin-557/dustin-557-interior-main.jpg", label: "Living Area" }] },
+        { id: 1, title: "The Brandon", model: "brandon", type: "spec", location: "Grand Lake · Snook, Texas", sqft: "1,625", beds: "4", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/brandon-569/brandon-exterior-main.jpg", sketch: "assets/images/projects/brandon-569/brandon-interior-main.jpg", description: "The Brandon model features a clean, modern farmhouse exterior with an open-concept interior. White cabinetry, granite counters, and dark hardwood floors create a crisp, timeless finish throughout.", verseText: "By wisdom a house is built, and through understanding it is established.", verseRef: "Proverbs 24:3", gallery: [{ src: "assets/images/projects/brandon-569/brandon-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/brandon-569/brandon-entry.jpg", label: "Entry" }, { src: "assets/images/projects/brandon-569/brandon-interior-main.jpg", label: "Living Area" }, { src: "assets/images/projects/brandon-569/brandon-kitchen.jpg", label: "Kitchen" }, { src: "assets/images/projects/brandon-569/brandon-master-bedroom.jpg", label: "Master Bedroom" }] },
+        { id: 2, title: "The Bayley", model: "bayley", type: "spec", location: "Grand Lake · Snook, Texas", sqft: "1,749", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/bayley-581/bayley-exterior-main.jpg", sketch: "assets/images/projects/bayley-581/bayley-interior-main.jpg", description: "The Bayley model delivers charm and efficiency in a compact footprint. Warm wood floors, a bright open kitchen, and thoughtful storage make this home feel larger than its square footage suggests.", verseText: "Unless the Lord builds the house, the builders labor in vain.", verseRef: "Psalm 127:1", gallery: [{ src: "assets/images/projects/bayley-581/bayley-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/bayley-581/bayley-interior-main.jpg", label: "Living Area" }, { src: "assets/images/projects/bayley-581/bayley-kitchen-1.jpg", label: "Kitchen" }] },
+        { id: 3, title: "The Dustin", model: "dustin", type: "spec", location: "Grand Lake · Snook, Texas", sqft: "1,710", beds: "3", baths: "2", garage: "2 Car", year: "2025", photo: "assets/images/projects/dustin-557/dustin-557-exterior-main.jpg", sketch: "assets/images/projects/dustin-557/dustin-557-interior-main.jpg", description: "The Dustin model at Harvest Lake features generous living spaces, clean finishes, and a layout designed for growing families. Situated on a corner lot with views of the community pond.", verseText: "Commit your work to the Lord, and your plans will be established.", verseRef: "Proverbs 16:3", gallery: [{ src: "assets/images/projects/dustin-557/dustin-557-exterior-main.jpg", label: "Front Exterior" }, { src: "assets/images/projects/dustin-557/dustin-557-interior-main.jpg", label: "Living Area" }] },
       ];
     }
 

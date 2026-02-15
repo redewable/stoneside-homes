@@ -18,7 +18,7 @@ window.STONESIDE_DATA = {
     title1Word2: "Blueprints",
     title2Word1: "Become",
     title2Word2: "Legacy",
-    subtitle: "Custom homes built with the patience of experience, the discipline of tradition, and the care of a family name.",
+    subtitle: "Four decades of building homes families never want to leave.",
     location: "Bryan–College Station, Texas",
     years: "40 Years",
     stat1Value: "40",
@@ -31,14 +31,14 @@ window.STONESIDE_DATA = {
 
   content: {
     legacyTitle: "Four Decades of *Unwavering Excellence*",
-    legacyLead: "In 1984, when most builders chased volume, we chose a different path—one measured not in units built, but in families served with excellence.",
+    legacyLead: "While other builders chase volume, we've spent four decades perfecting one thing: building homes that families hand down for generations.",
     philosophyTitle: "Building Is *Stewardship*",
-    philosophyLead: "A home is where your children will take their first steps. Where holidays will gather decades of memories. Where legacy is quietly built.",
+    philosophyLead: "Your home is where first steps happen. Where holidays stack into decades of memory. Where legacy is built, quietly, room by room.",
     portfolioTitle: "Homes That *Tell Stories*",
-    portfolioLead: "Every home begins as a drawing. What matters is what it becomes—a vessel for your family's story.",
+    portfolioLead: "Each project tells its own story. Explore our recent builds and see the quality that keeps families coming back.",
     processTitle: "From First *Conversation* to Forever Home",
     contactTitle: "Let's Build *Something* That Lasts",
-    contactLead: "A short note is enough to begin. We'll schedule a call to discuss your vision, timeline, and whether we're the right fit."
+    contactLead: "Tell us what you're envisioning. We'll schedule a no-pressure call to talk budget, timeline, and fit — usually within 24 hours."
   },
 
   contact: {
@@ -49,25 +49,25 @@ window.STONESIDE_DATA = {
   },
 
   timeline: [
-    { year: "1984", title: "The Beginning", text: "Founded in Bryan–College Station with a simple promise: build homes as if our name depended on it." },
-    { year: "1994", title: "First Decade", text: "A decade of learning the land, understanding families, and refining our craft." },
-    { year: "2004", title: "Deep Roots", text: "Twenty years of building relationships as strong as our foundations." },
-    { year: "2014", title: "Generational", text: "Three decades of families trusting their dreams to our hands." },
-    { year: "2025", title: "Four Decades Strong", text: "Over forty years of keeping one promise: every home built with the patience and care it deserves." }
+    { year: "1984", title: "The Beginning", text: "Founded with one promise: build homes worthy of the family name on the mailbox — and ours on the sign." },
+    { year: "1994", title: "First Decade", text: "Ten years of learning every supplier, every subcontractor, every inch of Brazos Valley soil." },
+    { year: "2004", title: "Deep Roots", text: "Relationships as solid as our foundations. By now, the children of our first clients are building with us too." },
+    { year: "2014", title: "Generational", text: "Three decades of families trusting us with their biggest investment. The homes — and the referrals — speak for themselves." },
+    { year: "2025", title: "Four Decades Strong", text: "200+ homes. 100% referral rate. Forty years of proving that patience and integrity never go out of style." }
   ],
 
   pillars: [
-    { num: "I", title: "Clarity Before Commitment", text: "You'll understand every detail before we break ground." },
-    { num: "II", title: "Peace During the Build", text: "Weekly communication. Clean sites. No surprises." },
-    { num: "III", title: "Accountability After Keys", text: "Our relationship doesn't end at closing. Ever." }
+    { num: "I", title: "Clarity Before Commitment", text: "You'll know every cost, every material, every timeline milestone — before we break ground." },
+    { num: "II", title: "Peace During the Build", text: "Weekly updates. Clean job sites. Zero surprises. Your project manager is one call away." },
+    { num: "III", title: "Accountability After Keys", text: "Our relationship doesn't end at closing. We stand behind every home, every year. Period." }
   ],
 
   process: [
-    { num: "01", title: "Initial Conversation", text: "We listen to what you need, answer your questions honestly, and figure out if we're the right fit.", icon: "plus" },
-    { num: "02", title: "Design & Planning", text: "Finalize your floor plan, selections, and budget. No surprises — you'll know every detail before we break ground.", icon: "grid" },
-    { num: "03", title: "Construction", text: "Weekly updates, clean job sites, and a build managed with the same care we'd give our own home.", icon: "arrow" },
-    { num: "04", title: "Walk-Through & Keys", text: "A thorough walk-through, final touches, and the moment you've been waiting for.", icon: "home" },
-    { num: "05", title: "After the Build", text: "Our relationship doesn't end at closing. We stand behind every home we build.", icon: "check" }
+    { num: "01", title: "Free Consultation", text: "No pressure. We listen to your vision, answer every question, and give you an honest assessment of scope, budget, and timeline.", icon: "plus" },
+    { num: "02", title: "Design & Pricing", text: "Lock in your floor plan, selections, and a fixed-price contract. You'll know the exact cost before we break ground — no hidden fees, ever.", icon: "grid" },
+    { num: "03", title: "Construction", text: "Weekly photo updates. Clean job sites. A dedicated project manager who answers your calls — not a voicemail.", icon: "arrow" },
+    { num: "04", title: "Walk-Through & Keys", text: "A meticulous final inspection, your punch list resolved, and the keys to a home built exactly as promised.", icon: "home" },
+    { num: "05", title: "Lifetime Relationship", text: "Our warranty doesn't come with fine print. Something not right? Call us. We'll be there. That's the Stoneside difference.", icon: "check" }
   ],
 
   testimonials: [
@@ -132,7 +132,7 @@ window.STONESIDE_DATA = {
       title: "The Brandon",
       model: "brandon",
       type: "spec",
-      location: "569 Harvest Lk Dr, Snook, TX",
+      location: "Grand Lake · Snook, Texas",
       sqft: "1,625",
       beds: "4",
       baths: "2",
@@ -166,7 +166,7 @@ window.STONESIDE_DATA = {
       title: "The Bayley",
       model: "bayley",
       type: "spec",
-      location: "581 Harvest Lk Dr, Snook, TX",
+      location: "Grand Lake · Snook, Texas",
       sqft: "1,749",
       beds: "3",
       baths: "2",
@@ -194,7 +194,7 @@ window.STONESIDE_DATA = {
       title: "The Dustin",
       model: "dustin",
       type: "spec",
-      location: "557 Harvest Lk Dr, Snook, TX",
+      location: "Grand Lake · Snook, Texas",
       sqft: "1,710",
       beds: "3",
       baths: "2",
@@ -231,7 +231,7 @@ window.STONESIDE_DATA = {
       title: "The Dustin",
       model: "dustin",
       type: "spec",
-      location: "545 Harvest Lk Dr, Snook, TX",
+      location: "Grand Lake · Snook, Texas",
       sqft: "1,710",
       beds: "3",
       baths: "2",
@@ -260,7 +260,7 @@ window.STONESIDE_DATA = {
       title: "The Caylen",
       model: "caylen",
       type: "spec",
-      location: "436 Brazos Bnd, Snook, TX",
+      location: "Grand Lake · Snook, Texas",
       sqft: "1,781",
       beds: "3",
       baths: "2",
@@ -295,7 +295,7 @@ window.STONESIDE_DATA = {
       title: "The Dustin",
       model: "dustin",
       type: "spec",
-      location: "424 Brazos Ct, Caldwell, TX",
+      location: "Grand Lake · Snook, Texas",
       sqft: "1,710",
       beds: "3",
       baths: "2",
@@ -303,7 +303,7 @@ window.STONESIDE_DATA = {
       year: "2025",
       photo: "assets/images/projects/dustin-424/dustin-424-exterior-main.jpg",
       sketch: "assets/images/projects/dustin-424/dustin-424-interior-main.jpg",
-      description: "The Dustin model in Caldwell brings the same disciplined floor plan to a new community. Modern gray exterior, covered porch, and an interior with clean lines and durable finishes throughout.",
+      description: "Another Dustin model build bringing the same disciplined floor plan to a new lot. Modern gray exterior, covered porch, and an interior with clean lines and durable finishes throughout.",
       verseText: "Whatever you do, work at it with all your heart.",
       verseRef: "Colossians 3:23",
       gallery: [
@@ -335,7 +335,7 @@ window.STONESIDE_DATA = {
       title: "The Hampton",
       model: "custom-hampton",
       type: "custom",
-      location: "Bryan–College Station, TX",
+      location: "Iola, Texas",
       sqft: "Custom",
       beds: "Custom",
       baths: "Custom",

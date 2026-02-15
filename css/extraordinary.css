@@ -317,23 +317,30 @@ button {
   height: 75px;
 }
 
-.header-logo {
+.header-brand {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
 }
 
-.logo-image {
-  height: 110px;
-  transition: height 0.3s var(--ease-out);
+.header-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  transition: font-size 0.3s var(--ease-out), color 0.3s;
 }
 
-.header.scrolled .logo-image {
-  height: 70px;
+.header.scrolled .header-brand-name {
+  font-size: 1.25rem;
+}
+
+.header-brand-name:hover {
+  color: var(--bronze);
 }
 
 @media (max-width: 768px) {
-  .logo-image { height: 72px; }
+  .header-brand-name { font-size: 1.25rem; }
   .footer-logo-img { height: 48px; }
 }
 
@@ -610,21 +617,27 @@ button {
 }
 
 .hero-logo-img {
-  height: 140px;
+  height: 280px;
   margin: 0 auto;
   display: block;
-  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.08));
+  filter: drop-shadow(0 8px 40px rgba(0, 0, 0, 0.12));
 }
 
 @media (max-width: 900px) {
   .hero-logo-img {
-    height: 100px;
+    height: 200px;
   }
 }
 
 @media (max-width: 600px) {
   .hero-logo-img {
-    height: 80px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-logo-img {
+    height: 130px;
   }
 }
 
@@ -1666,6 +1679,101 @@ button {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   CONVERSION BRIDGE — Urgency CTA between sections
+═══════════════════════════════════════════════════════════ */
+.conversion-bridge {
+  padding: var(--space-2xl) 0;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--charcoal) 100%);
+  text-align: center;
+}
+
+.bridge-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.bridge-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: var(--space-md);
+}
+
+.bridge-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--stone);
+  margin-bottom: var(--space-lg);
+}
+
+.bridge-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 16px 36px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  background: linear-gradient(135deg, var(--bronze-light), var(--bronze));
+  border-radius: 0;
+  transition: all 0.3s var(--ease-out);
+}
+
+.bridge-cta:hover {
+  background: var(--cream);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(157, 123, 90, 0.4);
+}
+
+.bridge-arrow {
+  font-size: 1.125rem;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.bridge-cta:hover .bridge-arrow {
+  transform: translateX(4px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTACT URGENCY SIGNAL
+═══════════════════════════════════════════════════════════ */
+.contact-urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 16px;
+  background: rgba(157, 123, 90, 0.08);
+  border: 1px solid rgba(157, 123, 90, 0.2);
+  border-radius: 100px;
+  margin-bottom: var(--space-lg);
+}
+
+.urgency-dot {
+  width: 8px;
+  height: 8px;
+  background: #4ade80;
+  border-radius: 50%;
+  animation: urgencyPulse 2s infinite;
+}
+
+@keyframes urgencyPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+}
+
+.urgency-text {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+/* ═══════════════════════════════════════════════════════════
    CONTACT
 ═══════════════════════════════════════════════════════════ */
 .contact {
@@ -2179,21 +2287,26 @@ button {
 
 .modal-spec {
   text-align: center;
+  padding: 8px 4px;
+  background: rgba(245, 245, 243, 0.5);
+  border-radius: 6px;
 }
 
 .spec-value {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: var(--ink);
+  line-height: 1.2;
 }
 
 .spec-label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--stone);
+  margin-top: 2px;
 }
 
 .modal-verse {
@@ -2271,6 +2384,185 @@ button {
 .modal-btn svg {
   width: 16px;
   height: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TRUST STRIP — Social Proof Bar
+═══════════════════════════════════════════════════════════ */
+.trust-strip {
+  padding: var(--space-lg) 0;
+  background: var(--ink);
+  border-top: 1px solid rgba(157, 123, 90, 0.2);
+  border-bottom: 1px solid rgba(157, 123, 90, 0.2);
+}
+
+.trust-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+.trust-icon {
+  color: var(--bronze-light);
+  font-size: 0.875rem;
+}
+
+.trust-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 768px) {
+  .trust-items {
+    gap: var(--space-md);
+  }
+  .trust-divider {
+    display: none;
+  }
+  .trust-item {
+    font-size: 0.625rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STICKY MOBILE CTA
+═══════════════════════════════════════════════════════════ */
+.sticky-cta {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 12px 16px;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(157, 123, 90, 0.3);
+  gap: 10px;
+  transform: translateY(100%);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.sticky-cta.visible {
+  transform: translateY(0);
+}
+
+.sticky-cta-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  background: linear-gradient(135deg, var(--bronze-light), var(--bronze));
+  border-radius: 0;
+  transition: all 0.3s;
+}
+
+.sticky-cta-btn:hover {
+  background: var(--cream);
+}
+
+.sticky-arrow {
+  font-size: 1rem;
+}
+
+.sticky-phone-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  color: var(--cream);
+  transition: all 0.3s;
+}
+
+.sticky-phone-btn:hover {
+  background: var(--bronze);
+  border-color: var(--bronze);
+  color: var(--charcoal);
+}
+
+@media (max-width: 900px) {
+  .sticky-cta {
+    display: flex;
+  }
+  /* Add bottom padding to body so content isn't hidden behind sticky CTA */
+  body {
+    padding-bottom: 72px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATED COUNTER (Number count-up on scroll)
+═══════════════════════════════════════════════════════════ */
+.number-value.counting {
+  transition: color 0.3s;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ENHANCED HOVER MICRO-INTERACTIONS
+═══════════════════════════════════════════════════════════ */
+.gallery-item {
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
+}
+
+.gallery-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial-card {
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s, border-color 0.4s;
+}
+
+.testimonial-card:hover {
+  border-left-color: var(--bronze-light);
+}
+
+/* CTA Button Pulse Animation */
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+  50% { box-shadow: 0 4px 24px rgba(157, 123, 90, 0.4); }
+}
+
+.header-cta {
+  animation: ctaPulse 3s infinite;
+}
+
+.header-cta:hover {
+  animation: none;
+}
+
+/* Form focus glow */
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--bronze);
+  box-shadow: 0 0 0 4px rgba(157, 123, 90, 0.15);
 }
 
 /* ═══════════════════════════════════════════════════════════

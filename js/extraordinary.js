@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTestimonials();
   initContactForm();
   initSmoothScroll();
+  initCounterAnimation();
+  initStickyCta();
 });
 
 // ════════════════════════════════════════════════════════════════
@@ -829,6 +831,88 @@ function initContactForm() {
       if (success) success.classList.remove('visible');
     }, 4000);
   });
+}
+
+// ════════════════════════════════════════════════════════════════
+// ANIMATED COUNTERS — Numbers count up when scrolled into view
+// ════════════════════════════════════════════════════════════════
+function initCounterAnimation() {
+  const counters = document.querySelectorAll('.number-value');
+  if (!counters.length) return;
+
+  const animateCounter = (el) => {
+    const text = el.textContent.trim();
+    const suffix = el.querySelector('.number-suffix');
+    const suffixText = suffix ? suffix.textContent : '';
+    const numText = text.replace(suffixText, '').trim();
+    const target = parseInt(numText);
+
+    if (isNaN(target) || target === 0) return;
+
+    const duration = 2000;
+    const startTime = performance.now();
+
+    const update = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+
+      if (suffix) {
+        el.innerHTML = `${current}<span class="number-suffix">${suffixText}</span>`;
+      } else {
+        el.textContent = current;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    };
+
+    requestAnimationFrame(update);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(counter => observer.observe(counter));
+}
+
+// ════════════════════════════════════════════════════════════════
+// STICKY MOBILE CTA — Shows after scrolling past hero
+// ════════════════════════════════════════════════════════════════
+function initStickyCta() {
+  const stickyCta = document.getElementById('stickyCta');
+  const contact = document.getElementById('contact');
+  if (!stickyCta) return;
+
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrolled = window.pageYOffset;
+        const heroHeight = window.innerHeight;
+        const contactTop = contact ? contact.getBoundingClientRect().top + scrolled : Infinity;
+        const nearContact = scrolled > contactTop - window.innerHeight;
+
+        if (scrolled > heroHeight * 0.8 && !nearContact) {
+          stickyCta.classList.add('visible');
+        } else {
+          stickyCta.classList.remove('visible');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
 }
 
 // ════════════════════════════════════════════════════════════════
