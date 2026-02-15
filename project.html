@@ -676,34 +676,96 @@
       color: var(--stone);
     }
 
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      .project-header {
-        padding: 16px 24px;
-      }
-
-      .project-hero-content {
-        padding: 40px 24px;
-      }
-
+    /* Tablet Responsive */
+    @media (max-width: 900px) {
       .project-gallery {
-        padding: 60px 24px;
+        padding: 60px 40px;
       }
 
       .project-content {
-        padding: 60px 24px;
+        padding: 60px 40px;
+      }
+
+      .related-section {
+        padding: 60px 40px;
+      }
+
+      .project-hero {
+        height: 55vh;
+        min-height: 400px;
+      }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .project-header {
+        padding: 16px 20px;
+      }
+
+      .project-hero {
+        height: 50vh;
+        min-height: 350px;
+      }
+
+      .project-hero-content {
+        padding: 32px 20px;
+      }
+
+      .project-title {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+      }
+
+      .project-gallery {
+        padding: 40px 20px;
+      }
+
+      .gallery-grid {
+        gap: 12px;
+      }
+
+      .project-content {
+        padding: 40px 20px;
+      }
+
+      .project-description {
+        font-size: 1rem;
       }
 
       .project-features {
         grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .feature-item {
+        padding: 20px;
+      }
+
+      .feature-value {
+        font-size: 1.25rem;
+      }
+
+      .specs-card {
+        padding: 24px;
+      }
+
+      .verse-card {
+        padding: 24px;
       }
 
       .related-section {
-        padding: 60px 24px;
+        padding: 40px 20px;
+      }
+
+      .related-title {
+        font-size: 1.5rem;
       }
 
       .project-footer {
-        padding: 32px 24px;
+        padding: 32px 20px;
+      }
+
+      .lightbox-overlay {
+        padding: 20px 10px;
       }
 
       .lightbox-nav {
@@ -712,11 +774,60 @@
       }
 
       .lightbox-nav.prev {
-        left: 10px;
+        left: 8px;
       }
 
       .lightbox-nav.next {
-        right: 10px;
+        right: 8px;
+      }
+
+      .lightbox-info {
+        padding: 0 10px;
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+    }
+
+    /* Small Mobile */
+    @media (max-width: 480px) {
+      .project-hero {
+        height: 45vh;
+        min-height: 300px;
+      }
+
+      .project-type-badge {
+        font-size: 0.5625rem;
+        padding: 5px 12px;
+      }
+
+      .project-title {
+        font-size: 1.5rem;
+      }
+
+      .project-location {
+        font-size: 0.875rem;
+      }
+
+      .gallery-header {
+        margin-bottom: 32px;
+      }
+
+      .gallery-title {
+        font-size: 1.375rem;
+      }
+
+      .project-main h2 {
+        font-size: 1.375rem;
+      }
+
+      .back-link span {
+        display: none;
+      }
+
+      .project-nav-btn {
+        width: 38px;
+        height: 38px;
       }
     }
 
@@ -912,7 +1023,7 @@
 
     <!-- Footer -->
     <footer class="project-footer">
-      <p class="footer-text">© 2025 Stoneside Custom Homes · Bryan–College Station, Texas · Building Legacy Since 1984</p>
+      <p class="footer-text">© 2026 Stoneside Custom Homes · Bryan–College Station, Texas · Building Legacy Since 1984</p>
     </footer>
   </div>
 

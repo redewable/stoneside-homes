@@ -308,12 +308,13 @@ button {
   justify-content: space-between;
   padding: 0 var(--space-xl);
   background: transparent;
-  transition: background 0.4s, backdrop-filter 0.4s;
+  transition: background 0.4s, backdrop-filter 0.4s, height 0.3s var(--ease-out);
 }
 
 .header.scrolled {
   background: rgba(245, 245, 243, 0.95);
   backdrop-filter: blur(20px);
+  height: 75px;
 }
 
 .header-logo {
@@ -324,6 +325,11 @@ button {
 
 .logo-image {
   height: 110px;
+  transition: height 0.3s var(--ease-out);
+}
+
+.header.scrolled .logo-image {
+  height: 70px;
 }
 
 @media (max-width: 768px) {
@@ -596,6 +602,32 @@ button {
   min-height: 100dvh;
 }
 
+/* Hero Logo Spotlight */
+.hero-logo-spotlight {
+  margin-bottom: var(--space-lg);
+  opacity: 0;
+  animation: fadeIn 0.8s var(--ease-out) 0.1s forwards;
+}
+
+.hero-logo-img {
+  height: 140px;
+  margin: 0 auto;
+  display: block;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.08));
+}
+
+@media (max-width: 900px) {
+  .hero-logo-img {
+    height: 100px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-logo-img {
+    height: 80px;
+  }
+}
+
 .hero-center {
   text-align: center;
   padding: var(--space-2xl) 0;
@@ -810,7 +842,7 @@ button {
    LEGACY SECTION
 ═══════════════════════════════════════════════════════════ */
 .legacy {
-  padding: var(--space-2xl) 0;
+  padding: var(--space-3xl) 0 var(--space-2xl);
   background: var(--cream);
 }
 
@@ -1158,7 +1190,7 @@ button {
    PORTFOLIO — Better lead text positioning
 ═══════════════════════════════════════════════════════════ */
 .portfolio {
-  padding: var(--space-2xl) 0;
+  padding: var(--space-3xl) 0 var(--space-2xl);
   background: var(--cream);
 }
 
@@ -1384,7 +1416,7 @@ button {
    PROCESS — Full-width centered title, animated steps
 ═══════════════════════════════════════════════════════════ */
 .process {
-  padding: var(--space-2xl) 0;
+  padding: var(--space-3xl) 0 var(--space-2xl);
   background: var(--white);
 }
 
@@ -1638,7 +1670,7 @@ button {
 ═══════════════════════════════════════════════════════════ */
 .contact {
   position: relative;
-  padding: var(--space-2xl) 0;
+  padding: var(--space-3xl) 0 var(--space-2xl);
   background: var(--cream);
   overflow: hidden;
 }
@@ -2335,6 +2367,28 @@ button {
     font-size: 0.7rem;
     padding: 12px 16px;
   }
+
+  /* Side elements hide on tablet */
+  .hero-side-left,
+  .hero-side-right {
+    display: none;
+  }
+
+  /* Grid numbers hide on tablet */
+  .grid-numbers {
+    display: none;
+  }
+
+  /* Portfolio header stacks on tablet */
+  .portfolio-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .portfolio-lead {
+    text-align: left;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2446,6 +2500,149 @@ button {
     grid-template-columns: 30px 1fr;
     padding: 15px;
   }
-  
+
   .pillar-num { font-size: 1.25rem; }
+
+  /* Contact section responsive */
+  .contact-title {
+    font-size: 1.75rem;
+  }
+
+  .contact-form-wrapper {
+    padding: var(--space-lg);
+  }
+
+  /* Footer responsive */
+  .footer {
+    padding: var(--space-lg) 0;
+  }
+
+  .footer-content {
+    gap: var(--space-md);
+  }
+
+  .footer-logo-img {
+    height: 48px;
+  }
+
+  /* Process section */
+  .process-title {
+    font-size: 1.75rem;
+  }
+
+  /* Testimonial section */
+  .testimonial {
+    padding: 40px 0;
+  }
+
+  .testimonial-card {
+    padding: var(--space-lg);
+  }
+
+  .testimonial-quote {
+    font-size: 1.125rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SMALL MOBILE (≤ 480px) — Extra tight spacing
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .hero-btn {
+    padding: 14px 24px;
+    font-size: 0.6875rem;
+  }
+
+  .legacy-title,
+  .portfolio-title,
+  .philosophy-title {
+    font-size: 1.75rem;
+  }
+
+  .gallery-item, .timeline-item {
+    flex: 0 0 85vw;
+  }
+
+  .gallery-info {
+    padding: var(--space-xs) 0 0;
+  }
+
+  .gallery-title {
+    font-size: 1.25rem;
+  }
+
+  .gallery-location {
+    font-size: 0.8125rem;
+  }
+
+  .section-tag {
+    font-size: 0.625rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .pillar {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  .pillar-num {
+    display: none;
+  }
+
+  .step {
+    grid-template-columns: 40px 1fr;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0;
+  }
+
+  .step-number {
+    font-size: 1.5rem;
+  }
+
+  .step-title {
+    font-size: 1.125rem;
+  }
+
+  .step-text {
+    font-size: 0.875rem;
+  }
+
+  .contact-details {
+    gap: var(--space-xs);
+  }
+
+  .detail-item {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-specs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .number-value {
+    font-size: 1.75rem;
+  }
+
+  .numbers-grid {
+    gap: var(--space-sm);
+  }
 }

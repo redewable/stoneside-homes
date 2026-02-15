@@ -53,7 +53,7 @@ window.STONESIDE_DATA = {
     { year: "1994", title: "First Decade", text: "A decade of learning the land, understanding families, and refining our craft." },
     { year: "2004", title: "Deep Roots", text: "Twenty years of building relationships as strong as our foundations." },
     { year: "2014", title: "Generational", text: "Three decades of families trusting their dreams to our hands." },
-    { year: "2024", title: "Four Decades Strong", text: "Forty years of keeping one promise: every home built with the patience and care it deserves." }
+    { year: "2025", title: "Four Decades Strong", text: "Over forty years of keeping one promise: every home built with the patience and care it deserves." }
   ],
 
   pillars: [
