@@ -35,13 +35,15 @@
       justify-content: space-between;
       align-items: center;
       background: rgba(245, 245, 243, 0.95);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--pearl);
-      transition: padding 0.3s ease;
+      transition: padding 0.5s var(--silk), box-shadow 0.5s var(--silk);
     }
 
     .port-header.scrolled {
       padding: 14px 40px;
+      box-shadow: 0 1px 20px rgba(0, 0, 0, 0.04);
     }
 
     .port-brand {
@@ -64,7 +66,7 @@
       color: var(--slate);
       text-decoration: none;
       letter-spacing: 0.02em;
-      transition: color 0.3s;
+      transition: color 0.25s var(--silk);
     }
 
     .port-nav-link:hover {
@@ -79,11 +81,18 @@
       font-weight: 600;
       text-decoration: none;
       border-radius: 6px;
-      transition: background 0.3s;
+      transition: all 0.4s var(--spring-gentle);
     }
 
     .port-cta-btn:hover {
       background: var(--bronze);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(157, 123, 90, 0.25);
+    }
+
+    .port-cta-btn:active {
+      transform: translateY(0) scale(0.97);
+      transition: all 0.1s var(--ease-out);
     }
 
     /* Hero Banner */
@@ -101,6 +110,9 @@
       text-transform: uppercase;
       color: var(--bronze);
       margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: portReveal 0.7s var(--silk) 0.2s forwards;
     }
 
     .port-hero-title {
@@ -110,6 +122,9 @@
       color: var(--ink);
       line-height: 1.1;
       margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: portReveal 0.8s var(--spring-gentle) 0.35s forwards;
     }
 
     .port-hero-lead {
@@ -118,6 +133,13 @@
       max-width: 600px;
       margin: 0 auto;
       line-height: 1.6;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: portReveal 0.7s var(--silk) 0.5s forwards;
+    }
+
+    @keyframes portReveal {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Filter Tabs */
@@ -137,18 +159,25 @@
       border: 1px solid var(--pearl);
       border-radius: 100px;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.4s var(--spring-gentle);
     }
 
     .filter-btn:hover {
       border-color: var(--bronze);
       color: var(--ink);
+      transform: translateY(-1px);
+    }
+
+    .filter-btn:active {
+      transform: scale(0.96);
+      transition: all 0.1s var(--ease-out);
     }
 
     .filter-btn.active {
       background: var(--ink);
       border-color: var(--ink);
       color: var(--cream);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
 
     /* Project Grid */
@@ -167,15 +196,17 @@
       overflow: hidden;
       background: #fff;
       border: 1px solid var(--pearl);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      transition: transform 0.5s var(--spring-gentle), box-shadow 0.5s var(--silk), border-color 0.4s var(--silk);
       text-decoration: none;
       color: inherit;
       display: block;
+      will-change: transform;
     }
 
     .port-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
+      transform: translateY(-10px);
+      box-shadow: 0 28px 72px rgba(0, 0, 0, 0.1);
+      border-color: rgba(157, 123, 90, 0.15);
     }
 
     .port-card-media {
@@ -188,11 +219,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform 0.7s var(--silk);
     }
 
     .port-card:hover .port-card-img {
-      transform: scale(1.05);
+      transform: scale(1.06);
     }
 
     .port-card-badge {
@@ -282,12 +313,19 @@
       font-weight: 600;
       text-decoration: none;
       border-radius: 8px;
-      transition: background 0.3s, transform 0.3s;
+      transition: all 0.45s var(--spring-gentle);
+      will-change: transform;
     }
 
     .port-cta-link:hover {
       background: var(--cream);
-      transform: translateY(-2px);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+    }
+
+    .port-cta-link:active {
+      transform: translateY(-1px) scale(0.97);
+      transition: all 0.1s var(--ease-out);
     }
 
     /* Footer */
@@ -426,10 +464,11 @@
       initHeaderScroll();
     });
 
-    function renderGrid(items) {
+    function renderGrid(items, animate = false) {
       const grid = document.getElementById('portGrid');
-      grid.innerHTML = items.map(p => `
-        <a href="project.html?id=${p.id}" class="port-card" data-type="${p.type}">
+      grid.innerHTML = items.map((p, i) => `
+        <a href="project.html?id=${p.id}" class="port-card" data-type="${p.type}"
+           style="opacity: 0; transform: translateY(30px) scale(0.97); transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1) ${i * 0.08}s, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 1.04) ${i * 0.08}s;">
           <div class="port-card-media">
             <img class="port-card-img" src="${p.photo}" alt="${p.title}" loading="lazy" />
             <span class="port-card-badge">${p.type === 'custom' ? 'Custom Build' : 'Spec Home'}</span>
@@ -458,6 +497,16 @@
           </div>
         </a>
       `).join('');
+
+      // Staggered entrance animation
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          grid.querySelectorAll('.port-card').forEach(card => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) scale(1)';
+          });
+        });
+      });
     }
 
     function initFilters() {

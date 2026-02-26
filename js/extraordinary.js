@@ -633,22 +633,62 @@ function initProcessSteps() {
 // SCROLL ANIMATIONS
 // ════════════════════════════════════════════════════════════════
 function initScrollAnimations() {
-  const elements = document.querySelectorAll('.reveal, .section-tag, .legacy-title, .philosophy-title, .portfolio-title, .process-title, .contact-title, .legacy-lead, .philosophy-lead, .portfolio-lead, .contact-lead');
+  const elements = document.querySelectorAll('.reveal, .reveal-scale, .reveal-left, .reveal-right, .section-tag, .legacy-title, .philosophy-title, .portfolio-title, .process-title, .contact-title, .legacy-lead, .philosophy-lead, .portfolio-lead, .contact-lead');
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        // Add stagger delay for sibling elements
+        const parent = entry.target.parentElement;
+        if (parent) {
+          const siblings = parent.querySelectorAll('.reveal, .reveal-scale');
+          siblings.forEach((sib, i) => {
+            if (sib === entry.target || sib.classList.contains('visible')) return;
+          });
+        }
         entry.target.classList.add('visible');
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
   elements.forEach(el => {
-    if (!el.classList.contains('reveal')) el.classList.add('reveal');
+    if (!el.classList.contains('reveal') && !el.classList.contains('reveal-scale') && !el.classList.contains('reveal-left') && !el.classList.contains('reveal-right')) {
+      el.classList.add('reveal');
+    }
     observer.observe(el);
   });
+
+  // Staggered card reveals for grids
+  initStaggeredReveals();
 }
+
+function initStaggeredReveals() {
+  const grids = document.querySelectorAll('.testimonials-grid, .numbers-grid, .philosophy-pillars');
+
+  const gridObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const children = entry.target.children;
+        Array.from(children).forEach((child, i) => {
+          child.style.opacity = '0';
+          child.style.transform = 'translateY(25px)';
+          child.style.transition = `opacity 0.6s var(--silk) ${i * 0.08}s, transform 0.6s var(--spring-gentle) ${i * 0.08}s`;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              child.style.opacity = '1';
+              child.style.transform = 'translateY(0)';
+            });
+          });
+        });
+        gridObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  grids.forEach(grid => gridObserver.observe(grid));
+}
+
 
 // ════════════════════════════════════════════════════════════════
 // TESTIMONIALS — Logic moved to loadAdminContent()
@@ -979,3 +1019,16 @@ function initSmoothScroll() {
     });
   });
 }
+
+// ════════════════════════════════════════════════════════════════
+// LAZY IMAGE FADE-IN — Smooth loading transitions for all images
+// ════════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
+    }
+  });
+});

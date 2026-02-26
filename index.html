@@ -95,6 +95,9 @@
       --font-mono: 'JetBrains Mono', monospace;
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --spring-gentle: cubic-bezier(0.25, 0.46, 0.45, 1.04);
+      --silk: cubic-bezier(0.19, 1, 0.22, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -448,14 +451,15 @@
       border: 1px solid var(--pearl);
       border-radius: 8px;
       outline: none;
-      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      transition: border-color 0.35s var(--silk), box-shadow 0.35s var(--silk), background 0.35s var(--silk);
     }
 
     .field-group input:focus,
     .field-group select:focus,
     .field-group textarea:focus {
       border-color: var(--bronze-light);
-      box-shadow: 0 0 0 3px rgba(157,123,90,0.08);
+      box-shadow: 0 0 0 4px rgba(157,123,90,0.08);
+      background: var(--white);
     }
 
     .field-group input::placeholder,
@@ -547,18 +551,19 @@
       border: 1px solid var(--charcoal);
       border-radius: 8px;
       cursor: pointer;
-      transition: all 0.3s var(--ease-out);
+      transition: all 0.4s var(--spring-gentle);
       position: relative;
       overflow: hidden;
+      will-change: transform;
     }
 
     .submit-btn:hover {
       background: var(--charcoal);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
 
-    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:active { transform: translateY(0) scale(0.98); transition: all 0.1s var(--ease-out); }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     .submit-btn .btn-text { transition: opacity 0.2s ease; }
     .submit-btn.sending .btn-text { opacity: 0; }
@@ -645,10 +650,10 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: color 0.2s ease;
+      transition: color 0.25s var(--silk), transform 0.3s var(--spring-gentle);
     }
 
-    .contact-links a:hover { color: var(--bronze); }
+    .contact-links a:hover { color: var(--bronze); transform: translateY(-1px); }
 
     .contact-links a svg {
       width: 17px; height: 17px;
