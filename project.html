@@ -995,6 +995,23 @@
                 <span class="spec-value" id="specYear">—</span>
               </div>
             </div>
+            <!-- Extra specs for custom builds -->
+            <div class="specs-extras" id="specsExtras" style="display: none;">
+              <div class="specs-list" style="margin-top: 16px;">
+                <div class="spec-row" id="specPorchesRow" style="display: none;">
+                  <span class="spec-label">Porches</span>
+                  <span class="spec-value" id="specPorches">—</span>
+                </div>
+                <div class="spec-row" id="specFireplacesRow" style="display: none;">
+                  <span class="spec-label">Fireplaces</span>
+                  <span class="spec-value" id="specFireplaces">—</span>
+                </div>
+                <div class="spec-row" id="specOutdoorKitchenRow" style="display: none;">
+                  <span class="spec-label">Outdoor Kitchen</span>
+                  <span class="spec-value" id="specOutdoorKitchen">—</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="verse-card" id="verseCard">
@@ -1130,6 +1147,24 @@
       document.getElementById('specBedBath').textContent = `${p.beds || '—'} / ${p.baths || '—'}`;
       document.getElementById('specGarage').textContent = p.garage || '—';
       document.getElementById('specYear').textContent = p.year || '—';
+
+      // Extra specs (porches, fireplaces, outdoor kitchen)
+      const extrasSection = document.getElementById('specsExtras');
+      if (p.porches || p.fireplaces || p.outdoorKitchen) {
+        extrasSection.style.display = 'block';
+        if (p.porches) {
+          document.getElementById('specPorchesRow').style.display = 'flex';
+          document.getElementById('specPorches').textContent = p.porches;
+        }
+        if (p.fireplaces) {
+          document.getElementById('specFireplacesRow').style.display = 'flex';
+          document.getElementById('specFireplaces').textContent = p.fireplaces;
+        }
+        if (p.outdoorKitchen) {
+          document.getElementById('specOutdoorKitchenRow').style.display = 'flex';
+          document.getElementById('specOutdoorKitchen').textContent = 'Yes';
+        }
+      }
 
       // Verse
       const verseCard = document.getElementById('verseCard');
