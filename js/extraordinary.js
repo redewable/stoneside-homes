@@ -1021,10 +1021,10 @@ function initSmoothScroll() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// LAZY IMAGE FADE-IN — Smooth loading transitions for all images
+// LAZY IMAGE FADE-IN — Only for images with .fade-load class
 // ════════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+  document.querySelectorAll('img.fade-load').forEach(img => {
     if (img.complete) {
       img.classList.add('loaded');
     } else {

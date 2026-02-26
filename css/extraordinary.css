@@ -2703,17 +2703,13 @@ button {
    iOS 26-LEVEL FLUIDITY ENHANCEMENTS
 ═══════════════════════════════════════════════════════════ */
 
-/* Smooth image loading */
-img {
-  transition: opacity 0.5s var(--silk);
-}
-
-img[loading="lazy"] {
+/* Smooth image loading — opt-in only (avoids hiding dynamically rendered images) */
+img.fade-load {
   opacity: 0;
+  transition: opacity 0.6s var(--silk);
 }
 
-img[loading="lazy"].loaded,
-img[loading="lazy"][complete] {
+img.fade-load.loaded {
   opacity: 1;
 }
 
