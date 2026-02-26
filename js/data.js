@@ -18,10 +18,10 @@ window.STONESIDE_DATA = {
     title1Word2: "Blueprints",
     title2Word1: "Become",
     title2Word2: "Legacy",
-    subtitle: "Four decades of building homes families never want to leave.",
+    subtitle: "Forty-five years of building homes families never want to leave.",
     location: "Bryan–College Station, Texas",
-    years: "40 Years",
-    stat1Value: "40",
+    years: "45 Years",
+    stat1Value: "45",
     stat1Label: "Years of Excellence",
     stat2Value: "∞",
     stat2Label: "Patience",
@@ -30,8 +30,8 @@ window.STONESIDE_DATA = {
   },
 
   content: {
-    legacyTitle: "Four Decades of *Unwavering Excellence*",
-    legacyLead: "While other builders chase volume, we've spent four decades perfecting one thing: building homes that families hand down for generations.",
+    legacyTitle: "Forty-Five Years of *Unwavering Excellence*",
+    legacyLead: "While other builders chase volume, we've spent forty-five years perfecting one thing: building homes that families hand down for generations.",
     philosophyTitle: "Building Is *Stewardship*",
     philosophyLead: "Your home is where first steps happen. Where holidays stack into decades of memory. Where legacy is built, quietly, room by room.",
     portfolioTitle: "Homes That *Tell Stories*",
@@ -49,11 +49,11 @@ window.STONESIDE_DATA = {
   },
 
   timeline: [
-    { year: "1984", title: "The Beginning", text: "Founded with one promise: build homes worthy of the family name on the mailbox — and ours on the sign." },
-    { year: "1994", title: "First Decade", text: "Ten years of learning every supplier, every subcontractor, every inch of Brazos Valley soil." },
-    { year: "2004", title: "Deep Roots", text: "Relationships as solid as our foundations. By now, the children of our first clients are building with us too." },
-    { year: "2014", title: "Generational", text: "Three decades of families trusting us with their biggest investment. The homes — and the referrals — speak for themselves." },
-    { year: "2025", title: "Four Decades Strong", text: "200+ homes. 100% referral rate. Forty years of proving that patience and integrity never go out of style." }
+    { year: "1981", title: "The Foundation", text: "Before the company, there was the craft. Started swinging hammers and learning the trade under seasoned builders — absorbing every lesson the hard way." },
+    { year: "1997", title: "Going Independent", text: "After sixteen years of learning what to do (and what never to do), the decision was made: build homes the right way, on our own terms. No shortcuts. No compromises." },
+    { year: "2000", title: "Homes at Scale", text: "Became the go-to builder for aging-in-place homes — 60 custom builds a year for buyers who knew exactly what they wanted and wouldn't settle for less." },
+    { year: "2022", title: "Stoneside Is Born", text: "Four decades of expertise distilled into a new brand. Stoneside Custom Homes launched with one mission: build fewer homes, build them better, and make every client feel like the only one." },
+    { year: "2026", title: "45 Years Strong", text: "Forty-five years in the business. Still family-owned. Still answering our own phone. Still building homes that families never want to leave." }
   ],
 
   pillars: [
@@ -127,6 +127,41 @@ window.STONESIDE_DATA = {
   ],
 
   projects: [
+    {
+      id: 5,
+      title: "The Caylen",
+      model: "caylen",
+      type: "spec",
+      location: "Grand Lake · Snook, Texas",
+      sqft: "1,781",
+      beds: "3",
+      baths: "2",
+      garage: "2 Car",
+      year: "2025",
+      photo: "assets/images/projects/caylen-436/caylen-exterior-main.jpg",
+      sketch: "assets/images/projects/caylen-436/caylen-interior-main.jpg",
+      description: "The Caylen model features a striking stone-and-siding exterior with a covered entry. Inside, you'll find an open floor plan with clean transitions, quality cabinetry, and a layout built for daily life.",
+      verseText: "As for me and my house, we will serve the Lord.",
+      verseRef: "Joshua 24:15",
+      gallery: [
+        { src: "assets/images/projects/caylen-436/caylen-exterior-main.jpg", label: "Front Exterior" },
+        { src: "assets/images/projects/caylen-436/caylen-entry.jpg", label: "Entry" },
+        { src: "assets/images/projects/caylen-436/caylen-interior-main.jpg", label: "Living Area" },
+        { src: "assets/images/projects/caylen-436/caylen-great-room.jpg", label: "Great Room" },
+        { src: "assets/images/projects/caylen-436/caylen-kitchen-1.jpg", label: "Kitchen" },
+        { src: "assets/images/projects/caylen-436/caylen-kitchen-2.jpg", label: "Kitchen Detail" },
+        { src: "assets/images/projects/caylen-436/caylen-dining.jpg", label: "Dining" },
+        { src: "assets/images/projects/caylen-436/caylen-master-bedroom.jpg", label: "Master Bedroom" },
+        { src: "assets/images/projects/caylen-436/caylen-master-bath.jpg", label: "Master Bath" },
+        { src: "assets/images/projects/caylen-436/caylen-master-shower.jpg", label: "Master Shower" },
+        { src: "assets/images/projects/caylen-436/caylen-master-closet.jpg", label: "Master Closet" },
+        { src: "assets/images/projects/caylen-436/caylen-bedroom-2.jpg", label: "Bedroom 2" },
+        { src: "assets/images/projects/caylen-436/caylen-bedroom-3.jpg", label: "Bedroom 3" },
+        { src: "assets/images/projects/caylen-436/caylen-guest-bath.jpg", label: "Guest Bath" },
+        { src: "assets/images/projects/caylen-436/caylen-exterior-back.jpg", label: "Back Exterior" },
+        { src: "assets/images/projects/caylen-436/caylen-exterior-patio.jpg", label: "Patio" }
+      ]
+    },
     {
       id: 1,
       title: "The Brandon",
@@ -253,41 +288,6 @@ window.STONESIDE_DATA = {
         { src: "assets/images/projects/dustin-545/dustin-545-master-shower.jpg", label: "Master Shower" },
         { src: "assets/images/projects/dustin-545/dustin-545-master-tub.jpg", label: "Master Tub" },
         { src: "assets/images/projects/dustin-545/dustin-545-guest-bath.jpg", label: "Guest Bath" }
-      ]
-    },
-    {
-      id: 5,
-      title: "The Caylen",
-      model: "caylen",
-      type: "spec",
-      location: "Grand Lake · Snook, Texas",
-      sqft: "1,781",
-      beds: "3",
-      baths: "2",
-      garage: "2 Car",
-      year: "2025",
-      photo: "assets/images/projects/caylen-436/caylen-exterior-main.jpg",
-      sketch: "assets/images/projects/caylen-436/caylen-interior-main.jpg",
-      description: "The Caylen model features a striking stone-and-siding exterior with a covered entry. Inside, you'll find an open floor plan with clean transitions, quality cabinetry, and a layout built for daily life.",
-      verseText: "As for me and my house, we will serve the Lord.",
-      verseRef: "Joshua 24:15",
-      gallery: [
-        { src: "assets/images/projects/caylen-436/caylen-exterior-main.jpg", label: "Front Exterior" },
-        { src: "assets/images/projects/caylen-436/caylen-entry.jpg", label: "Entry" },
-        { src: "assets/images/projects/caylen-436/caylen-interior-main.jpg", label: "Living Area" },
-        { src: "assets/images/projects/caylen-436/caylen-great-room.jpg", label: "Great Room" },
-        { src: "assets/images/projects/caylen-436/caylen-kitchen-1.jpg", label: "Kitchen" },
-        { src: "assets/images/projects/caylen-436/caylen-kitchen-2.jpg", label: "Kitchen Detail" },
-        { src: "assets/images/projects/caylen-436/caylen-dining.jpg", label: "Dining" },
-        { src: "assets/images/projects/caylen-436/caylen-master-bedroom.jpg", label: "Master Bedroom" },
-        { src: "assets/images/projects/caylen-436/caylen-master-bath.jpg", label: "Master Bath" },
-        { src: "assets/images/projects/caylen-436/caylen-master-shower.jpg", label: "Master Shower" },
-        { src: "assets/images/projects/caylen-436/caylen-master-closet.jpg", label: "Master Closet" },
-        { src: "assets/images/projects/caylen-436/caylen-bedroom-2.jpg", label: "Bedroom 2" },
-        { src: "assets/images/projects/caylen-436/caylen-bedroom-3.jpg", label: "Bedroom 3" },
-        { src: "assets/images/projects/caylen-436/caylen-guest-bath.jpg", label: "Guest Bath" },
-        { src: "assets/images/projects/caylen-436/caylen-exterior-back.jpg", label: "Back Exterior" },
-        { src: "assets/images/projects/caylen-436/caylen-exterior-patio.jpg", label: "Patio" }
       ]
     },
     {

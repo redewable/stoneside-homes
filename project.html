@@ -955,25 +955,6 @@
             Loading project description...
           </p>
 
-          <div class="project-features">
-            <div class="feature-item">
-              <div class="feature-label">Square Footage</div>
-              <div class="feature-value" id="featureSqft">—</div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-label">Bedrooms</div>
-              <div class="feature-value" id="featureBeds">—</div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-label">Bathrooms</div>
-              <div class="feature-value" id="featureBaths">—</div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-label">Garage</div>
-              <div class="feature-value" id="featureGarage">—</div>
-            </div>
-          </div>
-
           <div class="project-cta">
             <p class="cta-text">Interested in building a home like this? Let's start a conversation.</p>
             <a href="home.html#contact" class="cta-btn">
@@ -1037,7 +1018,7 @@
 
     <!-- Footer -->
     <footer class="project-footer">
-      <p class="footer-text">© 2026 Stoneside Custom Homes · Bryan–College Station, Texas · Building Legacy Since 1984</p>
+      <p class="footer-text">© 2026 Stoneside Custom Homes · Bryan–College Station, Texas · Building Legacy Since 1981</p>
     </footer>
   </div>
 
@@ -1141,12 +1122,6 @@
 
       // Description
       document.getElementById('projectDescription').textContent = p.description || 'A beautiful custom home built with care and attention to detail by Stoneside Custom Homes.';
-
-      // Features
-      document.getElementById('featureSqft').textContent = p.sqft ? `${p.sqft} sq ft` : '—';
-      document.getElementById('featureBeds').textContent = p.beds || '—';
-      document.getElementById('featureBaths').textContent = p.baths || '—';
-      document.getElementById('featureGarage').textContent = p.garage || '—';
 
       // Specs sidebar
       document.getElementById('specType').textContent = p.type === 'custom' ? 'Custom Build' : 'Spec Home';

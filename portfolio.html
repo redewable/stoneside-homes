@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Homes | Stoneside Custom Homes</title>
+  <meta name="description" content="Browse the Stoneside Custom Homes portfolio — spec homes and custom builds in Bryan–College Station, Texas." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/extraordinary.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+
+  <style>
+    /* ════════════════════════════════════════════════════════════════
+       PORTFOLIO PAGE STYLES
+       ════════════════════════════════════════════════════════════════ */
+
+    .portfolio-page {
+      min-height: 100vh;
+      background: var(--cream);
+    }
+
+    /* Header */
+    .port-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(245, 245, 243, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--pearl);
+      transition: padding 0.3s ease;
+    }
+
+    .port-header.scrolled {
+      padding: 14px 40px;
+    }
+
+    .port-brand {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .port-nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .port-nav-link {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--slate);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.3s;
+    }
+
+    .port-nav-link:hover {
+      color: var(--ink);
+    }
+
+    .port-cta-btn {
+      padding: 10px 24px;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    .port-cta-btn:hover {
+      background: var(--bronze);
+    }
+
+    /* Hero Banner */
+    .port-hero {
+      padding: 140px 60px 60px;
+      text-align: center;
+    }
+
+    .port-hero-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 20px;
+    }
+
+    .port-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .port-hero-lead {
+      font-size: 1.125rem;
+      color: var(--slate);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Filter Tabs */
+    .port-filters {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 60px 40px;
+    }
+
+    .filter-btn {
+      padding: 8px 20px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--slate);
+      background: transparent;
+      border: 1px solid var(--pearl);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--bronze);
+      color: var(--ink);
+    }
+
+    .filter-btn.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--cream);
+    }
+
+    /* Project Grid */
+    .port-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      padding: 0 60px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .port-card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--pearl);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .port-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
+    }
+
+    .port-card-media {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .port-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .port-card:hover .port-card-img {
+      transform: scale(1.05);
+    }
+
+    .port-card-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 5px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: rgba(10, 10, 10, 0.7);
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+    }
+
+    .port-card-body {
+      padding: 24px;
+    }
+
+    .port-card-title {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .port-card-location {
+      font-size: 0.8125rem;
+      color: var(--slate);
+      margin-bottom: 16px;
+    }
+
+    .port-card-specs {
+      display: flex;
+      gap: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--pearl);
+    }
+
+    .port-card-spec {
+      font-size: 0.75rem;
+      color: var(--slate);
+    }
+
+    .port-card-spec strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    /* CTA Section */
+    .port-cta {
+      padding: 80px 60px;
+      background: var(--charcoal);
+      text-align: center;
+    }
+
+    .port-cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--cream);
+      margin-bottom: 16px;
+    }
+
+    .port-cta-text {
+      font-size: 1rem;
+      color: var(--stone);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .port-cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background: var(--bronze);
+      color: var(--charcoal);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .port-cta-link:hover {
+      background: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .port-footer {
+      padding: 40px 60px;
+      text-align: center;
+      border-top: 1px solid var(--pearl);
+    }
+
+    .port-footer-text {
+      font-size: 0.875rem;
+      color: var(--slate);
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .port-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        padding: 0 40px 60px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .port-header {
+        padding: 16px 20px;
+      }
+
+      .port-nav {
+        gap: 16px;
+      }
+
+      .port-nav-link {
+        display: none;
+      }
+
+      .port-hero {
+        padding: 120px 20px 40px;
+      }
+
+      .port-filters {
+        padding: 0 20px 32px;
+        flex-wrap: wrap;
+      }
+
+      .port-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 20px 60px;
+      }
+
+      .port-cta {
+        padding: 60px 20px;
+      }
+
+      .port-footer {
+        padding: 32px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .port-hero-title {
+        font-size: 2rem;
+      }
+
+      .filter-btn {
+        padding: 6px 14px;
+        font-size: 0.75rem;
+      }
+
+      .port-card-body {
+        padding: 20px;
+      }
+
+      .port-card-specs {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body class="portfolio-page">
+  <!-- Header -->
+  <header class="port-header" id="portHeader">
+    <a href="home.html" class="port-brand">Stoneside</a>
+    <nav class="port-nav">
+      <a href="home.html#legacy" class="port-nav-link">Our Story</a>
+      <a href="home.html#process" class="port-nav-link">Process</a>
+      <a href="home.html#contact" class="port-cta-btn">Build Your Home</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="port-hero">
+    <span class="port-hero-tag">Portfolio</span>
+    <h1 class="port-hero-title">Homes That Tell Stories</h1>
+    <p class="port-hero-lead">Every project begins with a family's vision and ends with a home they never want to leave. Browse our recent builds.</p>
+  </section>
+
+  <!-- Filters -->
+  <div class="port-filters" id="portFilters">
+    <button class="filter-btn active" data-filter="all">All Homes</button>
+    <button class="filter-btn" data-filter="spec">Spec Homes</button>
+    <button class="filter-btn" data-filter="custom">Custom Builds</button>
+  </div>
+
+  <!-- Project Grid -->
+  <div class="port-grid" id="portGrid">
+    <!-- Populated by JavaScript -->
+  </div>
+
+  <!-- CTA -->
+  <section class="port-cta">
+    <h2 class="port-cta-title">Ready to Start Yours?</h2>
+    <p class="port-cta-text">Tell us about your vision. We'll schedule a no-pressure call to talk budget, timeline, and fit.</p>
+    <a href="home.html#contact" class="port-cta-link">
+      <span>Get Started Today</span>
+      <span>→</span>
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="port-footer">
+    <p class="port-footer-text">© 2026 Stoneside Custom Homes · Bryan–College Station, Texas · Building Legacy Since 1981</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script>
+    const projects = window.STONESIDE_DATA ? window.STONESIDE_DATA.projects : [];
+    let activeFilter = 'all';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGrid(projects);
+      initFilters();
+      initHeaderScroll();
+    });
+
+    function renderGrid(items) {
+      const grid = document.getElementById('portGrid');
+      grid.innerHTML = items.map(p => `
+        <a href="project.html?id=${p.id}" class="port-card" data-type="${p.type}">
+          <div class="port-card-media">
+            <img class="port-card-img" src="${p.photo}" alt="${p.title}" loading="lazy" />
+            <span class="port-card-badge">${p.type === 'custom' ? 'Custom Build' : 'Spec Home'}</span>
+          </div>
+          <div class="port-card-body">
+            <h3 class="port-card-title">${p.title}</h3>
+            <p class="port-card-location">${p.location}</p>
+            <div class="port-card-specs">
+              <div class="port-card-spec">
+                <strong>${p.sqft}</strong>
+                Sq Ft
+              </div>
+              <div class="port-card-spec">
+                <strong>${p.beds}</strong>
+                Beds
+              </div>
+              <div class="port-card-spec">
+                <strong>${p.baths}</strong>
+                Baths
+              </div>
+              <div class="port-card-spec">
+                <strong>${p.year}</strong>
+                Year
+              </div>
+            </div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    function initFilters() {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeFilter = btn.dataset.filter;
+
+          const filtered = activeFilter === 'all'
+            ? projects
+            : projects.filter(p => p.type === activeFilter);
+          renderGrid(filtered);
+        });
+      });
+    }
+
+    function initHeaderScroll() {
+      const header = document.getElementById('portHeader');
+      window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 50);
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>

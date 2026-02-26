@@ -478,6 +478,15 @@ function initTimeline() {
 // ════════════════════════════════════════════════════════════════
 let portfolioListenersBound = false;
 let galleryCurrentIndex = 0;
+let galleryVisibleCount = 3;
+
+function getVisibleCount() {
+  const w = window.innerWidth;
+  if (w <= 480) return 1;
+  if (w <= 768) return 1;
+  if (w <= 1100) return 2;
+  return 3;
+}
 
 function initPortfolio() {
   const track = document.getElementById('galleryTrack');
@@ -494,7 +503,7 @@ function initPortfolio() {
   }
   if (!track || typeof projects === 'undefined') return;
 
-  // Render gallery items with updated structure
+  // Render gallery items
   track.innerHTML = projects.map((project, index) => `
     <article class="gallery-item" data-id="${project.id}" data-index="${index}">
       <div class="gallery-media">
@@ -511,73 +520,92 @@ function initPortfolio() {
 
   if (countTotal) countTotal.textContent = String(projects.length).padStart(2, '0');
 
-  // Only bind event listeners once to prevent double-firing
-  if (portfolioListenersBound) return;
+  galleryVisibleCount = getVisibleCount();
+  galleryCurrentIndex = 0;
+
+  function slideToIndex(index) {
+    galleryVisibleCount = getVisibleCount();
+    const maxIndex = Math.max(0, projects.length - galleryVisibleCount);
+    galleryCurrentIndex = Math.min(Math.max(0, index), maxIndex);
+
+    const items = track.querySelectorAll('.gallery-item');
+    if (!items.length) return;
+
+    const item = items[galleryCurrentIndex];
+    const trackRect = track.getBoundingClientRect();
+    const offset = item.offsetLeft - track.offsetLeft;
+    track.style.transform = `translateX(-${offset}px)`;
+
+    if (countCurrent) countCurrent.textContent = String(galleryCurrentIndex + 1).padStart(2, '0');
+
+    // Update button states
+    if (prevBtn) prevBtn.style.opacity = galleryCurrentIndex === 0 ? '0.3' : '1';
+    if (nextBtn) nextBtn.style.opacity = galleryCurrentIndex >= maxIndex ? '0.3' : '1';
+  }
+
+  // Only bind event listeners once
+  if (portfolioListenersBound) {
+    slideToIndex(galleryCurrentIndex);
+    return;
+  }
   portfolioListenersBound = true;
 
-  let isDown = false, startX, scrollLeft, isDragging = false;
-
-  track.addEventListener('mousedown', (e) => {
-    isDown = true;
-    isDragging = false;
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-  });
-
-  track.addEventListener('mouseleave', () => isDown = false);
-  track.addEventListener('mouseup', () => isDown = false);
-
-  track.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const walk = (e.pageX - track.offsetLeft - startX) * 2;
-    if (Math.abs(walk) > 10) isDragging = true;
-    track.scrollLeft = scrollLeft - walk;
-  });
-
+  // Click to open modal
   track.addEventListener('click', (e) => {
-    if (isDragging) {
-      e.preventDefault();
-      isDragging = false;
-      return;
-    }
     const item = e.target.closest('.gallery-item');
     if (item) {
-      const index = parseInt(item.dataset.index);
-      openModal(index);
+      openModal(parseInt(item.dataset.index));
     }
   });
 
-  const updateCount = () => {
-    if (!countCurrent) return;
-    const items = track.querySelectorAll('.gallery-item');
-    const scrollCenter = track.scrollLeft + track.clientWidth / 2;
-    items.forEach((item, index) => {
-      if (Math.abs(scrollCenter - (item.offsetLeft + item.offsetWidth / 2)) < item.offsetWidth / 2) {
-        galleryCurrentIndex = index;
-        countCurrent.textContent = String(index + 1).padStart(2, '0');
-      }
-    });
-  };
+  // Touch/swipe support
+  let touchStartX = 0, touchDelta = 0, isSwiping = false;
 
-  track.addEventListener('scroll', updateCount, { passive: true });
+  track.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchDelta = 0;
+    isSwiping = true;
+    track.style.transition = 'none';
+  }, { passive: true });
 
-  const scrollToIndex = (index) => {
+  track.addEventListener('touchmove', (e) => {
+    if (!isSwiping) return;
+    touchDelta = e.touches[0].clientX - touchStartX;
     const items = track.querySelectorAll('.gallery-item');
-    if (items[index]) {
-      track.scrollTo({ left: items[index].offsetLeft - track.clientWidth * 0.05, behavior: 'smooth' });
+    if (!items.length) return;
+    const baseOffset = items[galleryCurrentIndex].offsetLeft - track.offsetLeft;
+    track.style.transform = `translateX(${-baseOffset + touchDelta}px)`;
+  }, { passive: true });
+
+  track.addEventListener('touchend', () => {
+    if (!isSwiping) return;
+    isSwiping = false;
+    track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+    if (touchDelta < -50) {
+      slideToIndex(galleryCurrentIndex + 1);
+    } else if (touchDelta > 50) {
+      slideToIndex(galleryCurrentIndex - 1);
+    } else {
+      slideToIndex(galleryCurrentIndex);
     }
-  };
-
-  prevBtn?.addEventListener('click', () => {
-    galleryCurrentIndex = Math.max(0, galleryCurrentIndex - 1);
-    scrollToIndex(galleryCurrentIndex);
   });
 
-  nextBtn?.addEventListener('click', () => {
-    galleryCurrentIndex = Math.min(projects.length - 1, galleryCurrentIndex + 1);
-    scrollToIndex(galleryCurrentIndex);
+  // Arrow buttons
+  prevBtn?.addEventListener('click', () => slideToIndex(galleryCurrentIndex - 1));
+  nextBtn?.addEventListener('click', () => slideToIndex(galleryCurrentIndex + 1));
+
+  // Recalc on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      galleryVisibleCount = getVisibleCount();
+      slideToIndex(galleryCurrentIndex);
+    }, 200);
   });
+
+  // Initial position
+  slideToIndex(0);
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -803,6 +831,7 @@ function initContactForm() {
         name: (formData.firstName || '') + ' ' + (formData.lastName || ''),
         email: formData.email || '',
         phone: formData.phone || null,
+        budget: formData.budget || null,
         message: formData.message || null,
         source: 'main-site',
         timestamp: Date.now(),
