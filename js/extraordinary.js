@@ -972,10 +972,14 @@ function initCounterAnimation() {
     const text = el.textContent.trim();
     const suffix = el.querySelector('.number-suffix');
     const suffixText = suffix ? suffix.textContent : '';
-    const numText = text.replace(suffixText, '').trim();
+    // Strip commas before parsing (e.g. "1,000" → "1000")
+    const numText = text.replace(suffixText, '').replace(/,/g, '').trim();
     const target = parseInt(numText);
 
     if (isNaN(target) || target === 0) return;
+
+    // Format numbers with commas for display
+    const formatNum = (n) => n.toLocaleString('en-US');
 
     const duration = 2000;
     const startTime = performance.now();
@@ -988,9 +992,9 @@ function initCounterAnimation() {
       const current = Math.round(eased * target);
 
       if (suffix) {
-        el.innerHTML = `${current}<span class="number-suffix">${suffixText}</span>`;
+        el.innerHTML = `${formatNum(current)}<span class="number-suffix">${suffixText}</span>`;
       } else {
-        el.textContent = current;
+        el.textContent = formatNum(current);
       }
 
       if (progress < 1) {
