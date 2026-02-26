@@ -192,11 +192,12 @@
 
     .port-card {
       position: relative;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
       background: #fff;
-      border: 1px solid var(--pearl);
-      transition: transform 0.5s var(--spring-gentle), box-shadow 0.5s var(--silk), border-color 0.4s var(--silk);
+      border: none;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.03);
+      transition: transform 0.5s var(--spring-gentle), box-shadow 0.5s var(--silk);
       text-decoration: none;
       color: inherit;
       display: block;
@@ -205,14 +206,26 @@
 
     .port-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 28px 72px rgba(0, 0, 0, 0.1);
-      border-color: rgba(157, 123, 90, 0.15);
+      box-shadow: 0 28px 72px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(157, 123, 90, 0.08);
     }
 
     .port-card-media {
       position: relative;
       aspect-ratio: 4/3;
       overflow: hidden;
+    }
+
+    /* Soft fade at bottom of image into card body */
+    .port-card-media::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(to top, #fff, transparent);
+      z-index: 1;
+      pointer-events: none;
     }
 
     .port-card-img {
@@ -223,7 +236,7 @@
     }
 
     .port-card:hover .port-card-img {
-      transform: scale(1.06);
+      transform: scale(1.04);
     }
 
     .port-card-badge {
@@ -264,7 +277,7 @@
       display: flex;
       gap: 16px;
       padding-top: 16px;
-      border-top: 1px solid var(--pearl);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .port-card-spec {
