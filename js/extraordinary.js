@@ -7,6 +7,7 @@
 let currentModalIndex = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderLocalProcessSteps(); // Render from STONESIDE_DATA immediately (no Firebase dependency)
   loadAdminContent();
   initPreloader();
   initCursor();
@@ -27,12 +28,57 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ════════════════════════════════════════════════════════════════
+// LOCAL PROCESS RENDERER — Renders from STONESIDE_DATA immediately
+// ════════════════════════════════════════════════════════════════
+function renderLocalProcessSteps() {
+  const processData = window.STONESIDE_DATA && window.STONESIDE_DATA.process;
+  if (!processData) return;
+
+  const list = document.querySelector('.process-steps');
+  if (!list || list.children.length > 0) return; // Don't overwrite if already rendered
+
+  const getIcon = (name) => {
+    const icons = {
+      plus: '<circle cx="24" cy="24" r="20"/><path d="M24 16v16M16 24h16"/>',
+      grid: '<rect x="8" y="8" width="32" height="32" rx="2"/><path d="M8 20h32M20 8v32"/>',
+      arrow: '<path d="M12 36l24-24M12 12h24v24"/>',
+      home: '<path d="M24 8L8 20v20h32V20L24 8z"/><path d="M18 40V28h12v12"/>',
+      check: '<circle cx="24" cy="24" r="20"/><path d="M16 24l6 6 10-12"/>',
+      key: '<path d="M24 8v12M18 20h12M24 20v12"/><circle cx="24" cy="36" r="6"/>'
+    };
+    return icons[name] || icons.plus;
+  };
+
+  const items = Array.isArray(processData) ? processData : Object.values(processData);
+  list.innerHTML = items.map(item => `
+    <div class="step">
+      <div class="step-number">${item.num}</div>
+      <div class="step-content">
+        <h3 class="step-title">${item.title}</h3>
+        ${item.subtitle ? `<span class="step-subtitle">${item.subtitle}</span>` : ''}
+        <p class="step-text">${item.text}</p>
+      </div>
+      <div class="step-visual">
+        <div class="visual-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            ${getIcon(item.icon)}
+          </svg>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Kick off the scroll animation observer
+  setTimeout(() => initProcessSteps(), 50);
+}
+
+// ════════════════════════════════════════════════════════════════
 // CLOUD DATA LOADER — Reads from Firebase Realtime Database
 // ════════════════════════════════════════════════════════════════
 function loadAdminContent() {
   const db = firebase.database();
 
   db.ref('/').on('value', (snapshot) => {
+    try {
     const DATA = snapshot.val();
     if (!DATA) return;
 
@@ -45,9 +91,12 @@ function loadAdminContent() {
     if (title1Words[1]) title1Words[1].textContent = hero.title1Word2 || 'Blueprints';
     if (title2Words[0]) title2Words[0].textContent = hero.title2Word1 || 'Become';
     if (title2Words[1]) title2Words[1].textContent = hero.title2Word2 || 'Legacy';
-    if (hero.subtitle) document.querySelector('.hero-subtitle').textContent = hero.subtitle;
-    if (hero.location) document.querySelector('.location-text').textContent = hero.location;
-    if (hero.years) document.querySelector('.divider-year').textContent = hero.years;
+    const heroSubEl = document.querySelector('.hero-subtitle');
+    if (hero.subtitle && heroSubEl) heroSubEl.textContent = hero.subtitle;
+    const locEl = document.querySelector('.location-text');
+    if (hero.location && locEl) locEl.textContent = hero.location;
+    const yearEl = document.querySelector('.divider-year');
+    if (hero.years && yearEl) yearEl.textContent = hero.years;
     
     const statItems = document.querySelectorAll('.stat-item');
     if (statItems[0]) {
@@ -179,6 +228,7 @@ function loadAdminContent() {
         `).join('');
       }
     }
+    } catch(e) { console.warn('Firebase content load error:', e); }
   });
 }
 
