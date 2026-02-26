@@ -100,7 +100,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html {
-      font-size: 16px;
+      font-size: 18px;
       scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
     }
@@ -204,7 +204,7 @@
 
     .brand-sub {
       font-family: var(--font-body);
-      font-size: 0.68rem;
+      font-size: 0.78rem;
       font-weight: 500;
       letter-spacing: 0.3em;
       text-transform: uppercase;
@@ -232,7 +232,7 @@
 
     .hero-divider-text {
       font-family: var(--font-mono);
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--stone);
@@ -240,7 +240,7 @@
 
     .hero-tagline {
       font-family: var(--font-display);
-      font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+      font-size: clamp(1.1rem, 2.4vw, 1.4rem);
       font-weight: 400;
       font-style: italic;
       color: rgba(245,245,243,0.75);
@@ -276,7 +276,7 @@
 
     .scroll-text {
       font-family: var(--font-mono);
-      font-size: 0.55rem;
+      font-size: 0.65rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--stone);
@@ -322,7 +322,7 @@
     }
 
     .trust-label {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -340,7 +340,7 @@
     }
 
     .content-inner {
-      max-width: 520px;
+      max-width: 560px;
       margin: 0 auto;
     }
 
@@ -352,7 +352,7 @@
 
     .message-label {
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.3em;
       text-transform: uppercase;
@@ -362,7 +362,7 @@
 
     .message-heading {
       font-family: var(--font-display);
-      font-size: clamp(1.3rem, 3vw, 1.65rem);
+      font-size: clamp(1.4rem, 3.2vw, 1.85rem);
       font-weight: 400;
       color: var(--charcoal);
       line-height: 1.4;
@@ -375,7 +375,7 @@
     }
 
     .message-body {
-      font-size: 0.88rem;
+      font-size: 1rem;
       color: var(--slate);
       line-height: 1.7;
     }
@@ -385,12 +385,12 @@
     ═══════════════════════════════════════════════════════════ */
     .form-card {
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       margin: 0 auto;
       background: var(--white);
       border: 1px solid var(--pearl);
       border-radius: 12px;
-      padding: 36px 32px 32px;
+      padding: 40px 36px 36px;
       box-shadow:
         0 1px 3px rgba(0,0,0,0.03),
         0 8px 32px rgba(0,0,0,0.05);
@@ -398,14 +398,14 @@
 
     .form-title {
       font-family: var(--font-display);
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       color: var(--ink);
       text-align: center;
       margin-bottom: 4px;
     }
 
     .form-subtitle {
-      font-size: 0.78rem;
+      font-size: 0.9rem;
       color: var(--stone);
       text-align: center;
       margin-bottom: 28px;
@@ -415,7 +415,7 @@
 
     .field-group label {
       display: block;
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -427,9 +427,9 @@
     .field-group select,
     .field-group textarea {
       width: 100%;
-      padding: 11px 14px;
+      padding: 13px 16px;
       font-family: var(--font-body);
-      font-size: 0.88rem;
+      font-size: 1rem;
       color: var(--ink);
       background: var(--cream);
       border: 1px solid var(--pearl);
@@ -474,6 +474,49 @@
       pointer-events: none;
     }
 
+    /* Budget Slider */
+    .budget-display {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--bronze);
+      text-align: center;
+      margin-bottom: 8px;
+      min-height: 1.4em;
+    }
+
+    .field-group input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      background: var(--pearl);
+      border-radius: 4px;
+      border: none;
+      outline: none;
+      padding: 0;
+    }
+
+    .field-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bronze);
+      cursor: pointer;
+      border: 2px solid var(--white);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+
+    .field-group input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bronze);
+      cursor: pointer;
+      border: 2px solid var(--white);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
 
     /* Submit */
     .submit-btn {
@@ -482,7 +525,7 @@
       padding: 14px;
       margin-top: 24px;
       font-family: var(--font-body);
-      font-size: 0.78rem;
+      font-size: 0.88rem;
       font-weight: 600;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -548,13 +591,13 @@
 
     .success-heading {
       font-family: var(--font-display);
-      font-size: 1.2rem;
+      font-size: 1.35rem;
       color: var(--ink);
       margin-bottom: 6px;
     }
 
     .success-body {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: var(--slate);
       line-height: 1.6;
     }
@@ -568,7 +611,7 @@
     }
 
     .contact-strip p {
-      font-size: 0.78rem;
+      font-size: 0.9rem;
       color: var(--stone);
       margin-bottom: 10px;
     }
@@ -582,7 +625,7 @@
 
     .contact-links a {
       font-family: var(--font-body);
-      font-size: 0.82rem;
+      font-size: 0.95rem;
       font-weight: 500;
       color: var(--charcoal);
       text-decoration: none;
@@ -595,7 +638,7 @@
     .contact-links a:hover { color: var(--bronze); }
 
     .contact-links a svg {
-      width: 15px; height: 15px;
+      width: 17px; height: 17px;
       stroke: var(--bronze);
       fill: none;
       stroke-width: 1.8;
@@ -615,7 +658,7 @@
     .footer-verse {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: rgba(245,245,243,0.4);
       margin-bottom: 6px;
     }
@@ -636,7 +679,7 @@
     }
 
     .footer-copy {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       color: rgba(245,245,243,0.2);
     }
@@ -652,7 +695,7 @@
       padding: 12px 24px;
       border-radius: 8px;
       font-family: var(--font-body);
-      font-size: 0.82rem;
+      font-size: 0.92rem;
       font-weight: 500;
       color: var(--cream);
       background: var(--charcoal);
@@ -836,12 +879,8 @@
 
           <div class="field-group">
             <label for="budget">Budget Range</label>
-            <select id="budget" name="budget">
-              <option value="" disabled selected>Select a range</option>
-              <option value="350k-550k">$350k – $550k</option>
-              <option value="550k-850k">$550k – $850k</option>
-              <option value="850k+">$850k+</option>
-            </select>
+            <div class="budget-display" id="budgetDisplay">$550k – $850k</div>
+            <input type="range" id="budget" name="budget" min="0" max="2" step="1" value="1" />
           </div>
 
           <div class="field-group">
@@ -897,6 +936,15 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // Budget slider
+    const budgetRanges = ['$350k – $550k', '$550k – $850k', '$850k+'];
+    const budgetSlider = document.getElementById('budget');
+    const budgetDisplay = document.getElementById('budgetDisplay');
+
+    budgetSlider.addEventListener('input', () => {
+      budgetDisplay.textContent = budgetRanges[budgetSlider.value];
+    });
+
     // Form handling
     const form = document.getElementById('intakeForm');
     const btn = document.getElementById('submitBtn');
@@ -921,7 +969,7 @@
       const phone = form.phone.value.trim();
       const location = form.location.value.trim();
       const interest = form.interest.value;
-      const budget = form.budget.value;
+      const budget = budgetRanges[budgetSlider.value];
       const message = form.message.value.trim();
 
       if (!name || !email) {
