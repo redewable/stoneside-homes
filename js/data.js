@@ -36,7 +36,7 @@ window.STONESIDE_DATA = {
     philosophyLead: "Your home is where first steps happen. Where holidays stack into decades of memory. Where legacy is built, quietly, room by room.",
     portfolioTitle: "Homes That *Tell Stories*",
     portfolioLead: "Each project tells its own story. Explore our recent builds and see the quality that keeps families coming back.",
-    processTitle: "From First *Conversation* to Forever Home",
+    processTitle: "The *Experience* of Building with Stoneside",
     contactTitle: "Let's Build *Something* That Lasts",
     contactLead: "Tell us what you're envisioning. We'll schedule a no-pressure call to talk budget, timeline, and fit — usually within 24 hours."
   },
@@ -63,11 +63,12 @@ window.STONESIDE_DATA = {
   ],
 
   process: [
-    { num: "01", title: "Free Consultation", text: "No pressure. We listen to your vision, answer every question, and give you an honest assessment of scope, budget, and timeline.", icon: "plus" },
-    { num: "02", title: "Design & Pricing", text: "Lock in your floor plan, selections, and a fixed-price contract. You'll know the exact cost before we break ground — no hidden fees, ever.", icon: "grid" },
-    { num: "03", title: "Construction", text: "Weekly photo updates. Clean job sites. A dedicated project manager who answers your calls — not a voicemail.", icon: "arrow" },
-    { num: "04", title: "Walk-Through & Keys", text: "A meticulous final inspection, your punch list resolved, and the keys to a home built exactly as promised.", icon: "home" },
-    { num: "05", title: "Lifetime Relationship", text: "Our warranty doesn't come with fine print. Something not right? Call us. We'll be there. That's the Stoneside difference.", icon: "check" }
+    { num: "01", title: "Discovery", subtitle: "3–4 weeks · 1–2 meetings per week", text: "Most builders hand you a catalog. We sit down. We listen. Over several weeks of one-on-one sessions, we uncover every detail of the home you've been picturing for years — how you wake up, where the light falls, what the holidays look like. This is the step no one else takes.", icon: "plus" },
+    { num: "02", title: "Design & Architecture", subtitle: "Plans · Elevations · Revisions", text: "Your vision becomes a blueprint. We develop floor plans, elevations, and architectural drawings — then refine them together until every room, every angle, every window placement is exactly right. No rushing. No settling.", icon: "grid" },
+    { num: "03", title: "Transparent Numbers", subtitle: "Cost Estimates · Allowances · Contract", text: "Before a single shovel hits dirt, you'll see every cost, every allowance, every line item. We lock in a fixed-price contract — no hidden fees, no surprises six months in. You'll know exactly what you're building and exactly what it costs.", icon: "arrow" },
+    { num: "04", title: "Selections", subtitle: "Every Finish, Every Detail", text: "Countertops, cabinetry, fixtures, flooring — this is where your home becomes yours. We guide you through every choice with the patience of experience, so nothing gets overlooked and nothing feels rushed.", icon: "home" },
+    { num: "05", title: "The Build", subtitle: "Weekly Updates · Clean Sites", text: "Construction starts — and you're never left wondering. Weekly photo updates, a dedicated project manager who actually answers the phone, and job sites clean enough to walk through. This is what accountability looks like.", icon: "check" },
+    { num: "06", title: "Walkthroughs & Keys", subtitle: "4 Scheduled Walk-Throughs", text: "You'll walk your home at four key milestones: pre-insulation, cabinet and trim, full orientation, and the final walk. By the time we hand you the keys, there are no surprises — just the home you designed, built exactly as promised.", icon: "key" }
   ],
 
   testimonials: [

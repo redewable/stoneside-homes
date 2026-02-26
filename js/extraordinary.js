@@ -124,7 +124,8 @@ function loadAdminContent() {
                     grid: '<rect x="8" y="8" width="32" height="32" rx="2"/><path d="M8 20h32M20 8v32"/>',
                     arrow: '<path d="M12 36l24-24M12 12h24v24"/>',
                     home: '<path d="M24 8L8 20v20h32V20L24 8z"/><path d="M18 40V28h12v12"/>',
-                    check: '<circle cx="24" cy="24" r="20"/><path d="M16 24l6 6 10-12"/>'
+                    check: '<circle cx="24" cy="24" r="20"/><path d="M16 24l6 6 10-12"/>',
+                    key: '<path d="M24 8v12M18 20h12M24 20v12"/><circle cx="24" cy="36" r="6"/>'
                 };
                 return icons[name] || icons.plus;
             };
@@ -134,6 +135,7 @@ function loadAdminContent() {
                 <div class="step-number">${item.num}</div>
                 <div class="step-content">
                   <h3 class="step-title">${item.title}</h3>
+                  ${item.subtitle ? `<span class="step-subtitle">${item.subtitle}</span>` : ''}
                   <p class="step-text">${item.text}</p>
                 </div>
                 <div class="step-visual">
