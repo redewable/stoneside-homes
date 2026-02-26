@@ -532,8 +532,8 @@ function initPortfolio() {
     if (!items.length) return;
 
     const item = items[galleryCurrentIndex];
-    const trackRect = track.getBoundingClientRect();
-    const offset = item.offsetLeft - track.offsetLeft;
+    const trackPadLeft = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    const offset = item.offsetLeft - track.offsetLeft - trackPadLeft;
     track.style.transform = `translateX(-${offset}px)`;
 
     if (countCurrent) countCurrent.textContent = String(galleryCurrentIndex + 1).padStart(2, '0');
@@ -573,7 +573,8 @@ function initPortfolio() {
     touchDelta = e.touches[0].clientX - touchStartX;
     const items = track.querySelectorAll('.gallery-item');
     if (!items.length) return;
-    const baseOffset = items[galleryCurrentIndex].offsetLeft - track.offsetLeft;
+    const trackPadLeft = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    const baseOffset = items[galleryCurrentIndex].offsetLeft - track.offsetLeft - trackPadLeft;
     track.style.transform = `translateX(${-baseOffset + touchDelta}px)`;
   }, { passive: true });
 
