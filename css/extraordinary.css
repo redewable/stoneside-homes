@@ -794,37 +794,9 @@ button {
   transform: translate(4px, -4px);
 }
 
-/* Minimal Scroll Indicator */
+/* Scroll Indicator — Hidden (off-brand) */
 .hero-scroll {
-  opacity: 0;
-  animation: fadeIn 0.8s var(--ease-out) 1.4s forwards;
-}
-
-.scroll-indicator {
-  border: 1px solid var(--bronze);
-  height: 40px;
-  width: 24px;
-  border-radius: 12px;
-  position: relative;
-}
-
-.scroll-dot {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  background: var(--bronze);
-  border-radius: 50%;
-  animation: scrollDrop 2s infinite;
-}
-
-@keyframes scrollDrop {
-  0% { transform: translate(-50%, 0); opacity: 0; }
-  20% { opacity: 1; }
-  80% { transform: translate(-50%, 15px); opacity: 0; }
-  100% { opacity: 0; }
+  display: none;
 }
 
 @media (max-width: 900px) {
@@ -999,36 +971,54 @@ button {
   color: var(--stone);
 }
 
-/* Legacy Numbers */
+/* Legacy Numbers — Refined, flowing layout */
 .legacy-numbers {
-  margin-top: var(--space-xl);
-  padding: var(--space-xl) 0;
-  background: var(--white);
-  border-top: 1px solid var(--pearl);
-  border-bottom: 1px solid var(--pearl);
+  margin-top: var(--space-2xl);
+  padding: 0;
+  background: transparent;
+  border: none;
 }
 
 .numbers-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-lg);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2xl);
   text-align: center;
 }
 
 @media (max-width: 768px) {
   .numbers-grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
   }
 }
 
 .number-item {
-  padding: var(--space-md);
+  padding: 0;
+  position: relative;
+}
+
+.number-item + .number-item::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--space-2xl) / -2);
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--pearl), transparent);
+}
+
+@media (max-width: 768px) {
+  .number-item + .number-item::before {
+    display: none;
+  }
 }
 
 .number-value {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 400;
   line-height: 1;
   color: var(--ink);
@@ -1036,15 +1026,15 @@ button {
 
 .number-suffix {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: var(--bronze);
 }
 
 .number-label {
   display: block;
-  margin-top: var(--space-xs);
+  margin-top: var(--space-sm);
   font-family: var(--font-mono);
-  font-size: 0.5625rem;
+  font-size: 0.625rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--stone);
@@ -1302,13 +1292,17 @@ button {
 .gallery-item {
   flex: 0 0 calc(33.333% - 16px);
   cursor: pointer;
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.03);
   transition: transform 0.5s var(--spring-gentle), box-shadow 0.5s var(--silk);
   will-change: transform;
 }
 
 .gallery-item:hover {
   transform: translateY(-10px);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
 }
 
 @media (max-width: 1100px) {
@@ -1332,9 +1326,9 @@ button {
 .gallery-media {
   position: relative;
   aspect-ratio: 4/3;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
-  margin-bottom: var(--space-md);
+  margin-bottom: 0;
 }
 
 /* Soft fade at bottom edge of gallery image */
@@ -1344,11 +1338,10 @@ button {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50px;
-  background: linear-gradient(to top, var(--cream), transparent);
+  height: 60px;
+  background: linear-gradient(to top, var(--white), transparent);
   z-index: 2;
   pointer-events: none;
-  opacity: 0.6;
 }
 
 .gallery-sketch,
@@ -1389,7 +1382,7 @@ button {
 }
 
 .gallery-info {
-  padding: var(--space-sm) var(--space-xs) 0;
+  padding: var(--space-md) var(--space-md) var(--space-lg);
 }
 
 .gallery-title {
@@ -1409,7 +1402,7 @@ button {
 /* Gallery Controls */
 .portfolio-controls {
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--pearl);
+  border-top: none;
 }
 
 .portfolio-controls .container {

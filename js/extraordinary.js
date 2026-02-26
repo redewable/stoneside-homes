@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initCounterAnimation();
   initStickyCta();
+  initDynamicYears();
 });
 
 // ════════════════════════════════════════════════════════════════
@@ -471,6 +472,55 @@ function initTimeline() {
 
   track.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
+}
+
+// ════════════════════════════════════════════════════════════════
+// DYNAMIC YEARS — Always shows current year across the site
+// ════════════════════════════════════════════════════════════════
+function initDynamicYears() {
+  const currentYear = new Date().getFullYear();
+  const yearsSince1981 = currentYear - 1981;
+
+  // Preloader end year
+  const preloaderEnd = document.getElementById('preloaderYearEnd');
+  if (preloaderEnd) preloaderEnd.textContent = currentYear;
+
+  // Timeline progress bar end year
+  const timelineEnd = document.getElementById('timelineEndYear');
+  if (timelineEnd) timelineEnd.textContent = currentYear;
+
+  // Footer copyright year
+  const footerYear = document.getElementById('footerYear');
+  if (footerYear) footerYear.textContent = currentYear;
+
+  // Years building stat (dynamic calculation)
+  const yearsBuilding = document.getElementById('yearsBuilding');
+  if (yearsBuilding) {
+    yearsBuilding.innerHTML = yearsSince1981 + '<span class="number-suffix">+</span>';
+  }
+
+  // Conversion bridge year
+  const bridgeText = document.querySelector('.bridge-text');
+  if (bridgeText) {
+    bridgeText.textContent = bridgeText.textContent.replace(/20\d{2}/, currentYear);
+  }
+
+  // Contact urgency year
+  const urgencyText = document.querySelector('.urgency-text');
+  if (urgencyText) {
+    urgencyText.textContent = urgencyText.textContent.replace(/20\d{2}/, currentYear);
+  }
+
+  // Timeline latest card (hardcoded fallback before Firebase overrides)
+  const latestCard = document.getElementById('timelineLatestCard');
+  if (latestCard) {
+    const yearEl = latestCard.querySelector('.timeline-year');
+    const titleEl = latestCard.querySelector('h3');
+    const textEl = latestCard.querySelector('p');
+    if (yearEl) yearEl.textContent = currentYear;
+    if (titleEl) titleEl.textContent = yearsSince1981 + ' Years Strong';
+    if (textEl) textEl.textContent = yearsSince1981 + ' years in the business and still building every home like our name\'s on the mailbox. Because it is.';
+  }
 }
 
 // ════════════════════════════════════════════════════════════════

@@ -53,7 +53,7 @@ window.STONESIDE_DATA = {
     { year: "1997", title: "Going Independent", text: "After sixteen years of learning what to do (and what never to do), the decision was made: build homes the right way, on our own terms. No shortcuts. No compromises." },
     { year: "2000", title: "Homes at Scale", text: "Became the go-to builder for aging-in-place homes — 60 custom builds a year for buyers who knew exactly what they wanted and wouldn't settle for less." },
     { year: "2022", title: "Stoneside Is Born", text: "Four decades of expertise distilled into a new brand. Stoneside Custom Homes launched with one mission: build fewer homes, build them better, and make every client feel like the only one." },
-    { year: "2026", title: "45 Years Strong", text: "Forty-five years in the business. Still family-owned. Still answering our own phone. Still building homes that families never want to leave." }
+    { year: String(new Date().getFullYear()), title: (new Date().getFullYear() - 1981) + " Years Strong", text: (new Date().getFullYear() - 1981) + " years in the business. Still family-owned. Still answering our own phone. Still building homes that families never want to leave." }
   ],
 
   pillars: [
